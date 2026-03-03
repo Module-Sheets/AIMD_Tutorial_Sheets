@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tutorial 02 – Mia Story: FBX Animation Clips & Looping</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.2; max-width: 900px; margin: 0 auto; padding: 20px; background: #f9f9f9; color: #333; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; margin-bottom: 12px; }
+    h2 { color: #34495e; margin-top: 30px; border-left: 4px solid #3498db; padding-left: 10px; }
+    h3 { color: #555; margin-top: 20px; }
+    a { color: #3498db; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ol, ul { margin: 10px 0; padding-left: 25px; }
+    li { margin: 8px 0; }
+    .section { background: #fff; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .video { margin-top: 10px; }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 12px 0; }
+    .gallery figure { margin: 0; }
+    .gallery img { width: 100%; border-radius: 6px; display: block; }
+    .gallery figcaption { font-size: 12px; color: #666; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Tutorial 02 – Working with FBX Animation Clips and Looping</h1>
+
+  <div class="section">
+    <h2>Overview & Files</h2>
+    <p><strong>Mocap Files:</strong> <a href="https://universityofwestminster-my.sharepoint.com/:u:/g/personal/fergusj_westminster_ac_uk/EVVQraW3cKRLmACi5xo_ZSQBvf_xsAP8lKw2sXXJ2kNjEg?e=DOzwTQ" target="_blank" rel="noopener">Tut 02 Fbx.zip</a></p>
+  </div>
+
+  <div class="section">
+    <h2>Tutorial 02 01 – Set Up Story Tracks</h2>
+    <p><a href="https://youtu.be/ZWk8-5G0P-o" target="_blank" rel="noopener">https://youtu.be/ZWk8-5G0P-o</a></p>
+    <div class="video">
+      <iframe width="100%" height="400" src="https://www.youtube.com/embed/ZWk8-5G0P-o?rel=0&modestbranding=1" title="Tutorial 02 01" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    <ol>
+      <li>SELECT 24 FPS – IMPORTANT TO BE CONSISTENT DURING PROJECT!</li>
+      <li>Bring in characterised Mia from Resources/Asset Browser/Tutorials.</li>
+      <li>De-characterise, add Floor Plane (like Tutorial 01).</li>
+      <li>PLOT TO CONTROL RIG.</li>
+      <li>Test Floor Plane by moving up.</li>
+      <li>In Story create Character track, select Mia in dropdown box.</li>
+      <li>Right click in transport area of Character Track and insert Animation File from provided files.</li>
+      <li>Select “01 Clip Stand Loop”, drag to 0 (start) and 19 (end).</li>
+      <li>Enter 19 in end box of transport control window (and timeline).</li>
+      <li>Hit F to frame selected animation clip in Story.</li>
+      <li>Check loop at start/end by FF and Rewind.</li>
+      <li>Turn loop on in Transport control.</li>
+      <li>Select root between feet in Character Controls window.</li>
+      <li>Click Ghost box in Story Track (Eye), root, and clip (all selected). Note the Ghost Skeleton.</li>
+      <li>Press T for translation gizmo.</li>
+      <li>Ensure translation is zeroed.</li>
+      <li>Press R and check rotation zeroed.</li>
+      <li>Character should be centered within root and on floor – check.</li>
+      <li>Right click in left panel of Story, insert new Character Track, select Mia.</li>
+      <li>This provides a separate track and overrides the one above.</li>
+      <li>Right click, insert anim file – it comes in at current transport position.</li>
+      <li>Select “Clip Stand Talk 1a Poses.fbx”, drag clip to 0 (start).</li>
+      <li>With clip selected, press F to frame.</li>
+      <li>Adjust transport to 0 (start) and 200 (end).</li>
+      <li>Repeat steps 6-10 to check.</li>
+      <li>Go to 0 (start), mute story track for “Clip Stand Talk 1a Poses.fbx”.</li>
+      <li>Check there is no jump in stand pose.</li>
+      <li>Rename both Story Character tracks as “Stand Looped” and “Stand Talk 1a Looped Poses”.</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>Tutorial 02 02 – Paste Poses</h2>
+    <p><a href="https://universityofwestminster-my.sharepoint.com/:v:/g/personal/fergusj_westminster_ac_uk/EZ5tLsoEy1tGj6OIp5r7lrUBtMnLt24c_xmBrAQE2bB8vQ?e=0O8mov&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D" target="_blank" rel="noopener">Tutorial 02 02 Overlay.mp4</a></p>
+    <ol>
+      <li>Repeat steps 4-15 for “Clip Stand Talk 1a No Pose.fbx”.</li>
+      <li>You will notice you have to fix the Ghost (Eye) for translation, but not rotation.</li>
+      <li>When checking loop, frame 0 matches previous matching stand pose, but runs to 595.</li>
+      <li>This is the raw clip of the previous and needs trimming.</li>
+      <li>Drag end of clip to 200, razor, or type 200 in top right corner.</li>
+      <li>Set transport at 200 and toggle mute to see difference from matched stand pose.</li>
+      <li>Mute all but stand loop track.</li>
+      <li>Go to 0 (start).</li>
+      <li><strong><em>Select all of the Mia Control Rig via Navigator: right click Ctrl:Reference → Select All Branches.</em></strong></li>
+      <li><strong><em>Do NOT select in Character Control window now as that introduces an offset!</em></strong></li>
+    </ol>
+
+    <div class="gallery">
+      <figure>
+        <img src="Tutorial%2002%20Mia%20Story_files/image002.gif" alt="Navigator selection reference" />
+        <figcaption><a href="https://gyazo.com/dac0280606fb65b33baf8d38b2abacf8" target="_blank" rel="noopener">Gyazo reference</a></figcaption>
+      </figure>
+      <figure>
+        <img src="Tutorial%2002%20Mia%20Story_files/image003.gif" alt="Control rig selection example" />
+        <figcaption><a href="https://gyazo.com/4a97e8ac6715c421f4a63b333d233ff5" target="_blank" rel="noopener">Gyazo reference</a></figcaption>
+      </figure>
+    </div>
+
+    <ol start="11">
+      <li>In Character Control Window, select all of the control rig and Full Body mode.</li>
+      <li>Go to Pose Controls in Resources window, hit + to create matching stand pose.</li>
+      <li>Go to 200 (end), unmute the clip with no end pose.</li>
+      <li>Insert character additive subtrack (right click track name bar).</li>
+      <li>Expand subtrack.</li>
+      <li>Click on key.</li>
+      <li>With Control Rig still selected, select paste in Pose Controls.</li>
+      <li>UNCLICK KEY to retain work.</li>
+      <li>Mute track and subtrack to check against previous track (Talk 1a with poses).</li>
+      <li>Unmute and check 0 and 200.</li>
+      <li>Note the pasted frame shows to 201; this is normal for frame 200 display.</li>
+      <li>With single pose frame selected, press F; Ctrl+LMB drag to view.</li>
+      <li>Select start side of single-frame pose clip and drag to 0 so it spans 0–201.</li>
+      <li>At 200 key weighting = 100; at 0 key weighting = 0.</li>
+      <li>Check start and end 0–200.</li>
+      <li>Play to check; rename tracks as “Stand Talk 1a No Pose” and subtrack as “End Pose”.</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>Tutorial 02 03 – Process Tracks from Story</h2>
+    <p><a href="https://youtu.be/ME5JhHQgfM0" target="_blank" rel="noopener">https://youtu.be/ME5JhHQgfM0</a></p>
+    <div class="video">
+      <iframe width="100%" height="400" src="https://www.youtube.com/embed/ME5JhHQgfM0?rel=0&modestbranding=1" title="Tutorial 02 03" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    <ol>
+      <li>Click track with subtrack pose, make sure it is active.</li>
+      <li>Right click on track name box and select “process track and subtracks to new clip”.</li>
+      <li>Check fps at 24 and accept all defaults.</li>
+      <li>Save clip as “Clip Stand Talk 1a Looped”.</li>
+      <li>The FBX animation-only clip is saved to disk and in new track.</li>
+      <li><em>Repeat the process for clips 1b and 1c.</em></li>
+      <li><em>Try copying and pasting the clips into one timeline for export of all animations.</em></li>
+      <li><em>To export animations in-scene, plot clips to takes on the skeleton; try on a new take and save.</em></li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h3>Recap – Two Ways to Add Animations</h3>
+    <ol>
+      <li>Week 1 Method – Merge whole FBX files to scene in Live Viewing Pane, or Motion File Import to FBX Skeletons
+        <ol type="a">
+          <li>Merge whole FBX, characterise, drive character FBX, plot to Control Rig, insert in Story.</li>
+          <li>Motion File Import with FBX Skeleton selected – additional takes added.</li>
+          <li>Insert current takes into Story track one by one.</li>
+          <li><em>Can also insert anim files from whole FBX files – will do with Mixamo.</em></li>
+        </ol>
+      </li>
+      <li>Week 2 – Import FBX anim-only clips in Story Mode
+        <ol type="a">
+          <li>Import FBX animation-only clip into Story track of character FBX with Control Rig.</li>
+          <li>Add more clips on same track or additional tracks for editing.</li>
+          <li>Paste together in one track for export.</li>
+          <li><em>Can also insert anim files from whole FBX files – will do with Mixamo.</em></li>
+        </ol>
+      </li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h3>Tips to Remember</h3>
+    <ol>
+      <li>CHECK FPS!!!
+        <ol type="a">
+          <li>Week 1 – 30 fps</li>
+          <li>Week 2 – 24 fps</li>
+        </ol>
+      </li>
+      <li>Always characterise on T-pose.</li>
+      <li>Plot to Control Rig before going to Story.
+        <ol type="a">
+          <li>Plot rather than select Control Rig to keep animation.</li>
+        </ol>
+      </li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h3>Story</h3>
+    <ol>
+      <li>Need FBX with Control Rig in Story for full effect.</li>
+      <li>Check Ghost with root, clip, Ghost button selected.</li>
+      <li>Zero out Ghost Translation and Rotation (ONLY on ROOT).</li>
+      <li>Insert New Character Animation Track.</li>
+      <li>Insert Current Take.</li>
+      <li>Export clips (animation only!)
+        <ol type="a">
+          <li>Right click and make clip writeable.</li>
+          <li>Check clean frames (no *).</li>
+          <li>Change transport end frame to match.</li>
+          <li>Keys go one frame beyond – remember when exporting.</li>
+          <li>Export ends at transport end – set appropriately.</li>
+          <li>Right click to save clip; label animation-only clips as Clip_Name.</li>
+          <li>Or process track/subtrack to a new track to export (clips).</li>
+          <li>Transport at zero.</li>
+        </ol>
+      </li>
+      <li>Right click to import clips
+        <ol type="a">
+          <li>Insert animation file.</li>
+          <li>Imports at current transport position.</li>
+        </ol>
+      </li>
+      <li>TURN KEY FRAMING OFF AFTER USING.</li>
+      <li>Mute Story to go back to Live view and process more clips.</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h3>Poses</h3>
+    <ol>
+      <li>Copy and paste pose on:
+        <ol type="a">
+          <li>Full body mode.</li>
+          <li>Full selection WITH root.</li>
+          <li>Keep pose defaults.</li>
+        </ol>
+      </li>
+    </ol>
+  </div>
+</body>
+</html>

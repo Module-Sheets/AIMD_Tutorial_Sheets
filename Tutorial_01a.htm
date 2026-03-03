@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MotionBuilder Tutorials – FBX Skeletons, Mocap & Control Rigs</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.2;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #3498db;
+      padding-bottom: 10px;
+    }
+    h2 {
+      color: #34495e;
+      margin-top: 30px;
+      border-left: 4px solid #3498db;
+      padding-left: 10px;
+    }
+    h3 {
+      color: #555;
+      margin-top: 20px;
+    }
+    a {
+      color: #3498db;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    ul, ol {
+      margin: 10px 0;
+      padding-left: 25px;
+    }
+    li {
+      margin: 8px 0;
+    }
+    .highlight {
+      background: #ffeb3b;
+      padding: 2px 4px;
+      font-weight: bold;
+    }
+    .important {
+      background: #ffe4e4;
+      padding: 15px;
+      border-left: 4px solid #e74c3c;
+      margin: 15px 0;
+    }
+    .section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    code {
+      background: #ecf0f1;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>MotionBuilder Tutorials – FBX Skeletons, Mocap & Control Rigs</h1>
+
+  <div class="section">
+    <h2>Tutorial 00 – MotionBuilder UI</h2>
+    <p>Familiarise yourself with Autodesk MotionBuilder with the YouTube video below:</p>
+    <p><a href="https://youtu.be/WlB57cTsu4w" target="_blank">MotionBuilder UI Tutorial</a></p>
+    <iframe width="100%" height="400" src="https://www.youtube.com/embed/WlB57cTsu4w" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="section">
+    <h2>Tutorial 01.01 – Getting Started with Characterised FBX Skeletons and Mocap</h2>
+    <p><a href="https://youtu.be/tYtavnjsOGo" target="_blank">Video Tutorial: FBX Skeletons and Mocap</a></p>
+    <iframe width="100%" height="400" src="https://www.youtube.com/embed/tYtavnjsOGo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    
+    <p><strong>Mocap Files:</strong><br>
+    <a href="https://universityofwestminster-my.sharepoint.com/:u:/g/personal/fergusj_westminster_ac_uk/EaFxsbXTnwlIlG09YkfVVe4BQTW9GtqznHJO5qmolWytiA?e=MM11ND" target="_blank">Tutorial Files 01 Mocap Only.zip</a></p>
+
+    <h3>Initial Setup Steps</h3>
+    <ol>
+      <li>Open MotionBuilder and start a new scene from the top left File Menu</li>
+      <li>Arrange your layout to suit with Navigator, Resources, Viewer, and Character Controls Windows Only – REQUIRES YOU TO HOLD DOWN SHIFT
+        <ol type="a">
+          <li>Drag Resources top right</li>
+          <li>Drag Navigator top right below resources</li>
+          <li>Close animation layers</li>
+          <li>Close animation key controls</li>
+          <li>Keep timeline at bottom across whole UI</li>
+          <li>Keep Character Controls full right</li>
+        </ol>
+      </li>
+    </ol>
+
+    <h3>Character Template & Mocap Setup</h3>
+    <ol start="3">
+      <li>From Resources/Asset Browser Tab/Tutorials Folder/, Drag a Mia Blue into the scene (FBX Open/No Animation)</li>
+      <li>From Resources/Asset Browser Tab/Templates Folder/Characters Folder/, Drag a Character Template over any part of Mia and drop</li>
+      <li>Select Characterise in the pop-up</li>
+      <li>Check Mia is facing positive Z and click Biped</li>
+      <li>Find in navigator under Characters and rename to Character Mia</li>
+      <li>At top menu on Left, select File/Merge</li>
+      <li>Select Waiter Idle.fbx from mocap files above</li>
+      <li>Accept all Defaults and click Merge</li>
+      <li>Select Takes in dropdown menu in Transport Controls Window to see new and old takes (Take 001 and Waiter Idle)</li>
+      <li>In navigator expand the Scene Folder by clicking the "+" sign</li>
+      <li>Find, select, and delete the Cameras, Markers, and unnamed markers in Scene Folder
+        <ol type="a">
+          <li>Right Click on System Folder and click "Select Branches"</li>
+          <li>Right Click, Select Delete/Confirm</li>
+          <li>Right Click on "Unnamed Markers" and click "Select Branches"</li>
+          <li>Right Click, Select Delete/Confirm</li>
+        </ol>
+      </li>
+      <li>You should be left with the mocap FBX skeleton and named optical markers
+        <ol type="a">
+          <li>Select Display/XRay at top of Viewer to view bones</li>
+        </ol>
+      </li>
+      <li>Check framerate at bottom far right of Transport Controls <strong>(select 30 in this case)</strong></li>
+      <li><strong>(Frame 0 – type 0 into start frame to eliminate 0* - Important)</strong></li>
+      <li><strong>Also change 894* to 894</strong></li>
+      <li><strong>Avoid moving the blue spheres that adjust the transport window – this shrinks the transport view</strong></li>
+    </ol>
+
+    <h3>Characterise Mocap Skeleton</h3>
+    <ol start="17">
+      <li>Characterise mocap FBX Skeleton on T-pose at Frame 0</li>
+      <li>Rename Character as Character Mocap</li>
+      <li>In Character window, with Character Mia as Character, select Character Mocap as Source</li>
+      <li>Playback and check the mocap Drives Mia, Note the scale differences</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>Tutorial 01.02 – Adjustments, Floor Plane & Control Rig</h2>
+    <p><a href="https://youtu.be/M5tQt9b1aD4" target="_blank">Video Tutorial: Adjustments and Floor Plane</a></p>
+    <iframe width="100%" height="400" src="https://www.youtube.com/embed/M5tQt9b1aD4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h3>Character Settings & IK Blend</h3>
+    <ol>
+      <li>Look at Property tabs in Navigator with Characters/Character Mia selected</li>
+      <li>Select Character in Navigator window, look at Property tabs for Character Definition, Character Settings</li>
+      <li>Character Settings Tab – Look at Inputs – Check Stance and Active tickbox (for all changes we make!)</li>
+      <li>Most of the Same controls are duplicated in the Character Controls Window we just used</li>
+      <li>Adjust IK Blend (Reach) and Pull – IK Blend moves toward source, Pull brings the rest along – Example: <a href="https://youtu.be/d8DDPImlp9s" target="_blank">IK Blend Example</a>
+        <iframe width="100%" height="300" src="https://www.youtube.com/embed/d8DDPImlp9s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </li>
+      <li>IK (Inverse Kinematics) is animation propagating up a skeleton (wrist moves elbow), FK (Forward Kinematics) is just the individual bone rotating</li>
+      <li>Adjust head IK Blend, T, and R, then IK Pull when IK Blend is active</li>
+      <li>In Character Settings Tab, try match source and action space compensation</li>
+      <li>Adjust Hands and other body parts for IK Blend T,R and Pull in Character Settings and also Character Controls windows. See the correlation and effect</li>
+      <li>Check feet – they are below the floor</li>
+      <li>In Character Settings tab, make sure character is on stance (not T-pose!), then untick active box</li>
+      <li>In Character Definition tab, untick characterize box</li>
+      <li>Check Character Controls Window for green bones (correct stance)</li>
+    </ol>
+
+    <h3>Floor Plane Setup</h3>
+    <ol start="14">
+      <li>Drag in Plane object from Asset Browser/Templates/Elements/</li>
+      <li>Type 0, 0, 0 in bottom right of viewing pane</li>
+      <li>Alt-drag the plane into the four spots below the reference node mapping box in Character Definition</li>
+      <li>Tick Characterize button, accept Biped</li>
+      <li>In Character Settings, modifiers/floor contact, select always sync in drop down box</li>
+      <li>Tick feet floor contact and toes floor contact</li>
+      <li>Scale up feet contact size to 300</li>
+      <li>Change foot front to 8</li>
+      <li>Change foot outside to 8</li>
+      <li>Click active box while in stance input</li>
+      <li>Change source to character mocap</li>
+      <li>Check foot plane works by hitting t key and translating plane up and down</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>Tutorial 01.03 – Importing More Mocap & Adjusting with Control Rig in Story</h2>
+    <p><a href="https://youtu.be/x0pfv5YWTvg" target="_blank">Video Tutorial: Control Rig in Story Mode</a></p>
+    <iframe width="100%" height="400" src="https://www.youtube.com/embed/x0pfv5YWTvg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <h3>Control Rig Setup & Story Mode</h3>
+    <ol>
+      <li>Clean up scene in navigator to just have FBX</li>
+      <li>Select FBX Solving Skeleton in Navigator and right click select branches</li>
+      <li>At top left select Motion File Import and import with Merge/In Selected Models only and all tick boxes selected except for create unmatched models</li>
+      <li>Change start frame from 0* to 0 and also clean up end frame</li>
+      <li>Check fps = 30</li>
+      <li>In Takes drop-down box in Transport bar, select and check different takes of motion</li>
+      <li>In Story Mode, insert Character Animation Track and select Character Mia in Drop down box reference</li>
+      <li>In Character Settings, Plot Character to Control Rig for Adjustments in Story</li>
+      <li>Select FK/IK and 30 fps</li>
+      <li>Name Control Rig as Control Rig Mia</li>
+      <li>Try IK Blend and Pull to move skeleton – Example: <a href="https://youtu.be/d8DDPImlp9s" target="_blank">IK Blend Example</a>
+        <iframe width="100%" height="300" src="https://www.youtube.com/embed/d8DDPImlp9s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </li>
+      <li>In story right click in story track and insert current take</li>
+      <li>Story Overrides all live animation! Control rig is plotted</li>
+      <li>Can mute story and change source to go back to mocap</li>
+      <li>Can switch takes, plot back to same control rig, add to second Story track
+        <ol type="a">
+          <li>Plot will capture from start and end frames of transport control!!!</li>
+          <li>Can move animations</li>
+          <li>Plot only between the start and end frames of takes – check!</li>
+          <li>Plots to transport position – keep at 0 when plotting</li>
+          <li>Plot to different tracks to adjust individually</li>
+        </ol>
+      </li>
+      <li>Try back and forth with a few animations. Try to catch any pitfalls</li>
+    </ol>
+  </div>
+
+</body>
+</html>
