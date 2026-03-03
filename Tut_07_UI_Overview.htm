@@ -1,350 +1,808 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en-GB">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorial 07 : UI Overview (Unity Animation and UI Buttons)</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #0F4761;
-            border-bottom: 3px solid #0F4761;
-            padding-bottom: 10px;
-        }
-        h2 {
-            color: #0F4761;
-            margin-top: 0;
-        }
-        h3 {
-            color: #467886;
-            margin-top: 20px;
-        }
-        p, li {
-            color: #1f1f1f;
-        }
-        a {
-            color: #467886;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        ol, ul {
-            margin-left: 22px;
-            margin-bottom: 10px;
-        }
-        li {
-            margin: 8px 0;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 12px auto;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        code {
-            background-color: #f4f4f4;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-        }
-        .note {
-            background-color: #E8F4F8;
-            border-left: 4px solid #467886;
-            padding: 12px;
-            margin: 15px 0;
-            border-radius: 4px;
-        }
-        .step-box {
-            background-color: #f7f7f7;
-            border: 1px solid #ddd;
-            padding: 14px 16px;
-            margin: 15px 0;
-            border-radius: 4px;
-        }
-        .accordion {
-            border: 1px solid #0F4761;
-            border-radius: 4px;
-            margin: 15px 0;
-            background-color: #f9f9f9;
-        }
-        .accordion-summary {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            padding: 15px;
-            user-select: none;
-            background-color: #f0f0f0;
-            border-radius: 4px 4px 0 0;
-        }
-        .accordion-summary:hover {
-            background-color: #e5e5e5;
-        }
-        .accordion-summary h2 {
-            margin: 0;
-            font-size: 18px;
-        }
-        .accordion-summary::before {
-            content: '';
-            width: 0;
-            height: 0;
-            border-left: 6px solid #0F4761;
-            border-top: 5px solid transparent;
-            border-bottom: 5px solid transparent;
-            transition: transform 0.2s ease;
-            flex-shrink: 0;
-        }
-        .accordion[open] .accordion-summary::before {
-            transform: rotate(90deg);
-        }
-        .accordion-content {
-            padding: 15px;
-            border-top: 1px solid #ddd;
-        }
-        .step-number {
-            display: inline-block;
-            min-width: 24px;
-            padding: 2px 6px;
-            margin-right: 6px;
-            border-radius: 12px;
-            background-color: #0F4761;
-            color: #ffffff;
-            text-align: center;
-            font-weight: bold;
-        }
-        .highlight {
-            background-color: #ffff99;
-            padding: 1px 4px;
-            border-radius: 2px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorial 07 : UI Overview (Full Source Content)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #1f1f1f;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #0F4761;
+      border-bottom: 3px solid #0F4761;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    .note {
+      background-color: #E8F4F8;
+      border-left: 4px solid #467886;
+      padding: 12px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .accordion {
+      border: 1px solid #0F4761;
+      border-radius: 4px;
+      margin: 15px 0;
+      background-color: #f9f9f9;
+      overflow: hidden;
+    }
+    .accordion-summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 15px;
+      user-select: none;
+      background-color: #f0f0f0;
+      border-radius: 4px 4px 0 0;
+      list-style: none;
+    }
+    .accordion-summary:hover {
+      background-color: #e5e5e5;
+    }
+    .accordion-summary::-webkit-details-marker { display: none; }
+    .accordion-summary::before {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 6px solid #0F4761;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .accordion[open] > .accordion-summary::before { transform: rotate(90deg); }
+    .accordion-summary h2 {
+      margin: 0;
+      color: #0F4761;
+      font-size: 18px;
+    }
+    .accordion-content {
+      padding: 15px;
+      border-top: 1px solid #ddd;
+      background-color: #fff;
+    }
+
+    .legacy-content p, .legacy-content li, .legacy-content div {
+      color: #1f1f1f;
+      max-width: 100%;
+    }
+    .legacy-content a {
+      color: #467886;
+      word-break: break-word;
+    }
+    .legacy-content img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      float: none !important;
+      clear: both;
+      margin: 12px auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .legacy-content img[align='left'],
+    .legacy-content img[align='right'] {
+      float: none !important;
+      display: block !important;
+      margin: 12px auto !important;
+    }
+    .legacy-content p[align='center'],
+    .legacy-content p[align='right'] {
+      text-align: left !important;
+    }
+    .legacy-content ol, .legacy-content ul {
+      margin: 8px 0 8px 28px;
+    }
+    .legacy-content p {
+      margin: 0 0 10px 0 !important;
+      text-indent: 0 !important;
+      line-height: 1.45 !important;
+      clear: both;
+    }
+    .legacy-content [style*='margin-left:54.0pt'] { margin-left: 1.8rem !important; }
+    .legacy-content [style*='margin-left:72.0pt'] { margin-left: 2.4rem !important; }
+    .legacy-content [style*='margin-left:90.0pt'] { margin-left: 3rem !important; }
+    .legacy-content [style*='margin-left:108.0pt'] { margin-left: 3.6rem !important; }
+    .legacy-content [style*='margin-left:126.0pt'] { margin-left: 4.2rem !important; }
+    .legacy-content [style*='margin-left:144.0pt'] { margin-left: 4.8rem !important; }
+    .legacy-content [style*='margin-left:180.0pt'] { margin-left: 6rem !important; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Tutorial 07 : UI Overview (Unity Animation and UI Buttons)</h1>
-
-        <div class="note">
-            <p><strong>Focus:</strong> This page cleans and restructures the original Week 07 DOCX export into the same tutorial style as the other XRMMI pages.</p>
-            <p><strong>Core principles used:</strong></p>
-            <ul>
-                <li>Unity scripting from extra Lectures 01 and 02</li>
-                <li>Unity animation from Lecture 04 and Tutorial 03</li>
-                <li>Unity UI from Lecture 05</li>
-            </ul>
-        </div>
-
-        <details class="accordion" open>
-            <summary class="accordion-summary">
-                <h2>7.1 Text Readouts</h2>
-            </summary>
-            <div class="accordion-content">
-                <div class="step-box">
-                    <ol>
-                        <li>Create 3 cubes and arrange them in a row.</li>
-                        <li>In Hierarchy, create a UI Panel on a Canvas set to <strong>Screen Space - Overlay</strong>.</li>
-                        <li>Inside the panel, create 3 <span class="highlight">Legacy Text</span> objects.</li>
-                        <li>Adjust Rect Transform scale and positions to match the examples.</li>
-                    </ol>
-                </div>
-
-                <img src="Tut 07 UI Overview_files/image001.png" alt="Panel and text layout example 1">
-                <p><a href="https://gyazo.com/52f5a1fc541cab0cc0be3af5d90a8fbd" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image002.png" alt="Panel and text layout example 2">
-                <p><a href="https://gyazo.com/1110c51828ed31e3d7b33070d701aa3d" target="_blank">Reference image</a></p>
-
-                <div class="step-box">
-                    <ol start="5">
-                        <li>Create a script for each cube.</li>
-                        <li>Change each cube rotation vector so each rotates on a different axis (X, Y, Z).</li>
-                        <li>The public text string should display live rotation values in <code>F2</code> format (position can stay commented out).</li>
-                        <li>Extra: use keyboard input to spawn cubes with a boolean guard so they spawn once.</li>
-                        <li>Extra: test spawning with <code>Instantiate</code>.
-                            <a href="https://docs.unity3d.com/ScriptReference/Object.Instantiate.html" target="_blank">Unity Instantiate docs</a>
-                        </li>
-                    </ol>
-                </div>
-
-                <img src="Tut 07 UI Overview_files/image003.png" alt="Cube script example">
-                <p><a href="https://gyazo.com/2b71f83e2c290b0fa2e3b269221bb756" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image004.png" alt="Keyboard and spawn logic">
-                <p><a href="https://gyazo.com/2f4d8c43bdc54de592012d6504d80c63" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image005.png" alt="Instantiate example">
-                <p><a href="https://gyazo.com/88fa8d7082e026e2018331152ac1ce85" target="_blank">Reference image</a></p>
-            </div>
-        </details>
-
-        <details class="accordion">
-            <summary class="accordion-summary">
-                <h2>7.2 Text Readout Score (Extra)</h2>
-            </summary>
-            <div class="accordion-content">
-                <div class="step-box">
-                    <ol>
-                        <li>Create a UI Text object and name it <strong>Score Counter</strong>.</li>
-                        <li>Add a script component.</li>
-                        <li>Create variables:
-                            <ul>
-                                <li><code>private Text uiText;</code></li>
-                                <li><code>private long score = 0;</code></li>
-                            </ul>
-                        </li>
-                        <li>In <code>Start()</code>, cache <code>uiText</code> and call <code>updateScoreCounter()</code>.</li>
-                        <li>Create <code>addPoints(int points)</code> to increment score and refresh the text.</li>
-                        <li>Implement <code>updateScoreCounter()</code> outside <code>Update()</code>.</li>
-                    </ol>
-                </div>
-                <p><strong>Example output format:</strong> <code>&lt;color=blue&gt;Score&lt;/color&gt;: 0</code></p>
-            </div>
-        </details>
-
-        <details class="accordion">
-            <summary class="accordion-summary">
-                <h2>7.3 Animate UI Button (Legacy, Basic - Extra)</h2>
-            </summary>
-            <div class="accordion-content">
-                <div class="step-box">
-                    <ol>
-                        <li>Create a button from <strong>UI &gt; Legacy &gt; Button</strong>.</li>
-                        <li>Keep Canvas set to <strong>Screen Space - Overlay</strong>.</li>
-                        <li>Set button Transition to <strong>Animation</strong>.</li>
-                        <li>Create and assign an Animator Controller.</li>
-                        <li>Create additional clips: Highlighted, Pressed, Selected.</li>
-                        <li>Set up Animator transitions and trigger parameters.</li>
-                        <li>In Animation window, add properties such as RectTransform scale/rotation and Image color.</li>
-                        <li>Test edits by scrubbing timeline, adding keys, and toggling record mode.</li>
-                    </ol>
-                </div>
-
-                <img src="Tut 07 UI Overview_files/image006.png" alt="Create legacy button">
-                <p><a href="https://gyazo.com/3d5183b60c46d898345f76d664f9e3f1" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image007.png" alt="Set transition to animation">
-                <p><a href="https://gyazo.com/70687da2be7f9d27cd8ea533f79c637f" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image008.jpg" alt="Create animator controller">
-                <img src="Tut 07 UI Overview_files/image009.png" alt="Assign animator controller">
-                <p><a href="https://gyazo.com/4ef2c7db38ffbc862fe79e157afec400" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image010.png" alt="Create additional clips">
-                <p><a href="https://gyazo.com/6f209177ab6cd42f11f966e624250916" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image011.png" alt="Create transitions in animator">
-                <p><a href="https://gyazo.com/73af099baf3054e84473f7a9dc2d4c55" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image012.jpg" alt="Animator trigger parameters">
-                <img src="Tut 07 UI Overview_files/image013.png" alt="Transition conditions">
-                <p><a href="https://gyazo.com/fc307e44e8f394e6ff89ca72ae55d14e" target="_blank">Reference image</a></p>
-            </div>
-        </details>
-
-        <details class="accordion">
-            <summary class="accordion-summary">
-                <h2>7.4 Animate UI Button with TextMeshPro (TMP - Extra)</h2>
-            </summary>
-            <div class="accordion-content">
-                <p><a href="https://www.youtube.com/watch?v=afgt9EnHba0" target="_blank">Video reference</a></p>
-
-                <div class="step-box">
-                    <ol>
-                        <li>Create a button from <strong>UI &gt; Button - TextMeshPro</strong>.</li>
-                        <li>Observe TMP button structure on Canvas (button + nested TMP text).</li>
-                        <li>Compare legacy vs TMP button workflows.</li>
-                        <li>Install TMP essentials when prompted (first-time TMP setup).</li>
-                        <li>Import examples/extras and fonts from Blackboard resources.</li>
-                        <li>Use <strong>Window &gt; TextMeshPro &gt; Font Asset Creator</strong>:
-                            <ul>
-                                <li>Drag font into Source Font File</li>
-                                <li>Generate Font Atlas</li>
-                                <li>Save font asset (ideally in a dedicated font folder)</li>
-                            </ul>
-                        </li>
-                        <li>Assign font asset to button text and adjust size/color.</li>
-                        <li>Adjust button size, position, color, sprite and borders as needed.</li>
-                        <li>Switch transition from Color Tint to Animation and auto-generate animation setup.</li>
-                        <li>For clip tuning, disable Loop Time where useful and test behavior.</li>
-                        <li>Advanced: animate button/text properties, including scale, color, slight pressed rotation, and sprite variations.</li>
-                    </ol>
-                </div>
-
-                <img src="Tut 07 UI Overview_files/image014.png" alt="TMP button creation">
-                <p><a href="https://gyazo.com/fe5775b76a0636b07cbc32ccc96c8f5f" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image015.png" alt="Legacy and TMP button comparison">
-                <p><a href="https://gyazo.com/f6646630734f66bbebdc6cbd3bd02df4" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image016.png" alt="TMP essentials prompt">
-                <p><a href="https://gyazo.com/fc37ec28d15c5c68b901189dc7a31773g" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image017.png" alt="Import TMP examples and extras">
-                <p><a href="https://gyazo.com/2eb3b15798ede689dd8babe811a1eea9" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image018.png" alt="Font asset creator example 1">
-                <p><a href="https://gyazo.com/bfd25238350ba91e23e068b6de24af1f" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image019.png" alt="Font asset creator example 2">
-                <p><a href="https://gyazo.com/120a7600cc4b5f2570447cd08abb87a2" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image020.png" alt="Generated font asset assignment">
-                <p><a href="https://gyazo.com/55d20d6eb77680d593ee2a30d35a167e" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image021.png" alt="TMP font assignment on button">
-                <p><a href="https://gyazo.com/a9cdfa734d5716d41ab450cef9d1cea7" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image022.png" alt="Button visual adjustments">
-                <p><a href="https://gyazo.com/772316ad6dc9ccfeae2b2b3fbcd161fb" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image023.png" alt="Transition switched to animation">
-                <p><a href="https://gyazo.com/dc491b9db7829eb8c04280427c293f8d" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image024.png" alt="Animator and animation windows">
-                <p><a href="https://gyazo.com/0e80677075e9291ed53d6f289361f086" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image025.png" alt="Loop time and clip options">
-                <p><a href="https://gyazo.com/ca54bf000f83adf329f6a4a1118b1535" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image026.png" alt="Add animated properties">
-                <p><a href="https://gyazo.com/6e966c775324c9220c7e7c598922ead6" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image027.png" alt="Animated sprite variation 1">
-                <p><a href="https://gyazo.com/f1a9477587a6d9df893b021cbae9e05b" target="_blank">Reference image</a></p>
-
-                <img src="Tut 07 UI Overview_files/image028.png" alt="Animated sprite variation 2">
-                <p><a href="https://gyazo.com/31efbb8a5f1266954113046e605ac578" target="_blank">Reference image</a></p>
-            </div>
-        </details>
-
-        <details class="accordion">
-            <summary class="accordion-summary">
-                <h2>Tutorial Summary</h2>
-            </summary>
-            <div class="accordion-content">
-                <ul>
-                    <li><span class="step-number">1</span>Built live text readouts from rotating objects.</li>
-                    <li><span class="step-number">2</span>Created a score UI workflow with scripted updates.</li>
-                    <li><span class="step-number">3</span>Animated legacy UI buttons with Animator triggers and transitions.</li>
-                    <li><span class="step-number">4</span>Implemented TMP button setup, fonts, and richer animation options.</li>
-                </ul>
-            </div>
-        </details>
+  <div class="container">
+    <h1>Tutorial 07 : UI Overview (Full Source Content)</h1>
+    <div class="note">
+      This page preserves and converts all content from Tut 07 UI Overview.htm, with images interspersed in the original sequence.
     </div>
+
+    <details class="accordion" open>
+      <summary class="accordion-summary"><h2>Tutorial 07 Full Content</h2></summary>
+      <div class="accordion-content legacy-content">
+        <p class=MsoNormal><b><span style='color:black'>Week 07 UI Tutorial – Unity
+Animation and UI Buttons Overview</span></b></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Core Principles –
+Unity Scripting from extra Lectures 01 and 02</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Unity Animation
+from Lecture 04 and Tutorial 03</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Unity UI from
+Lecture 05</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'><b><span
+lang=EN-US>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span dir=LTR></span><b><span lang=EN-US>7.1 Text Readouts</span></b></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>Create 3 cubes – arrange in
+a row</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>Right click in the
+Hierarchy and Create a UI Panel, with Canvas set to Screen Space Overlay</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>Right click the Ui panel,
+and create 3 UI <span style='background:yellow'>LEGACY</span> Text objects in
+the panel</span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>Adjust Rect Transform Scale
+and Position on Panel and Text objects to match the below:</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><img
+width=480 height=102 id="Picture 354331813"
+src="Tut%2007%20UI%20Overview_files/image001.png"></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><a
+href="https://gyazo.com/52f5a1fc541cab0cc0be3af5d90a8fbd">https://gyazo.com/52f5a1fc541cab0cc0be3af5d90a8fbd</a></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><img
+border=0 width=480 height=110 id="Picture 563273990"
+src="Tut%2007%20UI%20Overview_files/image002.png"></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><a
+href="https://gyazo.com/1110c51828ed31e3d7b33070d701aa3d">https://gyazo.com/1110c51828ed31e3d7b33070d701aa3d</a></span></p>
+
+<p class=MsoListParagraph style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>e.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>Make a script for each cube
+as follows: </span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><img
+border=0 width=480 height=454 id="Picture 880690631"
+src="Tut%2007%20UI%20Overview_files/image003.png"></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><a
+href="https://gyazo.com/2b71f83e2c290b0fa2e3b269221bb756">https://gyazo.com/2b71f83e2c290b0fa2e3b269221bb756</a></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>f.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>Change the rotate vector so
+that each rotates on a different axis (x,y,z)</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='background:yellow'>g.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='background:yellow'>The
+public text string collects the live information on the position and rotation
+of the object it is on and puts it in the string format “showing R for
+rotation, and the data entries 3-5, with Float depth of 2 decimal places (F2).
+Position display is shown, but commented out.</span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>h.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>Extra – try using keyboard
+input to spawn the cubes, with a boolean to check if they are already created.</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><img
+border=0 width=318 height=480 id="Picture 392407507"
+src="Tut%2007%20UI%20Overview_files/image004.png"></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><a
+href="https://gyazo.com/2f4d8c43bdc54de592012d6504d80c63">https://gyazo.com/2f4d8c43bdc54de592012d6504d80c63</a></span></p>
+
+<p class=MsoListParagraph style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>Extra – Try using
+Instantiate to spawn a game object: <a
+href="https://docs.unity3d.com/ScriptReference/Object.Instantiate.html">https://docs.unity3d.com/ScriptReference/Object.Instantiate.html</a>
+</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><img
+border=0 width=480 height=201 id="Picture 509335285"
+src="Tut%2007%20UI%20Overview_files/image005.png"></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><a
+href="https://gyazo.com/88fa8d7082e026e2018331152ac1ce85">https://gyazo.com/88fa8d7082e026e2018331152ac1ce85</a></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-18.0pt'><b><span
+lang=EN-US>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span dir=LTR></span><b><span lang=EN-US>7.2 Text Readout
+Score (extra)</span></b></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>Make UI/Text – call it
+“Score Counter” </span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>Add Component/Script </span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>Create Text “uiText” and
+“score” variables</span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:36.0pt'><span
+lang=EN-US style='background:lightgrey'>private Text uiText;</span><span
+lang=EN-US><br>
+                <span style='background:lightgrey'>private long score = 0;</span></span></p>
+
+<p class=MsoListParagraph style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>In Start – uiText =
+GetComponent&lt;Text&gt;(); </span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:36.0pt'><span
+lang=EN-US style='background:lightgrey'>void Start () {  </span><span
+lang=EN-US><br>
+                                <span style='background:lightgrey'>uiText = this.GetComponent&lt;Text&gt;
+();</span><br>
+                                <span style='background:lightgrey'>updateScoreCounter
+();</span><br>
+                <span style='background:lightgrey'>}</span>  </span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>e.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>Add Points (run script when
+key is pressed - remember how to do this?)<br>
+                <span style='background:lightgrey'>public void addPoints(int
+points){ </span><br>
+                                <span style='background:lightgrey'>score +=
+points;</span><br>
+                                <span style='background:lightgrey'>updateScoreCounter
+();</span><br>
+                <span style='background:lightgrey'>}</span></span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US>f.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US>Method outside of update:</span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt;text-indent:36.0pt'><span
+lang=EN-US style='background:lightgrey'>private void updateScoreCounter(){ </span><span
+lang=EN-US><br>
+                                <span style='background:lightgrey'>uiText.text
+= &quot;&lt;color=blue&gt;Score&lt;/color&gt;: &quot; + score;</span><br>
+                <span style='background:lightgrey'>}</span></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='text-indent:-18.0pt'><b><span
+lang=EN-US>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></b><span dir=LTR></span><b><span lang=EN-US>7.3 Animate UI
+Button – Legacy, Basic (extra)</span></b></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Create
+UI Button with a right click in the Hierarchy – <b>UI/Legacy/Button</b></span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Leave
+Canvas on the Screen Space Overlay mode and select the button</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><img
+border=0 width=172 height=120 id="Picture 713680241"
+src="Tut%2007%20UI%20Overview_files/image006.png"></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><a
+href="https://gyazo.com/3d5183b60c46d898345f76d664f9e3f1">https://gyazo.com/3d5183b60c46d898345f76d664f9e3f1</a></span></p>
+
+<p class=MsoListParagraph style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Change
+transition to Animation</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><img
+border=0 width=308 height=167 id="Picture 1915339200"
+src="Tut%2007%20UI%20Overview_files/image007.png"></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><a
+href="https://gyazo.com/70687da2be7f9d27cd8ea533f79c637f">https://gyazo.com/70687da2be7f9d27cd8ea533f79c637f</a></span></p>
+
+<p class=MsoListParagraph style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Create
+and add an Animator Controller</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><img
+border=0 width=480 height=349 id="Picture 2099920184"
+src="Tut%2007%20UI%20Overview_files/image008.jpg"></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><img
+border=0 width=304 height=238 id="Picture 2061873787"
+src="Tut%2007%20UI%20Overview_files/image009.png"></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><a
+href="https://gyazo.com/4ef2c7db38ffbc862fe79e157afec400">https://gyazo.com/4ef2c7db38ffbc862fe79e157afec400</a></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>e.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Create
+other Animations</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:108.0pt;text-indent:
+-108.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Animation
+drop down window: where clip name is, select, and drop down to <b>create new
+clip</b></span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:108.0pt;text-indent:-108.0pt'><span
+lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Create
+Highlighted, Pressed, Selected</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><img
+border=0 width=480 height=318 id="Picture 335998820"
+src="Tut%2007%20UI%20Overview_files/image010.png"></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><a
+href="https://gyazo.com/6f209177ab6cd42f11f966e624250916">https://gyazo.com/6f209177ab6cd42f11f966e624250916</a></span></p>
+
+<p class=MsoListParagraph style='margin-left:108.0pt;text-indent:-108.0pt'><span
+lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>iii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Make
+Transitions to Animations in Animator</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><img
+border=0 width=480 height=323 id="Picture 863661415"
+src="Tut%2007%20UI%20Overview_files/image011.png"></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><a
+href="https://gyazo.com/73af099baf3054e84473f7a9dc2d4c55">https://gyazo.com/73af099baf3054e84473f7a9dc2d4c55</a></span></p>
+
+<p class=MsoListParagraph style='margin-left:108.0pt;text-indent:-108.0pt'><span
+lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>iv.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Make
+trigger parameters in Animator Parameters tab</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><img
+border=0 width=480 height=371 id="Picture 438593039"
+src="Tut%2007%20UI%20Overview_files/image012.jpg"></span></p>
+
+<p class=MsoListParagraph style='margin-left:108.0pt;text-indent:-108.0pt'><span
+lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>v.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Select
+each transition, make conditions for each transition, and select the
+appropriate button trigger name for each</span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><img
+border=0 width=480 height=197 id="Picture 2089140830"
+src="Tut%2007%20UI%20Overview_files/image013.png"></span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span lang=EN-US><a
+href="https://gyazo.com/fc307e44e8f394e6ff89ca72ae55d14e">https://gyazo.com/fc307e44e8f394e6ff89ca72ae55d14e</a></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>f.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Animation</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:108.0pt;text-indent:
+-108.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Select
+Button object in Hierarchy</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:108.0pt;text-indent:
+-108.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Select
+desired animation in Animation window</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:108.0pt;text-indent:
+-108.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>iii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Click
+add property</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:108.0pt;text-indent:
+-108.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>iv.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Select
+Rect Transform: Position, Rotation or Scale as needed</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>g.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Color</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:108.0pt;text-indent:
+-108.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Select
+Button object in Hierarchy</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:108.0pt;text-indent:
+-108.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Select
+desired animation in Animation window</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:108.0pt;text-indent:
+-108.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>iii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Select
+frame desired in timeline (scrub to it)</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:108.0pt;text-indent:
+-108.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>iv.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Press
+red record button in Animation window</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:108.0pt;text-indent:
+-108.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>v.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Select
+and change any parameter desired (color)</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:108.0pt;text-indent:
+-108.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>vi.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>Untick
+record button, scrub to test</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><b><span lang=EN-US>7.4 Animate UI Button with
+Text Mesh Pro – TMP (extra)</span></b><span lang=EN-US><br>
+<a href="https://www.youtube.com/watch?v=afgt9EnHba0"><span lang=EN-GB>https://www.youtube.com/watch?v=afgt9EnHba0</span></a></span><span
+lang=EN-US style='color:black'> </span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:54.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Create button by
+right clicking in hierarchy panel and selecting UI/Button - TextMeshPro</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:54.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Note how the
+button is on a Canvas and has an additional Text element nested</span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:54.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span lang=EN-US style='color:black'>You can
+select Legacy or Text Mesh Pro (TMP)</span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><span lang=EN-US><img border=0
+width=492 height=354 id="Picture 1433928228"
+src="Tut%2007%20UI%20Overview_files/image014.png"
+alt="Graphical user interface, application&#10;&#10;Description automatically generated"></span><span
+lang=EN-US><br>
+<a href="https://gyazo.com/fe5775b76a0636b07cbc32ccc96c8f5f"><span lang=EN-GB>https://gyazo.com/fe5775b76a0636b07cbc32ccc96c8f5f</span></a></span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><span style='color:black'>This
+shows a legacy button, and a new Text Mesh Pro Button….</span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><span lang=EN-US><img border=0
+width=444 height=318 id="Picture 1788591006"
+src="Tut%2007%20UI%20Overview_files/image015.png"
+alt="Graphical user interface&#10;&#10;Description automatically generated"></span><span
+lang=EN-US><br>
+<a href="https://gyazo.com/f6646630734f66bbebdc6cbd3bd02df4"><span lang=EN-GB>https://gyazo.com/f6646630734f66bbebdc6cbd3bd02df4</span></a></span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><span style='color:black'>You can
+drag the button down in Rect Transform if you make a few on the canvas to test.
+Try two at least.</span></p>
+
+<p class=MsoListParagraph style='margin-left:54.0pt;text-indent:-18.0pt'><span
+style='color:black'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>If you select TMP
+for the first time, A prompt will come up asking you to install TMP essentials:</span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><span lang=EN-US><img border=0
+width=601 height=220 id="Picture 701426277"
+src="Tut%2007%20UI%20Overview_files/image016.png"></span><span lang=EN-US><br>
+<a href="https://gyazo.com/fc37ec28d15c5c68b901189dc7a31773g"><span lang=EN-GB>https://gyazo.com/fc37ec28d15c5c68b901189dc7a31773g</span></a></span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><span style='color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><span style='color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><span style='color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><span style='color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><span style='color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><span style='font-size:14.0pt;
+line-height:107%;color:black'>Import Examples and Extras as well….</span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><span lang=EN-US><img border=0
+width=488 height=362 id="Picture 1487785042"
+src="Tut%2007%20UI%20Overview_files/image017.png"
+alt="Graphical user interface, application&#10;&#10;Description automatically generated"></span><span
+lang=EN-US><br>
+<a href="https://gyazo.com/2eb3b15798ede689dd8babe811a1eea9"><span lang=EN-GB>https://gyazo.com/2eb3b15798ede689dd8babe811a1eea9</span></a></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:54.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Drag in fonts on
+BB</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:54.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Select and Render
+font to textmeshpro</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Go to top Menu –
+Window/TextMeshPro/FontAssetCreator</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Drag font to use
+into Source Font File box, and select Generate Font Atlas button</span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>PRESS SAVE TO SAVE
+OUT THE FONT – Ideally create a font folder.</span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><span lang=EN-US><img border=0
+width=320 height=582 id="Picture 583542066"
+src="Tut%2007%20UI%20Overview_files/image018.png"
+alt="Graphical user interface, text&#10;&#10;Description automatically generated"></span><span
+lang=EN-US><br>
+<a href="https://gyazo.com/bfd25238350ba91e23e068b6de24af1f"><span lang=EN-GB>https://gyazo.com/bfd25238350ba91e23e068b6de24af1f</span></a></span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><span lang=EN-US><img border=0
+width=315 height=570 id="Picture 1492816893"
+src="Tut%2007%20UI%20Overview_files/image019.png"
+alt="Graphical user interface, text, application&#10;&#10;Description automatically generated"></span><span
+lang=EN-US><br>
+<a href="https://gyazo.com/120a7600cc4b5f2570447cd08abb87a2"><span lang=EN-GB>https://gyazo.com/120a7600cc4b5f2570447cd08abb87a2</span></a></span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><span lang=EN-US><img border=0
+width=601 height=136 id="Picture 466118458"
+src="Tut%2007%20UI%20Overview_files/image020.png"
+alt="Graphical user interface, application&#10;&#10;Description automatically generated"></span><span
+lang=EN-US><br>
+<a href="https://gyazo.com/55d20d6eb77680d593ee2a30d35a167e"><span lang=EN-GB>https://gyazo.com/55d20d6eb77680d593ee2a30d35a167e</span></a></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:54.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Drag font into
+Button Font Asset Box</span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Adjust font size
+and color as desired</span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><span lang=EN-US><img border=0
+width=438 height=775 id="Picture 1347538139"
+src="Tut%2007%20UI%20Overview_files/image021.png"
+alt="A screenshot of a computer&#10;&#10;Description automatically generated with medium confidence"></span><span
+lang=EN-US><br>
+<a href="https://gyazo.com/a9cdfa734d5716d41ab450cef9d1cea7"><span lang=EN-GB>https://gyazo.com/a9cdfa734d5716d41ab450cef9d1cea7</span></a></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:54.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Adjust UI button</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Size</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Position</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>color</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Select Sprite
+image?</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>e.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Slice</span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>f.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Borders? Texture
+border</span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><span lang=EN-US><img border=0
+width=274 height=705 id="Picture 596748325"
+src="Tut%2007%20UI%20Overview_files/image022.png"
+alt="Graphical user interface, application&#10;&#10;Description automatically generated"></span><span
+lang=EN-US><br>
+<a href="https://gyazo.com/772316ad6dc9ccfeae2b2b3fbcd161fb"><span lang=EN-GB>https://gyazo.com/772316ad6dc9ccfeae2b2b3fbcd161fb</span></a></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:54.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Transition –
+Animation</span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Switch from Color
+Tint Transitions to Animation</span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><span lang=EN-US><img border=0
+width=440 height=301 id="Picture 178583366"
+src="Tut%2007%20UI%20Overview_files/image023.png"
+alt="Graphical user interface, text, application&#10;&#10;Description automatically generated"></span><span
+lang=EN-US><br>
+<a href="https://gyazo.com/dc491b9db7829eb8c04280427c293f8d"><span lang=EN-GB>https://gyazo.com/dc491b9db7829eb8c04280427c293f8d</span></a></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Autogenerate
+Animation (press this button below animation list)</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Save As Animation
+Controller</span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Open Animator,
+Animation windows</span></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><span lang=EN-US><img border=0
+width=601 height=266 id="Picture 1680821401"
+src="Tut%2007%20UI%20Overview_files/image024.png"></span><span lang=EN-US><br>
+<a href="https://gyazo.com/0e80677075e9291ed53d6f289361f086"><span lang=EN-GB>https://gyazo.com/0e80677075e9291ed53d6f289361f086</span></a></span></p>
+
+<p class=MsoListParagraph style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>e.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black;background:yellow'>Select
+animation and in inspector turn off loop time in inspector window – test best
+option...</span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><span lang=EN-US><img border=0
+width=601 height=230 id="Picture 1660873822"
+src="Tut%2007%20UI%20Overview_files/image025.png"
+alt="A screenshot of a computer&#10;&#10;Description automatically generated with medium confidence"></span><span
+lang=EN-US><br>
+<a href="https://gyazo.com/ca54bf000f83adf329f6a4a1118b1535"><span lang=EN-GB>https://gyazo.com/ca54bf000f83adf329f6a4a1118b1535</span></a></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:90.0pt;text-indent:-18.0pt'><span
+lang=EN-US style='color:black'>f.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>To adjust
+animations, select button or text in hierarchy</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:126.0pt;text-indent:
+-126.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Open Animation
+Window</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:126.0pt;text-indent:
+-126.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Select animation
+from drop down in animaton</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:126.0pt;text-indent:
+-126.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>iii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Add properties to
+Animate with Add Property button, scroll down and expand menus to select, and
+click on +</span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:126.0pt;text-indent:-126.0pt'><span
+lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>iv.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Try animating <b>RectTransform/Scale</b>
+for the <b>Highlighted</b> Animation</span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><span lang=EN-US><img border=0
+width=601 height=238 id="Picture 1155273734"
+src="Tut%2007%20UI%20Overview_files/image026.png"
+alt="A screenshot of a computer&#10;&#10;Description automatically generated with medium confidence"></span><span
+lang=EN-US><br>
+<a href="https://gyazo.com/6e966c775324c9220c7e7c598922ead6"><span lang=EN-GB>https://gyazo.com/6e966c775324c9220c7e7c598922ead6</span></a></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:126.0pt;text-indent:-126.0pt'><span
+lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>v.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Drag timeline to
+between keys, and adjust parameters to save a new key</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:126.0pt;text-indent:
+-126.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>vi.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>You can also press
+the red record button and just scale with the tools in the scene window at the
+timeline you want</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:126.0pt;text-indent:
+-126.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>vii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Try 1.05 for X,Y,Z
+scaling</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:126.0pt;text-indent:
+-126.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>viii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Select and drag
+keys for exact positioning</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:126.0pt;text-indent:
+-126.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>ix.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>viiii. Test with<b>
+<span style='background:yellow'>Image Color</span> </b>change for Highlighted
+Animation, and a slight rotation back and forth for the pressed animation to
+give a shake when it gets pressed.</span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:126.0pt;text-indent:
+-126.0pt'><span lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>x.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Animate the text as
+well.</span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:126.0pt;text-indent:-126.0pt'><span
+lang=EN-US style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>xi.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>You can add a
+button sprite image, and even animate the button sprite or change it out for
+each animation. Try adding a sprite with transparency for a frame.</span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><span lang=EN-US><img border=0
+width=591 height=253 id="Picture 318147541"
+src="Tut%2007%20UI%20Overview_files/image027.png"></span><span lang=EN-US>                <a
+href="https://gyazo.com/f1a9477587a6d9df893b021cbae9e05b"><span lang=EN-GB>https://gyazo.com/f1a9477587a6d9df893b021cbae9e05b</span></a></span></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><span lang=EN-US><img border=0
+width=597 height=266 id="Picture 1265553198"
+src="Tut%2007%20UI%20Overview_files/image028.png"></span><span lang=EN-US>                <a
+href="https://gyazo.com/31efbb8a5f1266954113046e605ac578"><span lang=EN-GB>https://gyazo.com/31efbb8a5f1266954113046e605ac578</span></a></span></p>
+
+<p class=MsoNormal><span lang=EN-US style='color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
+      </div>
+    </details>
+  </div>
 </body>
 </html>

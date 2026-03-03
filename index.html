@@ -62,6 +62,7 @@
 
         .tabs {
             display: flex;
+            align-items: stretch;
             background-color: #f5f5f5;
             border-bottom: 2px solid #0F4761;
             position: fixed;
@@ -70,30 +71,31 @@
             right: 0;
             z-index: 99;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            overflow-x: auto;
+            overflow: visible;
         }
 
         .tab-wrapper {
-            flex: 1 0 150px;
+            flex: 1 1 0;
             position: relative;
-            min-width: 120px;
+            min-width: 0;
             overflow: visible;
         }
 
         .tab {
             width: 100%;
-            padding: 15px 20px;
+            padding: 12px 10px;
             text-align: center;
             cursor: pointer;
             background-color: #e0e0e0;
             border: none;
             border-right: 1px solid #ccc;
-            font-size: 1em;
+            font-size: 0.95em;
             font-weight: 600;
             color: #333;
             transition: all 0.3s ease;
             display: block;
             text-decoration: none;
+            white-space: nowrap;
         }
 
         .tab-wrapper:last-child .tab {
@@ -305,6 +307,14 @@
                     <a href="#" onclick="loadTutorial('Tutorial_04_05.htm'); return false;" class="btn">Open Tutorial 04/05</a>
                 </div>
             </div>
+            <div class="tab-wrapper">
+                <a href="#" onclick="loadTutorial('Tut_07_UI_Overview.htm'); return false;" class="tab" data-tab="Tut_07_UI_Overview.htm">Tutorial 07</a>
+                <div class="dropdown">
+                    <h3>Tutorial 07 UI Overview</h3>
+                    <p>Open the UI overview tutorial sheet for interface workflow and reference notes.</p>
+                    <a href="#" onclick="loadTutorial('Tut_07_UI_Overview.htm'); return false;" class="btn">Open Tutorial 07</a>
+                </div>
+            </div>
         </div>
 
         <iframe id="content-frame" class="content-frame" style="display: none;"></iframe>
@@ -338,6 +348,10 @@
                     <li>
                         <a class="tutorial-link" href="#" onclick="loadTutorial('Tutorial_04_05.htm'); return false;">Tutorial 04/05 - Unity Animations, FPC, and Visual Scripting Dialog</a>
                         <a class="download-btn" href="#" onclick="loadTutorial('Tutorial_04_05.htm'); return false;">Open</a>
+                    </li>
+                    <li>
+                        <a class="tutorial-link" href="#" onclick="loadTutorial('Tut_07_UI_Overview.htm'); return false;">Tutorial 07 - UI Overview</a>
+                        <a class="download-btn" href="#" onclick="loadTutorial('Tut_07_UI_Overview.htm'); return false;">Open</a>
                     </li>
                 </ul>
             </div>
