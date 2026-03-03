@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial 03 - AIMD</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f7f9fc;
+            color: #1f2933;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(15, 71, 97, 0.12);
+        }
+
+        h1 {
+            color: #0F4761;
+            margin: 0 0 8px 0;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-top: 0;
+            color: #4a5a67;
+        }
+
+        details {
+            border: 1px solid #d4dde5;
+            border-radius: 8px;
+            margin: 14px 0;
+            background: #fbfdff;
+            overflow: hidden;
+        }
+
+        summary {
+            cursor: pointer;
+            padding: 14px 16px;
+            font-weight: 600;
+            color: #0F4761;
+            background: #eef5f9;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::before {
+            content: '▶';
+            font-size: 0.85em;
+            color: #0F4761;
+            transition: transform 0.2s ease;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .section-content {
+            padding: 16px;
+            border-top: 1px solid #dce6ee;
+        }
+
+        .tutorial-frame {
+            width: 100%;
+            min-height: 700px;
+            border: 1px solid #d4dde5;
+            border-radius: 6px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tutorial 03</h1>
+        <p>Use the expandable sections below to access each part of Tutorial 03.</p>
+
+        <details open>
+            <summary>Tutorial 03a - 02 Recap and Finish</summary>
+            <div class="section-content">
+                <iframe class="tutorial-frame" src="Tutorial_03a_02%20RecapandFinish.htm" title="Tutorial 03a"></iframe>
+            </div>
+        </details>
+
+        <details>
+            <summary>Tutorial 03b - Unity Mia and Mixamo</summary>
+            <div class="section-content">
+                <iframe class="tutorial-frame" src="Tutorial_03b_UnityMiaandMixamo.htm" title="Tutorial 03b"></iframe>
+            </div>
+        </details>
+
+        <details>
+            <summary>Tutorial 03c - Mixamo Further Use</summary>
+            <div class="section-content">
+                <iframe class="tutorial-frame" src="Tutorial_03c_MixamoFurtherUse.htm" title="Tutorial 03c"></iframe>
+            </div>
+        </details>
+    </div>
+</body>
+</html>

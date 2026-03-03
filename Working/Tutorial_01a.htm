@@ -67,15 +67,6 @@
       border-radius: 3px;
       font-family: 'Courier New', monospace;
     }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-      margin-top: 12px;
-    }
-    .gallery figure { margin: 0; }
-    .gallery img { width: 100%; border-radius: 6px; display: block; }
-    .gallery figcaption { font-size: 12px; color: #666; margin-top: 4px; }
   </style>
 </head>
 <body>
@@ -109,20 +100,6 @@
           <li>Keep timeline at bottom across whole UI</li>
           <li>Keep Character Controls full right</li>
         </ol>
-        <div class="gallery">
-          <figure>
-            <a href="https://gyazo.com/71d8f34e36846f6fd73a5770f1bcf882" target="_blank" rel="noopener">
-              <img src="https://i.gyazo.com/71d8f34e36846f6fd73a5770f1bcf882.png" alt="MotionBuilder UI layout example 1" />
-            </a>
-            <figcaption>UI layout example 1 (Gyazo)</figcaption>
-          </figure>
-          <figure>
-            <a href="https://gyazo.com/1d25fc1ace67356803610a01b09940c2" target="_blank" rel="noopener">
-              <img src="https://i.gyazo.com/1d25fc1ace67356803610a01b09940c2.png" alt="MotionBuilder UI layout example 2" />
-            </a>
-            <figcaption>UI layout example 2 (Gyazo)</figcaption>
-          </figure>
-        </div>
       </li>
     </ol>
 
@@ -135,16 +112,7 @@
       <li>Find in navigator under Characters and rename to Character Mia</li>
       <li>At top menu on Left, select File/Merge</li>
       <li>Select Waiter Idle.fbx from mocap files above</li>
-      <li>Accept all Defaults and click Merge
-        <div class="gallery">
-          <figure>
-            <a href="https://gyazo.com/32c1caa1703448ad535e349fedaa3b71" target="_blank" rel="noopener">
-              <img src="https://i.gyazo.com/32c1caa1703448ad535e349fedaa3b71.png" alt="Character/Mocap merge example" />
-            </a>
-            <figcaption>Character/Mocap merge example (Gyazo)</figcaption>
-          </figure>
-        </div>
-      </li>
+      <li>Accept all Defaults and click Merge</li>
       <li>Select Takes in dropdown menu in Transport Controls Window to see new and old takes (Take 001 and Waiter Idle)</li>
       <li>In navigator expand the Scene Folder by clicking the "+" sign</li>
       <li>Find, select, and delete the Cameras, Markers, and unnamed markers in Scene Folder
@@ -225,16 +193,7 @@
     <ol>
       <li>Clean up scene in navigator to just have FBX</li>
       <li>Select FBX Solving Skeleton in Navigator and right click select branches</li>
-      <li>At top left select Motion File Import and import with Merge/In Selected Models only and all tick boxes selected except for create unmatched models
-        <div class="gallery">
-          <figure>
-            <a href="https://gyazo.com/b5d23cc99234ea3386c559da635bbc0f" target="_blank" rel="noopener">
-              <img src="https://i.gyazo.com/b5d23cc99234ea3386c559da635bbc0f.png" alt="Motion File Import settings" />
-            </a>
-            <figcaption>Motion File Import settings (Gyazo)</figcaption>
-          </figure>
-        </div>
-      </li>
+      <li>At top left select Motion File Import and import with Merge/In Selected Models only and all tick boxes selected except for create unmatched models</li>
       <li>Change start frame from 0* to 0 and also clean up end frame</li>
       <li>Check fps = 30</li>
       <li>In Takes drop-down box in Transport bar, select and check different takes of motion</li>

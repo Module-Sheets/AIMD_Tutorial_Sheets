@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tutorial 04/05 - Unity Animations and Visual Scripting Dialog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.2; max-width: 980px; margin: 0 auto; padding: 20px; background: #f9f9f9; color: #333; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; margin-bottom: 12px; }
+    h2 { color: #34495e; margin-top: 30px; border-left: 4px solid #3498db; padding-left: 10px; }
+    h3 { color: #555; margin-top: 20px; }
+    a { color: #3498db; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ol, ul { margin: 10px 0; padding-left: 25px; }
+    ol[type="a"], ol[type="i"] { margin-left: 24px; padding-left: 28px; }
+    ol[type="i"] { margin-left: 32px; }
+    li { margin: 8px 0; }
+    .section { background: #fff; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    details.section { padding: 0; overflow: hidden; }
+    details.section > summary {
+      cursor: pointer;
+      padding: 16px 20px;
+      font-size: 1.5em;
+      font-weight: 700;
+      color: #34495e;
+      border-left: 4px solid #3498db;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+    }
+    details.section > summary::-webkit-details-marker { display: none; }
+    details.section > summary::before { content: '▶'; font-size: 0.7em; color: #3498db; transition: transform 0.2s ease; }
+    details.section[open] > summary::before { transform: rotate(90deg); }
+    .section-content { padding: 0 20px 20px 20px; }
+    .video { margin-top: 10px; }
+    .note-image { width: 100%; max-width: 640px; display: block; margin: 12px 0; border-radius: 4px; }
+    .image-ref { margin-top: -4px; font-size: 0.95em; }
+
+    .section-content > ol + .note-image,
+    .section-content > ol + .image-ref { margin-left: 25px; }
+
+    .section-content > ol[type="a"] + .note-image,
+    .section-content > ol[type="a"] + .image-ref { margin-left: 52px; }
+
+    .section-content > ol[type="i"] + .note-image,
+    .section-content > ol[type="i"] + .image-ref { margin-left: 68px; }
+  </style>
+</head>
+<body>
+  <h1>Tutorial 04/05 - Unity Animations, FPC, and Visual Scripting Dialog</h1>
+
+  <div class="section">
+    <h2>Overview & Files</h2>
+    <p><strong>Source Notes:</strong> <a href="Docs/Tutorial%2004%2005%20Videos.docx" target="_blank" rel="noopener">Tutorial 04 05 Videos.docx</a></p>
+    <p><strong>Full Legacy HTML Notes:</strong> <a href="Tutorial_04_05_Legacy.htm" target="_blank" rel="noopener">Tutorial_04_05_Legacy.htm</a></p>
+  </div>
+
+  <details class="section" open>
+    <summary>Tutorial 04 00 - Mia Animator Recap</summary>
+    <div class="section-content">
+      <p><a href="https://www.youtube.com/watch?v=miEewb5lXwo" target="_blank" rel="noopener">https://www.youtube.com/watch?v=miEewb5lXwo</a></p>
+      <div class="video">
+        <iframe width="100%" height="420" src="https://www.youtube.com/embed/miEewb5lXwo?rel=0&modestbranding=1" title="Tutorial 04 00" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <ol>
+        <li>Ensure all example Models and clips have same Humanoid Rig and Avatar from Mia or Mixamo TPose File</li>
+        <li>Ensure Clips Stand Loop (Idle) and Stand Talk 1 a,b,c are rooted with no compression (either root or no root methods)</li>
+        <li>Take Loop off Stand Talk 1a, b, c</li>
+        <li>Drag Stand Loop into Animator Window - Right click and Set as Layer Default State</li>
+        <li>This runs the idle animation off the Entry Node</li>
+        <li>Drag the Clips Talk 1 a,b,c into the Animator Window</li>
+        <li>Right Click on the Any State Node and make transitions to each in turn</li>
+        <li>Right Click on each of the 3 Talk clips and transition each to the Exit node</li>
+        <li>Click on Animator window Parameters Tab</li>
+        <li>Create Three new Trigger Parameters and name Talk 1a, Talk 1b, Talk 1c</li>
+        <li>Right click transitions from Any State and add a condition using the appropriately named Trigger</li>
+        <li>Make sure Has Exit Time is Unchecked here</li>
+        <li>Make sure Has Exit Time is Checked in transitions to the Exit Node</li>
+      </ol>
+    </div>
+  </details>
+
+  <details class="section">
+    <summary>Tutorial 04 01 - Mia with Unity Standard Assets Package</summary>
+    <div class="section-content">
+      <p><a href="https://www.youtube.com/watch?v=H9yS5CHPCtY" target="_blank" rel="noopener">https://www.youtube.com/watch?v=H9yS5CHPCtY</a></p>
+      <div class="video"><iframe width="100%" height="420" src="https://www.youtube.com/embed/H9yS5CHPCtY?rel=0&modestbranding=1" title="Tutorial 04 01" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <img class="note-image" src="Tutorial_04_05_files/image002.gif" alt="Title: Video titled: Tutorial 04 01">
+      <p><a href="https://www.youtube.com/watch?v=iCLnz5oUIpU" target="_blank" rel="noopener">https://www.youtube.com/watch?v=iCLnz5oUIpU</a></p>
+      <div class="video"><iframe width="100%" height="420" src="https://www.youtube.com/embed/iCLnz5oUIpU?rel=0&modestbranding=1" title="Tutorial 04 02" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <img class="note-image" src="Tutorial_04_05_files/image003.gif" alt="Title: Video titled: Tutorial 04 02">
+
+
+      <p><strong>SRP Option:</strong><br>
+      Starter Assets (Standard Lighting, needs some material adjustment back to standard) FPC<br>
+      <a href="https://assetstore.unity.com/packages/essentials/starter-assets-firstperson-updates-in-new-charactercontroller-pa-196525" target="_blank" rel="noopener">https://assetstore.unity.com/packages/essentials/starter-assets-firstperson-updates-in-new-charactercontroller-pa-196525</a></p>
+      <p>In Hierarchy with playground, select each object with pink material and select Standard for Shader</p>
+      <p><strong>URP Option:</strong><br>
+      <a href="https://assetstore.unity.com/packages/essentials/starter-assets-character-controllers-urp-267961" target="_blank" rel="noopener">https://assetstore.unity.com/packages/essentials/starter-assets-character-controllers-urp-267961</a></p>
+      <p>Overview of Unity Character Controllers: <a href="https://www.youtube.com/watch?v=e94KggaEAr4" target="_blank" rel="noopener">https://www.youtube.com/watch?v=e94KggaEAr4</a></p>
+
+      <ol start="1">
+        <li>Import Starter Assets SRP or URP FPC - from tools panel or asset store link above</li>
+      </ol>
+      <ol type="a">
+        <li>This will require you to login to Unity</li>
+        <li>It will also put the package in My Assets in package manager window</li>
+        <li>Open in Unity - Download - Import</li>
+        <li>This imports cinemachine</li>
+        <li>This imports new unity input system</li>
+        <li>Accept restart on window prompt</li>
+        <li>You will have to import FPC package again from website after restart</li>
+        <li>Starter assets should be in Assets folder now</li>
+        <li>New Unity input system knocks out Unity UI for FPC, so both should be selected</li>
+        <li>Edit/Project settings/Player settings/Input system/Active Input Handling - drop down menu - make sure both is selected</li>
+      </ol>
+
+      <img class="note-image" src="Tutorial_04_05_files/image004.gif" alt="Input settings">
+      <p class="image-ref"><a href="https://gyazo.com/8b2bb784d1b0fd4f5dcb062345354a6c" target="_blank" rel="noopener">https://gyazo.com/8b2bb784d1b0fd4f5dcb062345354a6c</a></p>
+
+      <p>g. Your packages in Project window should look like this:</p>
+      <img class="note-image" src="Tutorial_04_05_files/image005.jpg" alt="Project packages">
+
+      <ol start="2">
+        <li>Import FPC Sample Scene - Playground - Double click to load</li>
+      </ol>
+      <img class="note-image" src="Tutorial_04_05_files/image006.gif" alt="Sample scene">
+      <p class="image-ref"><a href="https://gyazo.com/1c0595dff29ea50531454bc520b90449" target="_blank" rel="noopener">https://gyazo.com/1c0595dff29ea50531454bc520b90449</a></p>
+
+      <ol type="a">
+        <li>This has the joysticks needed for control</li>
+        <li>Tick in top right in inspector to activate UI SA Inputs in Hierarchy (greyed out)</li>
+      </ol>
+      <ol type="i">
+        <li>URP - called “UI Touchscreen Input”</li>
+        <li>SRP - called “UI_Canvas_StarterAssetsInputs_Joysticks”</li>
+      </ol>
+      <ol type="a" start="3">
+        <li>This needs some adjustment to work</li>
+        <li>If you drag in the scene to hierarchy in the video, you have 2 scenes in the hierarchy and it may crash Unity</li>
+        <li>Playground scene should just be double clicked to load up, then you can drag in Mia/Animator after</li>
+        <li>The Playground Scene will be Pink - This is a URP mismatch</li>
+        <li>Change Scriptable Render Pipeline Settings from None to a Universal Render Pipeline (URP) setting</li>
+      </ol>
+
+      <img class="note-image" src="Tutorial_04_05_files/image007.jpg" alt="URP settings">
+
+      <ol type="a" start="8">
+        <li>Drag Playground settings to a lighting panel (Window/Rendering/Lighting if needed)</li>
+        <li>Select All Materials in Project Window/Favorites at top</li>
+        <li>Select all pink materials</li>
+        <li>Edit/Rendering/Materials/Convert to URP</li>
+        <li>This will not work for some, so select these in hierarchy and set Shader to Standard to fix</li>
+        <li>Mia can be exported/imported as a package</li>
+        <li>She will turn up Pink; fix Mia body/face materials in All Materials</li>
+        <li>You can also download and Import the MiaTut04StartURP.unitypackage</li>
+      </ol>
+
+      <img class="note-image" src="Tutorial_04_05_files/image008.jpg" alt="Material conversion">
+
+      <p>3. Activate UI Canvas StarterAssetsInputs Joysticks by ticking box in inspector</p>
+      <img class="note-image" src="Tutorial_04_05_files/image009.gif" alt="UI Joystick activation">
+      <p class="image-ref"><a href="https://gyazo.com/ef43ac81bf9565a53a3aa46fe069aafc" target="_blank" rel="noopener">https://gyazo.com/ef43ac81bf9565a53a3aa46fe069aafc</a></p>
+
+      <ol type="a"><li>Do The following to Use Unity UI interaction:
+        <ol type="i"><li>Player capsule - mouse cursor settings in Starter Assets Inputs:
+          <ol><li>Cursor locked - untick</li><li>Cursor input for look - untick</li></ol>
+        </li></ol>
+      </li></ol>
+
+      <img class="note-image" src="Tutorial_04_05_files/image010.gif" alt="Mouse cursor settings">
+      <p class="image-ref"><a href="https://gyazo.com/ff0fb2548e8f2ea53775b4ed8c48a3f3" target="_blank" rel="noopener">https://gyazo.com/ff0fb2548e8f2ea53775b4ed8c48a3f3</a></p>
+
+      <ol type="i" start="2"><li>UI Event System (Unity Bug!) pointer behavior note</li></ol>
+      <p>Note: Single Unified Pointer may work now (2022)</p>
+      <img class="note-image" src="Tutorial_04_05_files/image011.gif" alt="Single Unified Pointer">
+
+      <p>The UI_Virtual_Joystick_Look may be too powerful at 60 and 30. Change the settings to 1 and 0.5 in Inspector as below.</p>
+      <img class="note-image" src="Tutorial_04_05_files/image012.gif" alt="Look sensitivity">
+      <p class="image-ref"><a href="https://gyazo.com/feaecc836b2c9ff7a99fb41442bb9246" target="_blank" rel="noopener">https://gyazo.com/feaecc836b2c9ff7a99fb41442bb9246</a></p>
+
+      <ol type="i" start="3"><li>Can now use WASD, onscreen mouselook and joystick, and UI buttons</li><li>NOTE: if doing C# code - add namespace: <strong>using UnityEngine.UI;</strong></li></ol>
+
+      <p>4. Overview</p>
+      <ol type="a">
+        <li>Canvas sends out event</li>
+        <li>Parent canvas is listening with script</li>
+        <li>Sends out to player capsule/starter assets script</li>
+        <li>Event System needs input Options</li>
+        <li>Cameras need correct raycasters - Add Physics Raycaster to Main Camera and select mixed or everything</li>
+      </ol>
+      <img class="note-image" src="Tutorial_04_05_files/image013.jpg" alt="Physics raycaster">
+
+      <p>5. Basic Clicks on Scene Objects: Player Character</p>
+      <ol type="a"><li>Add Capsule Collider Component to Mia Stance TPose<ol type="i"><li>Does not need to be trigger</li></ol></li><li>Add Component/Visual Scripting/Script Machine to Mia Stance TPose</li></ol>
+      <ol type="i" start="2"><li>Scale collider to 2 in Y</li><li>Translate collider to 1 in Y</li></ol>
+      <img class="note-image" src="Tutorial_04_05_files/image014.gif" alt="Script machine setup">
+      <p class="image-ref"><a href="https://gyazo.com/fe39ea86fe78ea995250872e5194ccbc" target="_blank" rel="noopener">https://gyazo.com/fe39ea86fe78ea995250872e5194ccbc</a></p>
+
+      <ol type="i">
+        <li>In Source, select Embed in drop down</li>
+        <li>This allows use of scene objects</li>
+        <li>(Graph option only uses prefabs - looked at later)</li>
+        <li>Be careful - switching will wipe code</li>
+        <li>Name Script Mia Start Dialogue</li>
+        <li>Select Edit Graph Button - Script Window tab opens</li>
+        <li>Right click in Graph window and add: On Mouse Down (for Game Object, not Button), Debug Log, String Literal, and wire as below</li>
+      </ol>
+      <img class="note-image" src="Tutorial_04_05_files/image015.gif" alt="Pointer down graph">
+      <p class="image-ref"><a href="https://gyazo.com/8387b05762be58a183d8d3b79d61c6bc" target="_blank" rel="noopener">https://gyazo.com/8387b05762be58a183d8d3b79d61c6bc</a></p>
+    </div>
+  </details>
+
+  <details class="section">
+    <summary>Tutorial 04 02 / 05 - Follow-up Workflow and Dialog Integration</summary>
+    <div class="section-content">
+      <p><a href="https://www.youtube.com/watch?v=iCLnz5oUIpU" target="_blank" rel="noopener">https://www.youtube.com/watch?v=iCLnz5oUIpU</a></p>
+      <div class="video"><iframe width="100%" height="420" src="https://www.youtube.com/embed/iCLnz5oUIpU?rel=0&modestbranding=1" title="Tutorial 04 02" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <img class="note-image" src="Tutorial_04_05_files/image016.gif" alt="Tutorial 04 02">
+
+      <p>1. Canvas:</p>
+      <ol type="a">
+        <li>Create UI Canvas with right click in Hierarchy</li>
+        <li>Change name to Canvas Mia Dialogue</li>
+        <li>Change Render Mode in Inspector to World Space</li>
+        <li>Drag in Main Camera to Event Camera (handles click events)</li>
+        <li>Rect Transform
+          <ol type="a">
+            <li>Zero out position</li>
+            <li>Make position -.6, 1.5 0 or next to Mia's head</li>
+            <li>Make Width 600, Height 300</li>
+            <li>Make Scale .001 for X,Y,Z (1 Unit = 1 M!)</li>
+            <li>Rotate Y to 180</li>
+          </ol>
+        </li>
+      </ol>
+      <img class="note-image" src="Tutorial_04_05_files/image017.gif" alt="Canvas setup">
+      <p class="image-ref"><a href="https://gyazo.com/84ca6a68a0b8c75c032fd6fa5b5ff8d5" target="_blank" rel="noopener">https://gyazo.com/84ca6a68a0b8c75c032fd6fa5b5ff8d5</a></p>
+
+      <p>2. Text:</p>
+      <ol type="a" start="7"><li>Right click Canvas in Hierarchy and create UI/Text</li></ol>
+      <p>(Legacy/Text or Text Mesh Pro. if text mesh Pro, accept all imports of essentials and examples)</p>
+      <ol type="a" start="8"><li>Name Text As Dialogue Text 0</li><li>Change Width to 500 and Height to 60</li><li>Change Position to -15, 88, 0 or at top of canvas</li><li>Change font size to 28</li></ol>
+
+      <p>3. Visual Script Graph:</p>
+      <ol type="a" start="12"><li>Use previous Script Graph on the Mia character with the Debug function</li><li>Add Text Set Text node</li><li>Drag Dialog text into game object slot</li><li>Add new String Literal node</li><li>Type Mia: Hello, can you take my order? in the box</li><li>Wire as below and play test</li></ol>
+      <img class="note-image" src="Tutorial_04_05_files/image018.gif" alt="Text set graph">
+      <p class="image-ref"><a href="https://gyazo.com/8387b05762be58a183d8d3b79d61c6bc" target="_blank" rel="noopener">https://gyazo.com/8387b05762be58a183d8d3b79d61c6bc</a></p>
+      <p>If you are using Text Mesh Pro, use Text Mesh Pro UGUI: Set Text with Argument. <strong>USE ON MOUSE DOWN, not ON Pointer Down.</strong></p>
+      <img class="note-image" src="Tutorial_04_05_files/image019.gif" alt="TMP set text">
+      <p class="image-ref"><a href="https://gyazo.com/bfe76bb5ea260a493c90d0a862bb3a71" target="_blank" rel="noopener">https://gyazo.com/bfe76bb5ea260a493c90d0a862bb3a71</a></p>
+
+      <p>4. Dialogue system - Dialogue Counter, Dialogue list, Button</p>
+      <ol type="a"><li>Create a Visual Script as before (Embed) on Canvas Dialogue</li><li>Create Scene Variable in Graph Inspector:
+        <ol><li>Dialogue List - Type: List of String</li><li>Anim Trigger List - Type: List of String</li><li>Dialogue Counter - Type: Integer (this is incremented to access next items in the animation and dialogue lists)</li></ol>
+      </li><li>Create a UI button on dialogue canvas for forwarding<ol type="i"><li>Position at end of Dialogue Text Box</li></ol></li></ol>
+      <ol type="i" start="2"><li>UI Button canvas will need ForceCanvasSortOrder.cs script to function</li></ol>
+
+      <h3>04 02 a, b, c, d - Follow the below to create the CW1 Dialogue system:</h3>
+      <h3>Videos:</h3>
+      <p>Overview 04 05:</p>
+      <ul>
+        <li><a href="https://universityofwestminster-my.sharepoint.com/:v:/g/personal/fergusj_westminster_ac_uk/EZcP2-i5SlFGqE9gt3VVN3UBLE_N4GqbYLr-Z0Q9ZrOobg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=0umOqh" target="_blank" rel="noopener">Tutorial 04 02 d Crop.mp4</a></li>
+        <li><a href="https://universityofwestminster-my.sharepoint.com/:v:/g/personal/fergusj_westminster_ac_uk/EYOoHSMU-_BDpbexUXq4KucB7lgKQYUdmHH2iqUgJ2GVcg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=SdDPeA" target="_blank" rel="noopener">Tutorial 04 02 a Crop.mp4</a> 14:24</li>
+        <li><a href="https://universityofwestminster-my.sharepoint.com/:v:/g/personal/fergusj_westminster_ac_uk/EZ-fFrtVX5RAsRBuJSaZSnIBHIUSetxI6FaxAPl9o0_Jtg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=FHmoIg" target="_blank" rel="noopener">Tutorial 04 02 b Crop.mp4</a> 7:25 starts from crash and set text box</li>
+        <li><a href="https://universityofwestminster-my.sharepoint.com/:v:/g/personal/fergusj_westminster_ac_uk/EepS6FjUUu5GgtuX35pu3AkB4XkHaCXp9Cc8W0l_SRVCnA?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=SZEgl2" target="_blank" rel="noopener">Tutorial 04 02 c Crop.mp4</a> 17:17 - starts with visual script - does dialogue up to anim trigger</li>
+        <li><a href="https://universityofwestminster-my.sharepoint.com/:v:/g/personal/fergusj_westminster_ac_uk/EZcP2-i5SlFGqE9gt3VVN3UBLE_N4GqbYLr-Z0Q9ZrOobg?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=0umOqh" target="_blank" rel="noopener">Tutorial 04 02 d Crop.mp4</a> 9:33 - demos the dialogue</li>
+      </ul>
+
+      <img class="note-image" src="Tutorial_04_05_files/image020.gif" alt="Dialogue overview graph">
+      <p class="image-ref"><a href="https://gyazo.com/2b34005e1ac917b6b6c0abc126692338" target="_blank" rel="noopener">https://gyazo.com/2b34005e1ac917b6b6c0abc126692338</a></p>
+
+      <h3>Rough tasks:</h3>
+      <ol>
+        <li>Script Graph on Dialogue Canvas - Embed to access scene variables</li>
+        <li>Create Scene Variables: Type List of String for Anim Triggers and Dialogue Text</li>
+        <li>Create Scene Variable: Type Integer for Dialogue Counter</li>
+        <li>Add nodes to set dialogue variable and increment with a button or key input</li>
+        <li>Use dialogue counter to access Arrays incrementally to trigger animations and set Unity UI dialogue text</li>
+        <li>Organise with Ctrl-LMB click drag to make housekeeping boxes</li>
+      </ol>
+      <p><strong>NOTE:</strong> Changing Scene Variables in the Script graph will probably require a refresh - drag the scene variables back into graph window to replace and refresh them.</p>
+      <p><strong>Dialogue Fix for out of range Array:</strong> Add if statement to check if dialogue counter is less than or equal to end of array</p>
+
+      <img class="note-image" src="Tutorial_04_05_files/image021.gif" alt="Out of range array fix">
+      <p class="image-ref"><a href="https://gyazo.com/09121b69fefd61992349e18598c67df6" target="_blank" rel="noopener">https://gyazo.com/09121b69fefd61992349e18598c67df6</a></p>
+    </div>
+  </details>
+</body>
+</html>

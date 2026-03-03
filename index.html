@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Interactive Media Development - Tutorials</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+            overflow: visible;
+        }
+
+        .header {
+            background-color: #0F4761;
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 1.5em;
+            margin: 0;
+            display: inline;
+        }
+
+        .header p {
+            font-size: 1.5em;
+            opacity: 0.9;
+            display: inline;
+            margin-left: 15px;
+        }
+
+        .header p:before {
+            content: '|';
+            margin-right: 15px;
+            opacity: 0.5;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: #f5f5f5;
+            border-bottom: 2px solid #0F4761;
+            position: fixed;
+            top: 48px;
+            left: 0;
+            right: 0;
+            z-index: 99;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        .tab-wrapper {
+            flex: 1 0 150px;
+            position: relative;
+            min-width: 120px;
+            overflow: visible;
+        }
+
+        .tab {
+            width: 100%;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #e0e0e0;
+            border: none;
+            border-right: 1px solid #ccc;
+            font-size: 1em;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.3s ease;
+            display: block;
+            text-decoration: none;
+        }
+
+        .tab-wrapper:last-child .tab {
+            border-right: none;
+        }
+
+        .tab:hover {
+            background-color: #0F4761;
+            color: white;
+        }
+
+        .tab.active {
+            background-color: #0F4761;
+            color: white;
+            box-shadow: inset 0 -3px 0 #667eea;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            min-width: 250px;
+            background-color: white;
+            border: 2px solid #0F4761;
+            border-top: none;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tab-wrapper:hover .dropdown,
+        .tab:hover + .dropdown,
+        .dropdown:hover {
+            display: block;
+        }
+
+        .dropdown h3 {
+            color: #0F4761;
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+        }
+
+        .dropdown p {
+            color: #666;
+            margin: 0 0 10px 0;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .dropdown .btn {
+            display: inline-block;
+            background-color: #0F4761;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .dropdown .btn:hover {
+            background-color: #1a5f7f;
+        }
+
+        .content-frame {
+            position: fixed;
+            top: 101px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: calc(100vh - 101px);
+            border: none;
+            background-color: white;
+        }
+
+        .welcome-content {
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            font-size: 0.95em;
+        }
+
+        .welcome-content h2 {
+            color: #0F4761;
+            margin-bottom: 20px;
+        }
+
+        .welcome-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .tutorial-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .tutorial-list li {
+            background-color: #f9f9f9;
+            padding: 6px 12px;
+            margin-bottom: 2px;
+            border-radius: 4px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tutorial-link {
+            text-decoration: none;
+            color: #0F4761;
+            font-weight: 600;
+            font-size: 1em;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .tutorial-link:hover {
+            color: #667eea;
+        }
+
+        .download-btn {
+            background-color: #0F4761;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+
+        .download-btn:hover {
+            background-color: #1a5f7f;
+        }
+
+        .download-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Advanced Interactive Media Development</h1>
+            <p>Tutorial Series</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab-wrapper">
+                <a href="#" onclick="loadHome(); return false;" class="tab" data-tab="home">Home</a>
+            </div>
+            <div class="tab-wrapper">
+                <a href="#" onclick="loadTutorial('Tutorial_00.htm'); return false;" class="tab" data-tab="Tutorial_00.htm">Tutorial 00</a>
+                <div class="dropdown">
+                    <h3>Foundations</h3>
+                    <p>Start the AIMD tutorial sequence with core setup and introductory workflow.</p>
+                    <a href="#" onclick="loadTutorial('Tutorial_00.htm'); return false;" class="btn">Start Tutorial</a>
+                </div>
+            </div>
+            <div class="tab-wrapper">
+                <a href="#" onclick="loadTutorial('Tutorial_01.htm'); return false;" class="tab" data-tab="Tutorial_01.htm">Tutorial 01</a>
+                <div class="dropdown">
+                    <h3>Tutorial 01 Overview</h3>
+                    <p>This page contains expandable sections for both Tutorial 01a and Tutorial 01b.</p>
+                    <a href="#" onclick="loadTutorial('Tutorial_01.htm'); return false;" class="btn">Open Tutorial 01</a>
+                </div>
+            </div>
+            <div class="tab-wrapper">
+                <a href="#" onclick="loadTutorial('Tutorial_02_MiaStory.htm'); return false;" class="tab" data-tab="Tutorial_02_MiaStory.htm">Tutorial 02</a>
+                <div class="dropdown">
+                    <h3>Mia Story</h3>
+                    <p>Continue with narrative-driven interaction design and sequencing in Unity.</p>
+                    <a href="#" onclick="loadTutorial('Tutorial_02_MiaStory.htm'); return false;" class="btn">Start Tutorial</a>
+                </div>
+            </div>
+            <div class="tab-wrapper">
+                <a href="#" onclick="loadTutorial('Tutorial_03.htm'); return false;" class="tab" data-tab="Tutorial_03.htm">Tutorial 03</a>
+                <div class="dropdown">
+                    <h3>Tutorial 03 Overview</h3>
+                    <p>This page contains expandable sections for Tutorial 03a, 03b, and 03c.</p>
+                    <a href="#" onclick="loadTutorial('Tutorial_03.htm'); return false;" class="btn">Open Tutorial 03</a>
+                </div>
+            </div>
+            <div class="tab-wrapper">
+                <a href="#" onclick="loadTutorial('Tutorial_04_05.htm'); return false;" class="tab" data-tab="Tutorial_04_05.htm">Tutorial 04/05</a>
+                <div class="dropdown">
+                    <h3>Tutorial 04/05 Overview</h3>
+                    <p>Expandable sections for Unity animation, starter assets, and visual scripting workflow.</p>
+                    <a href="#" onclick="loadTutorial('Tutorial_04_05.htm'); return false;" class="btn">Open Tutorial 04/05</a>
+                </div>
+            </div>
+        </div>
+
+        <iframe id="content-frame" class="content-frame" style="display: none;"></iframe>
+        <div id="home-content" class="content-frame">
+            <div class="welcome-content">
+                <h2>Welcome to Advanced Interactive Media Development</h2>
+                <p>This home page gives quick access to all AIMD tutorial sheets. Use the top menu for direct navigation and the list below for a full overview.</p>
+                
+                <div style="margin-top: 10px; padding: 8px 12px; background-color: #e8f4f8; border-radius: 4px; margin-bottom: 15px;">
+                    <p style="margin: 0;"><strong>Tip:</strong> Click a tutorial tab to open it, then expand sections inside grouped pages like Tutorial 01, Tutorial 03, and Tutorial 04/05.</p>
+                </div>
+                
+                <h3 style="color: #0F4761; margin-top: 30px; margin-bottom: 15px;">Available Tutorials</h3>
+                <ul class="tutorial-list">
+                    <li>
+                        <a class="tutorial-link" href="#" onclick="loadTutorial('Tutorial_00.htm'); return false;">Tutorial 00 - Introduction</a>
+                        <a class="download-btn" href="#" onclick="loadTutorial('Tutorial_00.htm'); return false;">Open</a>
+                    </li>
+                    <li>
+                        <a class="tutorial-link" href="#" onclick="loadTutorial('Tutorial_01.htm'); return false;">Tutorial 01 - Character Workflow (01a + 01b)</a>
+                        <a class="download-btn" href="#" onclick="loadTutorial('Tutorial_01.htm'); return false;">Open</a>
+                    </li>
+                    <li>
+                        <a class="tutorial-link" href="#" onclick="loadTutorial('Tutorial_02_MiaStory.htm'); return false;">Tutorial 02 - Mia Story</a>
+                        <a class="download-btn" href="#" onclick="loadTutorial('Tutorial_02_MiaStory.htm'); return false;">Open</a>
+                    </li>
+                    <li>
+                        <a class="tutorial-link" href="#" onclick="loadTutorial('Tutorial_03.htm'); return false;">Tutorial 03 - Recap, Mia/Mixamo, and Further Use</a>
+                        <a class="download-btn" href="#" onclick="loadTutorial('Tutorial_03.htm'); return false;">Open</a>
+                    </li>
+                    <li>
+                        <a class="tutorial-link" href="#" onclick="loadTutorial('Tutorial_04_05.htm'); return false;">Tutorial 04/05 - Unity Animations, FPC, and Visual Scripting Dialog</a>
+                        <a class="download-btn" href="#" onclick="loadTutorial('Tutorial_04_05.htm'); return false;">Open</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setActiveTab(tabKey) {
+            var tabs = document.querySelectorAll('.tab');
+            tabs.forEach(function (tab) {
+                tab.classList.remove('active');
+            });
+
+            var activeTab = document.querySelector('.tab[data-tab="' + tabKey + '"]');
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+        }
+
+        function loadTutorial(filename) {
+            document.getElementById('home-content').style.display = 'none';
+            var iframe = document.getElementById('content-frame');
+            iframe.style.display = 'block';
+            iframe.src = filename;
+            setActiveTab(filename);
+        }
+
+        function loadHome() {
+            document.getElementById('content-frame').style.display = 'none';
+            document.getElementById('home-content').style.display = 'block';
+            setActiveTab('home');
+        }
+
+        setActiveTab('home');
+    </script>
+</body>
+</html>

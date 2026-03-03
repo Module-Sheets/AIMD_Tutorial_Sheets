@@ -1,0 +1,937 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Segoe UI";
+	panose-1:2 11 5 2 4 2 4 2 2 3;}
+@font-face
+	{font-family:Georgia;
+	panose-1:2 4 5 2 5 4 5 2 3 3;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:0cm;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:36.0pt;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:36.0pt;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+.MsoChpDefault
+	{font-family:"Calibri",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:107%;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-GB link=blue vlink="#954F72" style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:107%'>Tutorial
+03b – Mia fbx to Unity, then Mixamo fbx with and without Ref node to Unity</span></b></p>
+
+<p class=MsoNormal>Mixamo T-Pose (with Model) + Fbx Animation Clips. This will
+be the workflow for CW1 and CW2.<br>
+*Minimum required is Motionbuilder Mia model and Talk animations.</p>
+
+<p class=MsoNormal>To prevent feet sliding when blending animations in Unity
+Animator(Mechanim), add a root node in motionbuilder on the T-pose, then check
+it on all added Fbx Clips</p>
+
+<p class=MsoNormal><i>Mixamo does not natively come with a root node...This is
+not a problem, but the usage with root and without is different.</i></p>
+
+<p class=MsoNormal><i>There is some issue using root if you have a variety of
+scaled characters, so it is best to use all Mixamo, or all Mixamo Fuse
+Characters, or not use root with characters of varied scale. We will look at
+this more later, but it is best to have the option.</i></p>
+
+<p class=MsoNormal><b><u><span style='background:yellow'>Tutorial 03b 00 –
+MotionBuilder and Unity  - Mia with Ref Node (Root)</span></u></b></p>
+
+<p class=MsoNormal><br>
+<u><span style='color:black'>Overview Mia Unity Video:</span></u><br>
+<a
+href="https://universityofwestminster-my.sharepoint.com/:v:/g/personal/fergusj_westminster_ac_uk/EQ75TXll0OFFlySdkotYLi8Bdwn-CgdlVGpJzmEwNKHcQA?e=kP2n0i&amp;nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D">Tutorial
+03 MiaRecap 1080.mp4<span style='color:windowtext;text-decoration:none'><br>
+</span></a></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'><span style='background:yellow'>Start
+     with Mia Finished Tutorial 02 Fbx Scene in BB zip</span></li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Create new or Drag Mia Stance
+     TPose Fbx Scene into Unity Project window</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'><b><i><span style='background:
+      yellow'>Note: if you are using Characterised/Control Rig plotted clips,
+      also use this to create the stance for it to match up in Unity.</span></i></b></li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Select Mia TPose in Project
+      Window</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>In Inspector Window, select
+      Materials tab far right</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>In Location, select Drop down
+      box and select legacy materials</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Select Apply, see folders
+      created.</li>
+ </ol>
+ <li class=MsoNormal style='margin-bottom:0cm'>Drag all animation clips into a
+     new Anims folder in Fbx folder</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>Clip Mia Stand Looped</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Clip Stand Talk 1a Looped</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Clip Stand Talk 1b Looped</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Clip Stand Talk 1c Looped</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Clip All Talk Anims</li>
+ </ol>
+ <li class=MsoNormal style='margin-bottom:0cm'>Select the top level of  Mia
+     Stance T Pose Fbx file in project window</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Look at the tabs for the file in
+     the top right of Inspector Window</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>Rig Tab</li>
+  <ol style='margin-top:0cm' start=1 type=i>
+   <li class=MsoNormal style='margin-bottom:0cm'>Animation Type - Humanoid Rig</li>
+   <li class=MsoNormal style='margin-bottom:0cm'>Avatar Definition – Create
+       from this model</li>
+   <li class=MsoNormal style='margin-bottom:0cm'>Look at configure – just like
+       MB Story</li>
+  </ol>
+ </ol>
+</ol>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=228 height=480 id="Picture 317060731"
+src="Tutorial_03b_UnityMiaandMixamo_files/image001.gif"></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><a
+href="https://gyazo.com/ff141656a87fb6e87087c352273cfa28">https://gyazo.com/ff141656a87fb6e87087c352273cfa28</a></p>
+
+<ol style='margin-top:0cm' start=5 type=1>
+ <ol style='margin-top:0cm' start=2 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>Animations Tab - <b>For Root </b></li>
+  <ol style='margin-top:0cm' start=1 type=i>
+   <li class=MsoNormal style='margin-bottom:0cm'>Turn off Anim. compression </li>
+   <li class=MsoNormal style='margin-bottom:0cm'>Loop Time - if needed</li>
+   <li class=MsoNormal style='margin-bottom:0cm'>At Bottom – Motion Dropdown</li>
+   <ol style='margin-top:0cm' start=1 type=1>
+    <li class=MsoNormal style='margin-bottom:0cm'>Select Mia Character Root
+        from Motionbuilder</li>
+   </ol>
+  </ol>
+ </ol>
+</ol>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=226 height=480 id="Picture 615952637"
+src="Tutorial_03b_UnityMiaandMixamo_files/image002.gif"></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><a
+href="https://gyazo.com/3dd85c3dcc8d2cd3f5c53e05e811d3ab">https://gyazo.com/3dd85c3dcc8d2cd3f5c53e05e811d3ab</a></p>
+
+<ol style='margin-top:0cm' start=6 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>For each animation clip:</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>Select the top level</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Look at the tabs for the file
+      in the top right of Inspector Window</li>
+ </ol>
+</ol>
+
+<p class=MsoListParagraphCxSpFirst style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:108.0pt;text-indent:-108.0pt'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Rig Tab</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:144.0pt;text-indent:-18.0pt'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Animation Type - Humanoid Rig</p>
+
+<p class=MsoListParagraphCxSpLast style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:144.0pt;text-indent:-18.0pt'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Avatar Definition – <b>Copy from other avatar</b></p>
+
+<p class=MsoNormal align=right style='text-align:right'><img border=0
+width=435 height=291 id="Picture 2043440190"
+src="Tutorial_03b_UnityMiaandMixamo_files/image003.gif"></p>
+
+<p class=MsoNormal align=right style='margin-bottom:0cm;text-align:right'><a
+href="https://gyazo.com/e6b9db14fe6a2ab4262da642d7a298cc">https://gyazo.com/e6b9db14fe6a2ab4262da642d7a298cc</a></p>
+
+<p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+0cm;margin-left:144.0pt;text-indent:-18.0pt'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Drag in avatar from Mia Tpose that was created (you
+can find it in the project window view)</p>
+
+<p class=MsoNormal align=right style='text-align:right'><img border=0
+width=446 height=125 id="Picture 828145762"
+src="Tutorial_03b_UnityMiaandMixamo_files/image004.gif"></p>
+
+<p class=MsoNormal align=right style='margin-bottom:0cm;text-align:right'><a
+href="https://gyazo.com/07a8067b3c869ca63d4dd2b5e2a1b895">https://gyazo.com/07a8067b3c869ca63d4dd2b5e2a1b895</a></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:144.0pt;text-indent:-18.0pt'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Look at configure – just like MB Story</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:108.0pt;text-indent:-108.0pt'><b><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></b><span dir=LTR></span>Animations Tab - <b>For Root </b></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:144.0pt;text-indent:-18.0pt'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Turn off Anim. compression </p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:144.0pt;text-indent:-18.0pt'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Loop Time - if needed (just for stand loop)</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:144.0pt;text-indent:-18.0pt'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>At Bottom – Motion Dropdown</p>
+
+<p class=MsoListParagraphCxSpLast style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:180.0pt;text-indent:-18.0pt'>a.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Select Mia Character Root from Motionbuilder</p>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=248 height=480 id="Picture 1824220589"
+src="Tutorial_03b_UnityMiaandMixamo_files/image005.gif"></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><a
+href="https://gyazo.com/ae3b5e6fa202ff47b10d24e7e91d5be6">https://gyazo.com/ae3b5e6fa202ff47b10d24e7e91d5be6</a></p>
+
+<ol style='margin-top:0cm' start=7 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>If using a combined animation
+     clip rather than separate, Do steps 12-14 for the Combined Animation clip
+     as well, select Avatar from the Mia TPose</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>With the combined clip selected,
+     in Inspector/Animation Tab, create additional clips for the following
+     frames:</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>0-19 - Stand</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>20-219 - Talk 1a</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>220-499 - Talk 1b</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>500-1094 - Talk 1c</li>
+ </ol>
+</ol>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=228 height=480 id="Picture 447232429"
+src="Tutorial_03b_UnityMiaandMixamo_files/image006.gif"></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><a
+href="https://gyazo.com/f93f4c95cffc6f235b7d8a81d8ca544b">https://gyazo.com/f93f4c95cffc6f235b7d8a81d8ca544b</a></p>
+
+<ol style='margin-top:0cm' start=9 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>To create additional clips:</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>click the + sign and type in a
+      new name in the box below</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>adjust the start and end frames
+      in the boxes</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>click apply at the bottom</li>
+ </ol>
+ <li class=MsoNormal style='margin-bottom:0cm'>Create Animator Controller in
+     the Anims folder:</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>Right click &gt;Create &gt;
+      Animator Controller</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Name it AC1</li>
+  <li class=MsoNormal style='margin-bottom:0cm'><i>Drag this onto the Mia in
+      the scene heirarchy – it adds the Animator component and links this
+      Animator Controller.</i></li>
+ </ol>
+</ol>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=480 height=276 id="Picture 1842322091"
+src="Tutorial_03b_UnityMiaandMixamo_files/image007.gif"></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><a
+href="https://gyazo.com/39055bd72f04b7e15716a3cca3e1ea0e">https://gyazo.com/39055bd72f04b7e15716a3cca3e1ea0e</a></p>
+
+<ol style='margin-top:0cm' start=10 type=1>
+ <ol style='margin-top:0cm' start=4 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>Open Animator Window</li>
+ </ol>
+ <li class=MsoNormal style='margin-bottom:0cm'>Populate Animator Window</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>Drag in Stand Loop - becomes
+      Default State</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Drag in Mia Talk 1a, 1b, 1c – <i>(either
+      from the combined set or separate)</i></li>
+ </ol>
+</ol>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=336 height=97 id="Picture 2072897610"
+src="Tutorial_03b_UnityMiaandMixamo_files/image008.gif"></p>
+
+<p class=MsoNormal align=center style='text-align:center'>Separate</p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><a
+href="https://gyazo.com/e83880a988ee68915a3be7e11ac479a4">https://gyazo.com/e83880a988ee68915a3be7e11ac479a4</a></p>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=480 height=92 id="Picture 1029428137"
+src="Tutorial_03b_UnityMiaandMixamo_files/image009.gif"></p>
+
+<p class=MsoNormal align=center style='text-align:center'>Combined</p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><a
+href="https://gyazo.com/1099d77cd209dc545692387b5ceae7c2">https://gyazo.com/1099d77cd209dc545692387b5ceae7c2</a></p>
+
+<ol style='margin-top:0cm' start=11 type=1>
+ <ol style='margin-top:0cm' start=3 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>Make transitions to each from
+      Any State with right clicks</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Make transitions from each to
+      Exit by right click</li>
+ </ol>
+ <li class=MsoNormal style='margin-bottom:0cm'>Test in Playback</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Move camera and Light to other
+     side of Mia with Transport Bar - Translate and Rotate</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Make Triggers</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>Create triggers in Animator
+      Parameters by pressing the “+” sign and selecting Trigger in the drop
+      down box.</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>ReName the Triggers as Talk 1a,
+      Talk 1b, Talk 1c</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Attach as conditions to
+      transitions from Any State to the Talk animations by</li>
+  <ol style='margin-top:0cm' start=1 type=i>
+   <li class=MsoNormal style='margin-bottom:0cm'>Selecting the transition lines</li>
+   <li class=MsoNormal style='margin-bottom:0cm'>Selecting the preferred
+       trigger in the conditions drop down box on the right hand panel</li>
+  </ol>
+ </ol>
+</ol>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=480 height=220 id="Picture 1464129867"
+src="Tutorial_03b_UnityMiaandMixamo_files/image010.gif"></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><a
+href="https://gyazo.com/14e79aeffaef8ccea028c85f48f388c0">https://gyazo.com/14e79aeffaef8ccea028c85f48f388c0</a></p>
+
+<ol style='margin-top:0cm' start=15 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>Script for key press:</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>TriggerAnims.cs:</li>
+ </ol>
+</ol>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt'><a
+href="https://drive.google.com/drive/u/1/folders/1aI3nWow7yCwPcsPnxHfKZu0YiVZZdTks"><span
+style='color:#1155CC'>https://drive.google.com/drive/u/1/folders/1aI3nWow7yCwPcsPnxHfKZu0YiVZZdTks</span></a>
+</p>
+
+<ol style='margin-top:0cm' start=15 type=1>
+ <ol style='margin-top:0cm' start=2 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>Place in Assets/Scripts in
+      Project window</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Add Component on Mia in
+      hierarchy,  and select this script, or drag and drop the script onto Mia
+      in Heirarchy or live view</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>The names of the triggers are
+      in the variable boxes already, populated by the script array:</li>
+ </ol>
+</ol>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=365 height=480 id="Picture 66105433"
+src="Tutorial_03b_UnityMiaandMixamo_files/image011.gif"></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><a
+href="https://gyazo.com/0afef656052c19175910d4b5458591b1">https://gyazo.com/0afef656052c19175910d4b5458591b1</a></p>
+
+<ol style='margin-top:0cm' start=15 type=1>
+ <ol style='margin-top:0cm' start=5 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>Test in playback</li>
+ </ol>
+ <li class=MsoNormal style='margin-bottom:0cm'>Extra - try it with both the
+     separate imported talk animations, and the ones you divided up. Get used
+     to working with Animator this way. </li>
+</ol>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt'>&nbsp;</p>
+
+<p class=MsoNormal><b><u><span style='background:yellow'>Tutorial 03b 01, 02,
+03– Mixamo in MotionBuilder with no Ref Node (No Root, As downloaded from
+Mixamo or Google Drive example)</span></u></b><br>
+<b><u><span style='background:yellow'>TPose</span></u></b></p>
+
+<p class=MsoNormal><br>
+<a
+href="https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=8d868313-56ce-48ad-8be5-ac4a010a0249"><span
+lang=EN-US style='background:red'>https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=8d868313-56ce-48ad-8be5-ac4a010a0249</span></a></p>
+
+<p class=MsoNormal><span lang=EN-US style='background:yellow'>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span lang=ES>01 Mixamo TPose Video</span></b><span
+lang=ES><br>
+</span><a href="https://youtu.be/EX0her-yPiY"><span lang=ES>https://youtu.be/EX0her-yPiY</span></a></p>
+
+<p class=MsoNormal><a href="https://youtu.be/EX0her-yPiY"><img border=0
+width=583 height=338 src="Tutorial_03b_UnityMiaandMixamo_files/image012.gif"
+align=left hspace=12
+alt="Title: Video titled: Tutorial 03b 01 Mixamo Tpose NoRefNode 1080" title=""></a></p>
+
+<p class=MsoNormal><b>02 Mixamo Add Anims Video</b><br>
+<a href="https://youtu.be/lv9VF3s_TeQ">https://youtu.be/lv9VF3s_TeQ</a></p>
+
+<p class=MsoNormal><a href="https://youtu.be/lv9VF3s_TeQ"><img border=0
+width=583 height=338 src="Tutorial_03b_UnityMiaandMixamo_files/image013.gif"
+align=left hspace=12
+alt="Title: Video titled: Tutorial 03b 02 Mixamo Tpose Anims NoRefNode 1080"
+title=""></a></p>
+
+<p class=MsoNormal> </p>
+
+<p class=MsoNormal><br>
+<b>03 Mixamo Fuse to Mixamo Autorig to Unity with No Root Video:</b><br>
+<a href="https://youtu.be/qDewDoXdcdA">https://youtu.be/qDewDoXdcdA</a></p>
+
+<p class=MsoNormal><a href="https://youtu.be/qDewDoXdcdA"><img border=0
+width=583 height=338 src="Tutorial_03b_UnityMiaandMixamo_files/image014.gif"
+align=left hspace=12
+alt="Title: Video titled: Tutorial 03b 03 Fuse To Mixamo to Unity NoRefNode 1080"
+title=""></a></p>
+
+<p class=MsoNormal> </p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='background:yellow'>Use Clark NoRoot TPose Motionbuilder model from BB
+     Week 3 Files.</span></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>Characterise as before in Motionbuilder (Tutorial 01
+     and 02)</span></li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+      style='background:yellow'>If naming issues - Drag and drop bones in base
+      Characterisation template (See BB Collaborate Video)</span></li>
+ </ol>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'>Add <span
+     style='color:black'>Floor Plane as before</span></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'>Create <span
+     style='color:black'>Control Rig as before</span></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'>Insert in <span
+     style='color:black'>Story Track as before </span></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>Insert Current take i</span>n Story <span
+     style='color:black'>– This should be the </span>Tpose</li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'>Create <span
+     style='color:black'>New Story Tracks </span>for<span style='color:black'>
+     All Ani</span>mation Clips</li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'>Import <span
+     style='color:black'>New Anim Clip in Each (From above tutorial</span>)</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>Clip Mia Stand Looped</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Clip Stand Talk 1a Looped</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Clip Stand Talk 1b Looped</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>Clip Stand Talk 1c Looped</li>
+ </ol>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>Mute tracks to see matching</span></li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Plot the Tpose to the skeleton,
+     save this as a scene file (not story!) so you have a character model in
+     Tpose to import into Unity</li>
+ <li class=MsoNormal>Or you could download a character with a Tpose from Mixamo
+     as a “Unity fbx” and import directly.</li>
+ <li class=MsoNormal> Export the Clips from Story one by one to have an Anim
+     Set with No Root and no model (lighter).</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal><span style='background:yellow'>If issues exporting (not
+      option in menu) Plot all animations and insert current take in new Story
+      character track (See BB Collaborate Video)</span></li>
+ </ol>
+ <li class=MsoNormal>You could also use the Fbx Animation clips “as-is” in
+     Unity for characters, but processing in Motionbuilder ensures they are
+     accurate for the individual models.</li>
+ <li class=MsoNormal>Build in Unity as with Mia (Humanoid Rig, Animation).</li>
+ <li class=MsoNormal><span style='background:yellow'>follow further
+     instructions below (06) for No Root.</span></li>
+</ol>
+
+<p class=MsoNormal style='margin-left:72.0pt;border:none'><span
+style='color:black'>&nbsp;</span></p>
+
+<p class=MsoNormal><b><u><span style='background:yellow'>Tutorial 03b 04, 05 –
+Mixamo in Motionbuilder with Ref Node (Root)</span></u></b></p>
+
+<p class=MsoNormal><b><u>Mixamo with Root:</u></b><u> </u></p>
+
+<p class=MsoNormal><b>04 Add Root in Motionbuilder:</b><br>
+<a href="https://www.youtube.com/watch?v=OdEJm2z831c"><span style='font-family:
+"Segoe UI",sans-serif'>https://www.youtube.com/watch?v=OdEJm2z831c</span></a></p>
+
+<p class=MsoNormal><a href="https://www.youtube.com/watch?v=OdEJm2z831c"><img
+border=0 width=583 height=338
+src="Tutorial_03b_UnityMiaandMixamo_files/image015.gif" align=left hspace=12
+alt="Title: Video titled: Tutorial 03b 04 Mixamo Tpose Add Reference Node"
+title=""></a></p>
+
+<p class=MsoNormal><span style='font-family:"Segoe UI",sans-serif'>&nbsp;</span></p>
+
+<p class=MsoNormal><b>05 Root In Unity: </b>As with Mia before<br>
+<a href="https://www.youtube.com/watch?v=0QeekzOtGlc"><span style='font-family:
+"Segoe UI",sans-serif'>https://www.youtube.com/watch?v=0QeekzOtGlc</span></a></p>
+
+<p class=MsoNormal><a href="https://www.youtube.com/watch?v=0QeekzOtGlc"><img
+border=0 width=583 height=338
+src="Tutorial_03b_UnityMiaandMixamo_files/image016.gif" align=left hspace=12
+alt="Title: Video titled: Tutorial 03b 05 Mixamo Tpose Add Reference Node Unity Import 2"
+title=""></a></p>
+
+<p class=MsoNormal><span style='font-family:"Segoe UI",sans-serif'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'><span style='color:black'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+dir=LTR></span><span style='color:black'>Import </span>Malcolm<span
+style='color:black'> <b>No Root </b>Tpose fbx from BB zip</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Characterise</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Plot to Control Rig (30
+fps)</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Add Floor Plane from
+Asset Browser/Elements, Zero out</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>De characterise</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'><b>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></b><span
+dir=LTR></span><b><span style='color:black'>Add Control Rig Reference as
+reference and floor plane for feet</span></b></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Re Characterise</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Test floor and Reference</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'><b><span style='color:black'>9.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></b><span
+dir=LTR></span><b><span style='color:black'>Parent All Models (Select all at
+top level, Don’t Select Branches) drag to to Control Rig Reference to parent</span></b></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>10.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Story Track - Character</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>11.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Insert current take</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>12.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Select Ghost, Reference
+in Character Controls Window, and Clip</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>13.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Check Translate and
+Rotate Gizmo for Zero out</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>14.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Do for </span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Tpose</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>stand idle</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>talk 1a</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt'>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>talk 1b</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt'>e.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>talk 1c</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'><b><span style='color:black'>15.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></span></b><span
+dir=LTR></span><b><span style='color:black'>Plot the Tpose to the skeleton,
+save this as a scene file (not story!) so you have a character model in Tpose
+to import into Unity</span></b></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'><b>16.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></b><span dir=LTR></span><b>Export
+the Clips from Story one by one to have an Anim Set with Root</b></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal><b><u><span style='background:yellow'>Tutorial 03b 06 –
+Import to Unity and Test - Root and No Root</span></u></b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>Open New Unity Project</span></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>Create folder in Project/Assets for Fbx Imports</span></li>
+ <li class=MsoNormal style='color:black;margin-bottom:0cm;border:none'><b>Drag
+     in saved scene (Tpose)</b></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>Drag in exported clips:</span></li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'>stand idle</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>talk 1a</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>talk 1b</li>
+  <li class=MsoNormal style='margin-bottom:0cm'>talk 1c</li>
+ </ol>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>In Project expand Fbx imports</span></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>Select  Fbx clips one by one</span></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>Preview clips</span></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>Select edit in top right of Inspector Window</span></li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+      style='color:black'>Rig Tab</span></li>
+ </ol>
+</ol>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:108.0pt;text-indent:-108.0pt;border:none'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Animation Type - Humanoid
+Rig</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:108.0pt;text-indent:-108.0pt;border:none'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Avatar Definition –
+Create from this model</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:108.0pt;text-indent:-108.0pt;border:none'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>iii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Look at configure – just
+like MB Story</span></p>
+
+<ol style='margin-top:0cm' start=8 type=1>
+ <ol style='margin-top:0cm' start=2 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+      style='color:black'>Animations Tab</span></li>
+ </ol>
+</ol>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:108.0pt;text-indent:-108.0pt;border:none'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Turn off Anim.
+compression </span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:108.0pt;text-indent:-108.0pt;border:none'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Loop Time - if needed</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:108.0pt;text-indent:-108.0pt;border:none'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>iii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>At Bottom – Motion
+Dropdown</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:144.0pt;text-indent:-18.0pt;border:none'><span style='background:
+yellow'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='background:yellow'>Root: <span
+style='color:black'>Select Character Root from Motionbuilder (If having root)</span></span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:144.0pt;text-indent:-18.0pt;border:none'><span style='background:
+yellow'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='background:yellow'>No Root: If
+no root, do following:</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:180.0pt;text-indent:-18.0pt'><span style='background:yellow'>a.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+dir=LTR></span><span style='background:yellow'>Root transform rotation set to
+body orientation and bake to pose</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:180.0pt;text-indent:-18.0pt'><span style='background:yellow'>b.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+dir=LTR></span><span style='background:yellow'>Root transform position Y set to
+original, no bake</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:180.0pt;text-indent:-18.0pt'><span style='background:yellow'>c.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+dir=LTR></span><span style='background:yellow'>Root transform position XZ set
+to center of mass, no bake</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:180.0pt;text-indent:-18.0pt'><span style='background:yellow'>d.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><span
+dir=LTR></span><span style='background:yellow'>Turn off the compression on the
+imported animations.</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt'><span style='background:yellow'>&nbsp;</span></p>
+
+<ol style='margin-top:0cm' start=9 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>Create New Scene</span></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>into Hierarchy Drag Standard Assets/Characters/First
+     Person Controller/Prefabs/FPSController</span></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>At top menu create 3D game object/Plane, Zero out</span></li>
+ <li class=MsoNormal style='color:black;margin-bottom:0cm;border:none'><b>into
+     Hierarchy Drag the Tpose Fbx Scene with character model</b></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>Right click in project folder for fbx, create New
+     Animator Controller, name MRootAC or MNoRoo</span>t<span style='color:
+     black'>AC, depending on Imported Character</span></li>
+ <li class=MsoNormal style='color:black;margin-bottom:0cm;border:none'>Drag New
+     Animator Controller into Slot on TPose Fbx in Project</li>
+ <li class=MsoNormal style='margin-bottom:0cm'><span style='background:yellow'>Turn
+     on Apply Root Motion in Animator on character.</span></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>Open an Animator Window</span></li>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+     style='color:black'>Drag the Idle Fbx Clip into the Animator Window</span></li>
+ <li class=MsoNormal style='border:none'><span style='color:black'>Play and
+     Test</span></li>
+</ol>
+
+<p class=MsoNormal style='border:none'><span style='background:yellow'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none'><span style='background:yellow'>++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span></p>
+
+<p class=MsoNormal style='border:none'><span style='background:yellow'>&nbsp;</span></p>
+
+<p class=MsoNormal style='border:none'><span style='background:aqua'>Recap for
+Root and No Root Difference:</span></p>
+
+<p class=MsoNormal><span style='background:aqua'>1. Mixamo without a root
+(without Motionbuilder reference, just downloaded):</span><br>
+<a
+href="http://answers.unity3d.com/questions/758387/characters-feet-are-shifting.html">http://answers.unity3d.com/questions/758387/characters-feet-are-shifting.html</a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;text-indent:36.0pt'>Set Humanoid
+Rig as before</p>
+
+<p class=MsoNormal style='margin-bottom:0cm;text-indent:36.0pt'>In Animation
+Tab:</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Root transform rotation set to body orientation and
+bake to pose</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Root transform position Y set to original, no bake</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Root transform position XZ set to center of mass,
+no bake</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Turn off the compression on the imported
+animations.</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt'>In Animator on Character: </p>
+
+<p class=MsoListParagraph style='margin-top:0cm;margin-right:0cm;margin-bottom:
+0cm;margin-left:72.0pt;text-indent:-18.0pt'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Turn on Apply Root Motion in Animator Component on
+character.</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-bottom:0cm;line-height:normal'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-bottom:0cm;line-height:normal'><span
+style='background:aqua'>2. Mixamo with Root Node in Unity (Motionbuilder
+Reference – Currently Recommended):</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;line-height:normal'><a
+href="https://docs.unity3d.com/Manual/AnimationRootMotionNodeOnImportedClips.html">https://docs.unity3d.com/Manual/AnimationRootMotionNodeOnImportedClips.html</a>
+</p>
+
+<p class=MsoNormal style='margin-bottom:0cm;line-height:normal'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;line-height:normal'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Apply root motion In Inspector/Animator for Game Object</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;line-height:normal'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Select Fbx animation</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;line-height:normal'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Select Edit button in Inspector</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;line-height:normal'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Rig Tab</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;line-height:normal'>a.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Animation Type - Humanoid Rig</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;line-height:normal'>b.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Avatar Definition – Create from this model</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;line-height:normal'>c.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Look at configure – just like MB Story</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;line-height:normal'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Animations Tab</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;line-height:normal'>a.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Turn off Anim. compression </p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;line-height:normal'>b.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Loop Time - if needed</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;line-height:normal'>c.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>At Bottom – Motion Dropdown</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:126.0pt;text-indent:-126.0pt;line-height:normal'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Select Character Root from Motionbuilder</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;line-height:normal'>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Repeat for all Fbx Clips and Tposes</p>
+
+<p class=MsoNormal><u><span style='text-decoration:none'>&nbsp;</span></u></p>
+
+<p class=MsoNormal><b><i><u>*Mixamo further use tips are at the end of the next
+tutorial sheet</u></i></b></p>
+
+</div>
+
+</body>
+
+</html>

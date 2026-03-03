@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tutorial 04/05 - Unity Animations and Visual Scripting Dialog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.2; max-width: 980px; margin: 0 auto; padding: 20px; background: #f9f9f9; color: #333; }
+    h1 { color: #2c3e50; border-bottom: 3px solid #3498db; padding-bottom: 10px; margin-bottom: 12px; }
+    h2 { color: #34495e; margin-top: 30px; border-left: 4px solid #3498db; padding-left: 10px; }
+    h3 { color: #555; margin-top: 20px; }
+    a { color: #3498db; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ol, ul { margin: 10px 0; padding-left: 25px; }
+    li { margin: 8px 0; }
+    .section { background: #fff; padding: 20px; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    details.section { padding: 0; overflow: hidden; }
+    details.section > summary {
+      cursor: pointer;
+      padding: 16px 20px;
+      font-size: 1.5em;
+      font-weight: 700;
+      color: #34495e;
+      border-left: 4px solid #3498db;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+    }
+    details.section > summary::-webkit-details-marker { display: none; }
+    details.section > summary::before {
+      content: '▶';
+      font-size: 0.7em;
+      color: #3498db;
+      transition: transform 0.2s ease;
+    }
+    details.section[open] > summary::before { transform: rotate(90deg); }
+    .section-content { padding: 0 20px 20px 20px; }
+    .video { margin-top: 10px; }
+    .resource-link {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: #eaf4fb;
+      border: 1px solid #c8dff1;
+      border-radius: 6px;
+      color: #1f4e79;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tutorial 04/05 - Unity Animations, FPC, and Visual Scripting Dialog</h1>
+
+  <div class="section">
+    <h2>Overview & Files</h2>
+    <p><strong>Source Notes:</strong> <a href="Docs/Tutorial%2004%2005%20Videos.docx" target="_blank" rel="noopener">Tutorial 04 05 Videos.docx</a></p>
+    <p><strong>Full Legacy HTML Notes:</strong> <a href="Tutorial_04_05_Legacy.htm" target="_blank" rel="noopener">Tutorial_04_05_Legacy.htm</a></p>
+  </div>
+
+  <details class="section" open>
+    <summary>Tutorial 04 00 - Mia Animator Recap</summary>
+    <div class="section-content">
+      <p><a href="https://www.youtube.com/watch?v=miEewb5lXwo" target="_blank" rel="noopener">https://www.youtube.com/watch?v=miEewb5lXwo</a></p>
+      <div class="video">
+        <iframe width="100%" height="420" src="https://www.youtube.com/embed/miEewb5lXwo?rel=0&modestbranding=1" title="Tutorial 04 00" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <ol>
+        <li>Confirm all model clips use a consistent Humanoid rig and avatar mapping.</li>
+        <li>Set the Stand Loop as default state in Animator and route talk clips from Any State.</li>
+        <li>Use trigger parameters for Talk 1a, Talk 1b, and Talk 1c to drive interactions.</li>
+      </ol>
+      <a class="resource-link" href="Tutorial_04_05_Legacy.htm" target="_blank" rel="noopener">Open full recap notes</a>
+    </div>
+  </details>
+
+  <details class="section">
+    <summary>Tutorial 04 01 - Standard Assets FPC Setup</summary>
+    <div class="section-content">
+      <p><a href="https://www.youtube.com/watch?v=H9yS5CHPCtY" target="_blank" rel="noopener">https://www.youtube.com/watch?v=H9yS5CHPCtY</a></p>
+      <div class="video">
+        <iframe width="100%" height="420" src="https://www.youtube.com/embed/H9yS5CHPCtY?rel=0&modestbranding=1" title="Tutorial 04 01" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <ol>
+        <li>Import Starter Assets First Person package and required dependencies.</li>
+        <li>Enable both input handling systems in Player settings where needed.</li>
+        <li>Load Playground sample scene and verify materials/shaders.</li>
+      </ol>
+      <p><strong>Starter Assets link:</strong> <a href="https://assetstore.unity.com/packages/essentials/starter-assets-firstperson-updates-in-new-charactercontroller-pa-196525" target="_blank" rel="noopener">Asset Store Package</a></p>
+      <a class="resource-link" href="Tutorial_04_05_Legacy.htm" target="_blank" rel="noopener">Open full 04 01 notes</a>
+    </div>
+  </details>
+
+  <details class="section">
+    <summary>Tutorial 04 02 / 05 - Follow-up Workflow and Dialog Integration</summary>
+    <div class="section-content">
+      <p><a href="https://www.youtube.com/watch?v=iCLnz5oUIpU" target="_blank" rel="noopener">https://www.youtube.com/watch?v=iCLnz5oUIpU</a></p>
+      <div class="video">
+        <iframe width="100%" height="420" src="https://www.youtube.com/embed/iCLnz5oUIpU?rel=0&modestbranding=1" title="Tutorial 04 02" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <ol>
+        <li>Continue scene integration with animation triggers and interaction flow.</li>
+        <li>Build toward CW1 workflow using visual scripting dialog logic.</li>
+        <li>Use the full notes for detailed step-by-step setup checkpoints.</li>
+      </ol>
+      <a class="resource-link" href="Tutorial_04_05_Legacy.htm" target="_blank" rel="noopener">Open full 04/05 notes</a>
+    </div>
+  </details>
+</body>
+</html>

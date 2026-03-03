@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial 01 - AIMD</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f7f9fc;
+            color: #1f2933;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(15, 71, 97, 0.12);
+        }
+
+        h1 {
+            color: #0F4761;
+            margin: 0 0 8px 0;
+        }
+
+        p {
+            line-height: 1.6;
+            margin-top: 0;
+            color: #4a5a67;
+        }
+
+        details {
+            border: 1px solid #d4dde5;
+            border-radius: 8px;
+            margin: 14px 0;
+            background: #fbfdff;
+            overflow: hidden;
+        }
+
+        summary {
+            cursor: pointer;
+            padding: 14px 16px;
+            font-weight: 600;
+            color: #0F4761;
+            background: #eef5f9;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::before {
+            content: '▶';
+            font-size: 0.85em;
+            color: #0F4761;
+            transition: transform 0.2s ease;
+        }
+
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .section-content {
+            padding: 16px;
+            border-top: 1px solid #dce6ee;
+        }
+
+        .tutorial-frame {
+            width: 100%;
+            min-height: 620px;
+            border: 1px solid #d4dde5;
+            border-radius: 6px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tutorial 01</h1>
+        <p>Use the expandable sections below to access each part of Tutorial 01.</p>
+
+        <details open>
+            <summary>Tutorial 01a - Character Setup</summary>
+            <div class="section-content">
+                <p>Build the first practical character interaction workflow for the AIMD module.</p>
+                <iframe class="tutorial-frame" src="Tutorial_01a.htm" title="Tutorial 01a"></iframe>
+            </div>
+        </details>
+
+        <details>
+            <summary>Tutorial 01b - IK Blend Pull</summary>
+            <div class="section-content">
+                <p>Apply inverse-kinematics blending and pull techniques to animation control.</p>
+                <iframe class="tutorial-frame" src="Tutorial_01b_IKBlendPull.htm" title="Tutorial 01b"></iframe>
+            </div>
+        </details>
+    </div>
+</body>
+</html>
