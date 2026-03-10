@@ -1,0 +1,1520 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Georgia;
+	panose-1:2 4 5 2 5 4 5 2 3 3;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:0cm;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{color:#0563C1;
+	text-decoration:underline;}
+.MsoChpDefault
+	{font-family:"Calibri",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:107%;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-GB link="#0563C1" vlink="#954F72" style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal><b>Tutorial 08-09 Visual Scripting with Prefabs</b></p>
+
+<p class=MsoNormal><b>Assets (all in Week 8 in BB)</b></p>
+
+<p class=MsoNormal>Cafe_Fbx.zip - Chair, Café (Just chair is in Chair.fbx)<br>
+iPad<br>
+Burger and beer<br>
+Annie<br>
+Sitting Loop Animations - Sitting Loop Anims.zip</p>
+
+<p class=MsoNormal><b>Overview</b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><b><span
+     style='color:black'>Import Starter Assets and sort Unity Input (or use
+     CW1)</span></b></li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='color:black;margin-bottom:0cm;border:none'><span
+      style='background:yellow'>Work from CW1 Unity Project or Tutorial 08 Base
+      Project Provided</span></li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'>Import Container
+      Cafe</li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+      style='color:black'>Import iPad Model (Extra Work) or make </span>flattened
+      cube (for Tutorials)</li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+      style='color:black'>Attach </span>“iPad” <span style='color:black'>to
+      Player Capsule</span></li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+      style='color:black'>Add UI Text and Buttons to iPad Canvas and Test</span></li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+      style='color:black'>Import Café and Chair</span></li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+      style='color:black'>Check movement around scene with FPC</span></li>
+ </ol>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><b><span
+     style='color:black'>Import Annie and Animations</span></b></li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+      style='color:black'>Check proportions and lighting</span></li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+      style='color:black'>Setup Animator</span></li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+      style='color:black'>Make Prefab</span></li>
+ </ol>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><b><span
+     style='color:black'>Visual Scripting and Assets</span></b></li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+      style='color:black'>VS Manager</span></li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><span
+      style='color:black'>iPad Canvas Diner GUI (WorldSpace)</span></li>
+  <li class=MsoNormal style='border:none'><span style='color:black'>Prefab
+      Canvas (WorldSpace)</span></li>
+ </ol>
+</ol>
+
+<p class=MsoNormal style='margin-bottom:0cm'>Your scene will gradually start to
+look like this:</p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center'><img
+width=331 height=294 id="Picture 1254980264"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image001.gif"></p>
+
+<p class=MsoNormal align=center style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;text-align:center'><a
+href="https://gyazo.com/6aa9da78a83efd5f8d11ea72612a9df1">https://gyazo.com/6aa9da78a83efd5f8d11ea72612a9df1</a></p>
+
+<p class=MsoNormal align=center style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;text-align:center'>&nbsp;</p>
+
+<p class=MsoNormal align=center style='margin-top:0cm;margin-right:0cm;
+margin-bottom:0cm;margin-left:36.0pt;text-align:center'>&nbsp;</p>
+
+<p class=MsoNormal><b><u><span style='text-decoration:none'>&nbsp;</span></u></b></p>
+
+<p class=MsoNormal><b><u>Tutorial 8 01 – FPC, Input, iPad and UI, and Chair</u></b><br>
+<i><span style='background:yellow'>Check BB Panopto lecture recordings for the
+iPad creation video</span></i></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;border:none'><span style='color:black'>&nbsp;</span></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal style='color:black;margin-bottom:0cm;border:none'><span
+     style='color:windowtext'>Start with your CW1 Project or the Tutorial 08
+     Start Project</span></li>
+ <li class=MsoNormal style='color:black;margin-bottom:0cm;border:none'><span
+     style='color:windowtext'>If starting a new project,</span><span
+     style='color:black'>As with CW1, Import Starter Assets FPC and install new
+     Unity Input, accept Restart</span></li>
+</ol>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><span
+style='color:black'>IPad and Countdown Timer:</span></b></p>
+
+<ol style='margin-top:0cm' start=3 type=1>
+ <li class=MsoNormal style='color:black;margin-bottom:0cm;border:none'><span
+     style='color:black'>Import iPad Free model and tidy asset, or flatten a 3D
+     cube object (details below)– not all ipad model</span><span
+     style='color:windowtext'> sections may be </span><span style='color:black'>needed.
+     </span></li>
+</ol>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;border:none'><span style='color:black;background:yellow'>Extract
+Materials in Inspect</span><span style='background:yellow'>or to edit them
+later.</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><span style='background:yellow'>If doing a
+flattened cube, watch the Lecture 08 BB Panopto video for the process, there
+are scaling issues to account for. Also watch the Chair and Burger and Beer
+videos for a workflow on adjusting online assets for use. </span><br>
+<u><span style='background:white'>Chair Adjustment: Max Units and Pivots (for
+Chair)</span></u><br>
+<a href="https://youtu.be/H_x9AuSXq1w"><span style='color:#0563C1;background:
+white'>https://youtu.be/H_x9AuSXq1w</span></a></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><u><span style='background:white'>Asset
+Management: Burgers and Beer (Sourced Asset Mangement)</span></u><br>
+<a href="https://www.youtube.com/watch?v=SXKYAtfenhs"><span style='color:#0563C1;
+background:white'>https://www.youtube.com/watch?v=SXKYAtfenhs</span></a></p>
+
+<ol style='margin-top:0cm' start=3 type=1>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><b><i><span
+      style='background:lime'>Videos for flattened cube method below: </span></i></b><a
+      href="https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=ca5bcb8d-ca7a-4dc9-a810-b13300959799"><i><span
+      style='background:lime'>https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=ca5bcb8d-ca7a-4dc9-a810-b13300959799</span></i></a><i>
+      </i></li>
+ </ol>
+</ol>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><a
+href="https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=c63a95cb-0215-429f-a3ff-b13300b65b47"><i><span
+style='background:lime'>https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=c63a95cb-0215-429f-a3ff-b13300b65b47</span></i></a><i><span
+style='background:lime'> </span></i></p>
+
+<ol style='margin-top:0cm' start=3 type=1>
+ <ol style='margin-top:0cm' start=2 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><i>If you are using
+      a flattened cube, also use a root to normalise the transform</i></li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'><i>If the parent
+      object has any scaling, you will also have to mitigate this with another
+      scaled game object parent. Unity does not have pivot or scaling
+      normalisation tools</i></li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'>Hide other objects
+      and scale cube at Pos 0 0 0 into an iPad shape</li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'>Add empty Game
+      Object at 0 0 0 and parent iPad Cube to it</li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'>Now you can work
+      with a canvas parented to the iPad Cube root and have it normalised for
+      positions and rotations</li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'>Parenting to PlayerCapsule
+      may require another empty game object if the PlayerCapsule is scaled.</li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'>Position the Ipad Root
+      as needed by viewing in scene And Game view and moving one axis at at
+      time.</li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'>In
+      PlayerFollowCamera, add some Damping:</li>
+ </ol>
+</ol>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><a
+href="https://gyazo.com/57d152ff8c4b8b22e66a11026db6cbc1"><span
+style='color:#1155CC'>https://gyazo.com/57d152ff8c4b8b22e66a11026db6cbc1</span></a>
+</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><img border=0 width=438 height=892
+id=image21.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image002.jpg"></p>
+
+<ol style='margin-top:0cm' start=4 type=1>
+ <li class=MsoNormal style='color:black;margin-bottom:0cm;border:none'><span
+     style='color:black'>Add Unity UI Canvas for iPad</span></li>
+</ol>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>M<span style='color:black'>ake Ca</span>nvas</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Change canvas to “<span style='color:black'>worldspace</span>”<span
+style='color:black'> and </span>copy position from iPad model screen (top right
+3 dots)</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Adjust scale and rotation as needed, try with local
+or global settings (top left)</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Drag to make it a child of the iPad Root (Best
+Practice) or screen model</p>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=601 height=282 id="Picture 1162872686"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image003.gif"></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+border:none'><a href="https://gyazo.com/7705eee454637b0c74d544cc30de0efd">https://gyazo.com/7705eee454637b0c74d544cc30de0efd</a></p>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=601 height=273 id="Picture 654028110"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image004.gif"></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+border:none'><a href="https://gyazo.com/d774b3a95388c71476cdc06a21dfcba4">https://gyazo.com/d774b3a95388c71476cdc06a21dfcba4</a></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>e.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>On Canvas, Add text for
+timer</span>, move and scale using local translations</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'><span style='color:black'>f.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span>This may need a Text Mesh Pro Import - the
+prompt to install will look like this:</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;border:none'><img border=0 width=529 height=198
+id="Picture 2027443442"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image005.gif"></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;border:none'><span style='color:black'>You can also Import
+Text Mesh Pro Samples to get some extras to work with…but Project will be
+larger as a result….</span><a href="https://www.youtube.com/watch?v=bR0clpZvjXo"><span
+style='color:#1155CC'>https://www.youtube.com/watch?v=bR0clpZvjXo</span></a></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:36.0pt;border:none'>&nbsp;</p>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=602 height=284 id="Picture 2031233086"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image006.gif"></p>
+
+<p class=MsoNormal align=center style='margin-bottom:0cm;text-align:center;
+border:none'><a href="https://gyazo.com/6151dc33cc2786e3b031c583059018ca">https://gyazo.com/6151dc33cc2786e3b031c583059018ca</a></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>g.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Add a Script Machine Component to the canvas</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:108.0pt;text-indent:-108.0pt;border:none'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Make Embed in drop down box</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:108.0pt;text-indent:-108.0pt;border:none'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Press edit Graph to display Visual Scripting Edit
+window.</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>h.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Timer: Add variables under the Scene tab in the VS
+edit window for Timer as below (Type in Names first, then + to add):<span
+style='background:yellow'><br>
+</span><img border=0 width=334 height=235 id=image23.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image007.gif"><a
+href="https://gyazo.com/342b6f2ef881fc55559611d54e560815"><span
+style='color:#1155CC'>https://gyazo.com/342b6f2ef881fc55559611d54e560815</span></a></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><span style='color:black;background:#D9EAD3'>NOTE:
+If you are using the new TextMeshPro Type as below:</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><span style='color:black;background:#D9EAD3'><img
+border=0 width=527 height=280 id=image5.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image008.jpg"></span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><a
+href="https://gyazo.com/4fd86e74591057b10b43c796ae748c01"><span
+style='color:#1155CC;background:#D9EAD3'>https://gyazo.com/4fd86e74591057b10b43c796ae748c01</span></a><span
+style='color:black;background:#D9EAD3'> </span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><span style='color:black;background:#D9EAD3'>You
+will need to select it as a variable type AND import nodes for Text Mesh Pro
+and Text Mesh Pro UGUI in Project Settings/Visual Scripting/, then click
+Regenerate Nodes – do this by pressing the + button and search and select the
+Text Mesh Pro, Text Mesh Pro UGUI:</span></p>
+
+<p class=MsoNormal><img border=0 width=601 height=291 id="Picture 385070412"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image009.gif"></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><a
+href="https://gyazo.com/93db4d8cf71bdcdaa5d3c627005b710b">https://gyazo.com/93db4d8cf71bdcdaa5d3c627005b710b</a></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><img border=0 width=602 height=567
+id=image6.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image010.gif"></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><a
+href="https://gyazo.com/348d03c867ccceae3690b89543c28edd"><span
+style='color:#1155CC'>https://gyazo.com/348d03c867ccceae3690b89543c28edd</span></a></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><span style='background:yellow'>Finally, in the
+same window, expand Type Options and add Text Mesh Pro and Text Mesh Pro UGUI,
+Regenerate Nodes:</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><img border=0 width=601 height=687
+id=image4.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image011.gif"></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'><a
+href="https://gyazo.com/47c8a369fd06aec34be3d33714f6b4bb"><span
+style='color:#1155CC'>https://gyazo.com/47c8a369fd06aec34be3d33714f6b4bb</span></a></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Select types as Text (or Text Mesh Pro UGUI) and
+Integer, give Integer a starting value of 100</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>j.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Add a Visual Scripting Component to the Timer Text
+Game Object - Embed Option</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>k.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Use the Start Unit in the VS Edit Window</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>l.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Right click, search for and add a Timer Unit</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>m.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Add a Get Variable Unit - Select Scene in Drop
+down, and add Timer_Value variable in variable drop down</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>n.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Wire up Start Unit to ‘Start’ on Timer</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>o.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Add an ‘Integer to String’ Unit, value wired from
+the Tmer Remaining output</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>p.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Get a Text: Set Text Unit and wire the value
+(orange) into the orange value bottom slot in the Text:Set Text</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>q.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Copy and paste the Get Variable Unit, select Timer
+variable in the drop down, and plug this into the Game Object slot on Text:Set
+Text - (You could also select it in the box as seen below)</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;border:none'>r.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>This will provide a decrementing timer from 100</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;border:none'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'>Timer Remaining
+Standard Text:</p>
+
+<p class=MsoNormal style='line-height:normal'><img border=0 width=601
+height=314 id="Picture 523860759"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image012.gif"><a
+href="https://gyazo.com/134d768dfed49ef6b389fa9b6909e2c7">https://gyazo.com/134d768dfed49ef6b389fa9b6909e2c7</a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'>Timer Remaining %
+Standard Text:</p>
+
+<p class=MsoNormal><img border=0 width=601 height=279 id="Picture 164537704"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image013.gif"><a
+href="https://gyazo.com/864515a25f1339798371c12fc8006c6a">https://gyazo.com/864515a25f1339798371c12fc8006c6a</a></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='line-height:normal'>Text Mesh Pro UGUI: <br>
+(search for node: “<span style='font-size:10.5pt;font-family:"Arial",sans-serif;
+color:#1B1B1B;background:white'>Text Mesh Pro UGUI: Set Text, Sync, Text Input
+Box”)</span><br>
+                                </p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'>Timer Remaining UGUI
+Text:</p>
+
+<p class=MsoNormal><img border=0 width=601 height=301 id="Picture 633741701"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image014.gif"><a
+href="https://gyazo.com/5270e77f9523bf5a9a951d678e5308c8">https://gyazo.com/5270e77f9523bf5a9a951d678e5308c8</a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'>Timer Remaining % UGUI
+Text:</p>
+
+<p class=MsoNormal><img border=0 width=601 height=296 id="Picture 1913785698"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image015.gif"><a
+href="https://gyazo.com/805cfa56d2a8032ab7bf7806868e63c6"><span
+style='font-size:10.5pt;line-height:107%;font-family:"Arial",sans-serif'>https://gyazo.com/805cfa56d2a8032ab7bf7806868e63c6</span></a></p>
+
+<p class=MsoNormal style='margin-left:72.0pt;line-height:normal;border:none'><a
+href="https://www.youtube.com/watch?v=BNgWV8SdVAQ"><span style='color:#1155CC;
+background:lime'>https://www.youtube.com/watch?v=BNgWV8SdVAQ</span></a> </p>
+
+<p class=MsoNormal><b><u><span style='text-decoration:none'>&nbsp;</span></u></b></p>
+
+<p class=MsoNormal><b><u><span style='text-decoration:none'>&nbsp;</span></u></b></p>
+
+<p class=MsoNormal><b><u><span style='text-decoration:none'>&nbsp;</span></u></b></p>
+
+<p class=MsoNormal><b><u>Tutorial 8 02 – Mixamo Prefab and Animations - Annie
+Sitting in Chair Asset</u></b><br>
+Whole process for matching sit animation to chair(old,but valid)): <a
+href="https://youtu.be/8tEZM7CLKOc"><span style='color:#0563C1'>https://youtu.be/8tEZM7CLKOc</span><span
+style='color:windowtext;text-decoration:none'><br>
+</span></a>Unity Import (old, but valid): <a href="https://youtu.be/VLy6U2edJ30"><span
+style='color:#0563C1;background:lime'>https://youtu.be/VLy6U2edJ30</span></a></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Import Café  - comes with chair object</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Import Materials and Textures in Inspector, make
+folders</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Drag other images into textures - drag and drop for
+cafe sign, posters, and iPad Screen</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Add Collision to Stairs</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Select pCube25 and pCube26</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Add box colliders to each</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Test with FPC that you can go up stairs</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Add box collider to pCube 41 - test the lip to the
+floor from stairs and adjust as needed</p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><img border=0
+width=602 height=205 id=image13.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image016.gif"></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/fee17854e096484e3725ff1bcc7e031a"><span
+style='color:#1155CC'>https://gyazo.com/fee17854e096484e3725ff1bcc7e031a</span></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><img border=0
+width=602 height=209 id=image14.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image017.gif"></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/8384b1139645fa7be454560530d15cc9"><span
+style='color:#1155CC'>https://gyazo.com/8384b1139645fa7be454560530d15cc9</span></a></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Download Chair Asset or
+use one in Cafe model import</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>if extra chair used - <span style='color:black'>Check
+scaling and pivots in Motionbuilder or 3D package of choice</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Drag into Unity</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Check scaling and pivots
+in Unity</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Find Chair in Cafe hierarchy</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>You will see that you cannot adjust this, as it is
+part of the Cafe Prefab</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>It does not act as a proper prefab though, as it is
+legacy</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>For now, copy and paste the chair model into the
+Hierarchy</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Deactivate the Chair in the Cafe</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Download </span>Fuse
+Annie Mixamo Tpose.fbx and Sitting Loop Anims.zip <span style='color:black'>from
+BB Assets for week 0</span>8</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Y<span style='color:black'>ou could also download
+the same from Mixamo, as before:</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Use </span>“<span
+style='color:black'>Unity for fbx</span>”<span style='color:black'> setting in
+Mixamo download, NOT </span>“<span style='color:black'>FBX</span>”</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Download </span>character<span
+style='color:black'> with skin, animation without skin</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>30 fps</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>No animation compression</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Bring </span>Annie<span
+style='color:black'> </span>Tpose <span style='color:black'>fbx into Unity
+(drag to Project window)</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>10.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span>In Inspector with Annie selected in project:</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Use external Material (Legacy)</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Import Textures</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Select and <span style='color:black'>Change
+Materials to Opaque</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;border:none'><img border=0 width=421 height=882
+id=image38.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image018.gif"></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;border:none'><a
+href="https://gyazo.com/43638a90cc7433e74e9ba773c246e937"><span
+style='color:#1155CC'>https://gyazo.com/43638a90cc7433e74e9ba773c246e937</span></a></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;border:none'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>11.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Quick Fix for Eyelashes</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Create<span style='color:black'> Diffuse material -
+Transparent</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Select default model in </span>Annie<span
+style='color:black'> (eyelashes)</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Drag material into
+eyelash model</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Or just hide eyelashes (untick active box)</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>12.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span>Scale Annie</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>ONLY in Project window in Model tab in Inspector</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Scale to 1.5 - <span style='background:yellow'>Note,
+you should scale down assets, not scale up diners</span>.</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'><span style='background:
+yellow'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='background:yellow'>Scale character
+back to 1.0, and scale assets instead.</span></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><img border=0
+width=601 height=632 id=image2.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image019.gif"></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/7c85b762ae51065668da2d8ecdfe15eb"><span
+style='color:#1155CC'>https://gyazo.com/7c85b762ae51065668da2d8ecdfe15eb</span></a></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Adjust Annies Tpose to have a Humanoid Skeleton Rig</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>e.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Adjust Annies Animation to have Compression off,
+and Body Orientation baked into the Pose ticked.</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>f.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Root Motion Node is None if there is no Control Rig
+on a Mixamo import </p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><img border=0 width=602
+height=848 id=image3.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image020.gif"></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><a
+href="https://gyazo.com/d380ea22ceb6c2e7cc460f9a21f16178"><span
+style='color:#1155CC'>https://gyazo.com/d380ea22ceb6c2e7cc460f9a21f16178</span></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-bottom:0cm'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>13.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Create Animator
+Controller for </span>Annie</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'><span style='color:black;
+background:white'>14.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></span><span
+dir=LTR></span><span style='background:white'>Add Sitting Loop Anims (Clip
+Burger, Drink, Fries Loops)</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Drag clips into Project window and make folder</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Select Desired Fbx Clip
+in Project (Expand to select animation)</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>In Inspector, select Edit
+Button top Right</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Select Middle “Rig” tab
+in inspector</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:126.0pt;text-indent:-126.0pt;border:none'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Animation Type – Humanoid</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:126.0pt;text-indent:-126.0pt;border:none'><b><i><span
+style='color:black'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></i></b><span dir=LTR></span><b><i><span style='color:black'>Avatar
+Definition – </span>Create from this model</i></b></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'>e.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Select Right “Animations”
+tab in Inspector</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:126.0pt;text-indent:-126.0pt;border:none'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Top: Anim. Compression –
+Off</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:126.0pt;text-indent:-126.0pt;border:none'><span style='color:black'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><span dir=LTR></span><span style='color:black'>Bottom:
+Motion/Root Motion Node – Root Transform</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:90.0pt;text-indent:-18.0pt;border:none'><b><i><span
+style='color:black'>f.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></i></b><span dir=LTR></span><b><i><span style='color:black'>Repeat
+for all clips</span></i></b></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:126.0pt;text-indent:-126.0pt;border:none'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Referencing this Avatar</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:126.0pt;text-indent:-126.0pt;border:none'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Rename as needed</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:126.0pt;text-indent:-126.0pt;border:none'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>iii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Loop as needed.</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>15.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Drag Sitting animation
+into Animator window (start state)</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>16.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Test Playback</span></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>17.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span><span style='color:black'>Position, rotate and
+scale chair as needed to fit </span>Annie</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>18.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span>Make Triggers for Fries, Drink, and Burger:</p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><img border=0
+width=602 height=321 id=image37.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image021.gif"></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>19.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span>Place Finished Annie in Hierarchy</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>20.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span>Drag Annie from Hierarchy to Project folder - This
+creates a Prefab of Annie</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt;text-indent:-18.0pt;border:none'>21.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;
+</span><span dir=LTR></span>Make a new Prefab folder in Project window to store
+the Annie Prefab</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:54.0pt'><span style='background:#B7B7B7'>&nbsp;</span></p>
+
+<p class=MsoNormal><b><u><span style='text-decoration:none'>&nbsp;</span></u></b></p>
+
+<p class=MsoNormal><b><u><span style='text-decoration:none'>&nbsp;</span></u></b></p>
+
+<p class=MsoNormal><b><u><span style='text-decoration:none'>&nbsp;</span></u></b></p>
+
+<p class=MsoNormal><b><u><span style='text-decoration:none'>&nbsp;</span></u></b></p>
+
+<p class=MsoNormal><b><u><span style='text-decoration:none'>&nbsp;</span></u></b></p>
+
+<p class=MsoNormal><b><u>Tutorial 8 03 – VS – Game Manager</u></b></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'>1. Make and empty Game Object and
+add a VS Embedded Script Graph (to access Scene Variables):</p>
+
+<p class=MsoNormal style='text-indent:36.0pt'>This serves to enable a script to
+manage some basic scene functions. The Game object is blank, and just acts as a
+host for the Visual Scripting to run:</p>
+
+<p class=MsoNormal><img border=0 width=601 height=584 id="Picture 172327574"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image022.gif"><a
+href="https://gyazo.com/6e3ea42da0dd9b63b9851f408c1ba428">https://gyazo.com/6e3ea42da0dd9b63b9851f408c1ba428</a></p>
+
+<p class=MsoNormal>The Visual Scripting looks as follows:</p>
+
+<p class=MsoNormal><a href="https://gyazo.com/870c2deb863d4183530f4b994a4ef2f0"><span
+style='font-size:10.5pt;line-height:107%;font-family:"Arial",sans-serif;
+color:#1155CC;background:white'>https://gyazo.com/870c2deb863d4183530f4b994a4ef2f0</span></a><span
+style='font-size:10.5pt;line-height:107%;font-family:"Arial",sans-serif;
+color:#4A4A4A;background:white'> </span></p>
+
+<p class=MsoNormal align=center style='text-align:center'><span
+style='font-size:10.5pt;line-height:107%;font-family:"Arial",sans-serif;
+color:#4A4A4A'><img border=0 width=602 height=633 id=image19.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image023.jpg"></span></p>
+
+<p class=MsoNormal style='text-indent:36.0pt'>2. FPC Start Disable -  This
+toggles the FPC on and off with the Start Button</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Right click and create Game Object Unit</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Get First Person Controller Literal (type in First,
+select FPC, select literal)</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Drag in Player Capsule to box or select via circle</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'><i>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></i><span dir=LTR></span><i>OR just drag in Player Capsule from
+Hierarchy (no FPC Script)</i></p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>e.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Right click and create Game Object Unit</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>f.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>search for Game Object Set Active (value) and
+accept</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>g.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>wire up Start to GO Set Active, and FPC PC to GO
+Set Active</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>h.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Keep Value unticked (off)</p>
+
+<p class=MsoNormal style='margin-left:72.0pt;text-indent:-18.0pt'>i.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>CTRL-LMB to create a bounding box around elements,
+rename to FPC Start Disable</p>
+
+<p class=MsoNormal style='text-indent:36.0pt'>3. FPC Start button enable</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Create a UI Canvas and a button - keep it screen
+space overlay</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Edit button text to say Start</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Use the same process above to create a GameObject
+in the same VS window, and drag in the start button to the box</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>d.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Right click and search for a On Button Click event,
+Game Object Set Active, and copy paste some elements from above to wire up a
+sequence that when the start button is pressed, the:</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:108.0pt;text-indent:-108.0pt'><span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>i.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Start button is made inactive (disappears- unticked
+value)</p>
+
+<p class=MsoNormal style='margin-left:108.0pt;text-indent:-108.0pt'><span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>ii.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>FOC PC is made active (value is ticked)</p>
+
+<p class=MsoNormal style='text-indent:36.0pt'>4. Toggle iPad</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>a.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Use the provided Update event</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>b.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>drag the iPadcobject from hierarchy into the script</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt'>c.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span dir=LTR></span>Game Object: Get Active Self</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;line-height:normal'>d.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Negate</p>
+
+<p class=MsoNormal style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;
+margin-left:72.0pt;text-indent:-18.0pt;line-height:normal'>e.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Game Object: Set Active</p>
+
+<p class=MsoNormal style='margin-bottom:0cm;line-height:normal'><i>&nbsp;</i></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;line-height:normal'><i>Option with
+Just Player Capsule:</i></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=602
+height=590 id=image9.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image024.gif"></p>
+
+<p class=MsoNormal style='margin-left:72.0pt'><a
+href="https://gyazo.com/ad7aa27294cadd8b1faec777586f7740"><span lang=ES
+style='color:#1155CC'>https://gyazo.com/ad7aa27294cadd8b1faec777586f7740</span></a></p>
+
+<p class=MsoNormal><b><u><span lang=ES><span style='text-decoration:none'>&nbsp;</span></span></u></b></p>
+
+<p class=MsoNormal><b><u><span lang=ES><span style='text-decoration:none'>&nbsp;</span></span></u></b></p>
+
+<p class=MsoNormal><b><u><span lang=ES><span style='text-decoration:none'>&nbsp;</span></span></u></b></p>
+
+<p class=MsoNormal><b><u><span lang=ES><span style='text-decoration:none'>&nbsp;</span></span></u></b></p>
+
+<p class=MsoNormal><b><u><span lang=ES><span style='text-decoration:none'>&nbsp;</span></span></u></b></p>
+
+<p class=MsoNormal><b><u><span lang=ES><span style='text-decoration:none'>&nbsp;</span></span></u></b></p>
+
+<p class=MsoNormal><b><u><span lang=ES><span style='text-decoration:none'>&nbsp;</span></span></u></b></p>
+
+<p class=MsoNormal><b><u><span lang=ES><span style='text-decoration:none'>&nbsp;</span></span></u></b></p>
+
+<p class=MsoNormal><b><u><span lang=ES><span style='text-decoration:none'>&nbsp;</span></span></u></b></p>
+
+<p class=MsoNormal><b><u><span lang=ES>Tutorial 8 04 – VS – iPad Diner UI</span></u></b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>On iPad Canvas, Create a Button
+     to Spawn a Diner - move this to the side of the existing timer from above</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>change the text below the button
+     object to “Diner 0”</li>
+ <li class=MsoNormal>On iPad Canvas, Create a <b>Visual Script Machine component
+     </b>and select <b>Embed</b>. We will be making the following Scene
+     Variables and Visual Script:</li>
+</ol>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=601 height=389 id="Picture 1483281490"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image025.gif"></p>
+
+<p class=MsoNormal align=center style='text-align:center'><a
+href="https://gyazo.com/3f44e72da9f0a1d3e346d19cf0bc094d">https://gyazo.com/3f44e72da9f0a1d3e346d19cf0bc094d</a></p>
+
+<p class=MsoNormal align=center style='text-align:center'><img border=0
+width=600 height=392 id="Picture 189418525"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image026.gif"></p>
+
+<p class=MsoNormal align=center style='text-align:center'><a
+href="https://gyazo.com/534b30098f891285465053c4763b5ecc">https://gyazo.com/534b30098f891285465053c4763b5ecc</a></p>
+
+<p class=MsoNormal align=center style='text-align:center'>&nbsp;</p>
+
+<ol style='margin-top:0cm' start=4 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>Create <b>Scene Variables</b> of
+     the following type and name:</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='margin-bottom:0cm'><b>List of Game Object:
+      DinerList </b>(make 4 entries, but leave blank)</li>
+  <li class=MsoNormal style='margin-bottom:0cm'><b>Integer: DinerListIndex </b>(leave
+      as 0)</li>
+  <li class=MsoNormal style='color:#BFBFBF;margin-bottom:0cm'><span
+      style='background:yellow'>List of String: OrderList (make 3 entries, but
+      leave blank – to be used later)</span></li>
+  <li class=MsoNormal style='color:#BFBFBF;margin-bottom:0cm'><b><span
+      style='background:yellow'>Boolean: OrderBool</span></b><span
+      style='background:yellow'> (Leave unticked)</span></li>
+  <li class=MsoNormal style='color:#BFBFBF;margin-bottom:0cm'><b><span
+      style='background:yellow'>GameObject: MainCamera</span></b><span
+      style='background:yellow'> (Drag in Main Camera here)</span></li>
+ </ol>
+ <li class=MsoNormal style='margin-bottom:0cm'>We will use the above in
+     creating and managing a List of Diner Prefabs</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>In the Visual Scripting Graph
+     Edit window, create an <b>On Button Click node</b>, and Drag in the <b>Diner
+     0 button</b> above</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Get a <b>Set Variable Node</b>,
+     select <b>DinerListIndex </b>in the drop down box</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>get an <b>Integer Literal Unit
+     Node</b>, type in 0, and wire up this value to the bottom link in the <b>Set
+     Variable Node</b></li>
+ <li class=MsoNormal style='margin-bottom:0cm'>We will Instantiate the Diner
+     prefab now: Get a <b>Game Object Instantiate Node,</b> and drag the Diner
+     prefab from the Project window into the box</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>For position and rotation, place
+     an empty game object on the floor below the chair to spawn onto</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Get a <b>Game Object Node</b> in
+     the VS Edit Graph Window, select the Empty Object for Pos and Rot</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Right click in the VS Script
+     Graph edit window and get <b>Transform:Get Position</b> and <b>Transform:Get
+     Rotation Nodes</b></li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Plug the Empty object <b>Game
+     Object Node</b> into each of these inputs</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Wire the outputs to the <b>Game
+     Object Instantiate Node</b></li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Test it now.</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>If working, finish up by getting
+     a <b>Node</b> for <b>List: Insert Item</b></li>
+ <li class=MsoNormal style='margin-bottom:0cm'>plug in the green continue arrow
+     from <b>Instantiate</b>, and the <b>Game Object</b> to the Item slot in
+     The <b>List Insert Item Node</b></li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Make a new <b>Get Variable Node</b>,
+     and select the <b>Diner List Variable </b>from the drop down box. Plug
+     this into the <b>List slot</b> in the <b>List Insert Item Node</b></li>
+ <li class=MsoNormal>You can add an optional <b>Debug log Node a</b>nd <b>string</b>
+     after this to check success.</li>
+</ol>
+
+<p class=MsoNormal><b><span style='font-size:13.0pt;line-height:107%;
+color:black;background:#D9EAD3'>Update: Spawn Diners via Seat Table button
+(Includes diner IDs and display of IDs):</span></b></p>
+
+<p class=MsoNormal><b><i><span style='font-size:13.0pt;line-height:107%;
+background:yellow'>NOTE: DINER IDs IS EXTRA WORK</span></i></b></p>
+
+<p class=MsoNormal><b><span style='font-size:13.0pt;line-height:107%;
+color:black;background:#D9EAD3'>iPad Canvas Scripts:</span></b></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><b><u><span style='font-size:12.0pt;line-height:107%;
+color:black;background:#D9EAD3'>A C# dinerArray script (on the canvas) will
+seat diner prefabs by clicking the &quot;Seat Table&quot; button up to 3 times.
+</span></u></b><u><span style='font-size:12.0pt;line-height:107%;color:black;
+background:#D9EAD3'><br>
+on iPad Model/Screen Buttons/Canvas/GUI_Buttons Visual Script</span></u></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><u><span style='font-size:12.0pt;line-height:107%;
+color:black;background:#D9EAD3'><img border=0 width=482 height=450
+id=image12.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image027.gif"></span></u></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><a
+href="https://gyazo.com/35544b189db59c842d92dc479b62d7d6"><span
+style='font-size:12.0pt;line-height:107%;color:#1155CC;background:#D9EAD3'>https://gyazo.com/35544b189db59c842d92dc479b62d7d6</span></a></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><u><span style='font-size:12.0pt;line-height:107%;
+color:black;background:#D9EAD3'><img border=0 width=418 height=326
+id=image15.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image028.gif"></span></u></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><a
+href="https://gyazo.com/3d5ce711c5fb781da20dd086bbb42aa6"><span
+style='font-size:12.0pt;line-height:107%;color:#1155CC;background:#D9EAD3'>https://gyazo.com/3d5ce711c5fb781da20dd086bbb42aa6</span></a></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'>You can populate the array with Prefab diners as
+above...</p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'>Inside your visual scripting, right click anywhere and
+type in “Diner Array”. You’ll get these options:</p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><img border=0 width=346 height=229
+id="Picture 224712797"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image029.jpg"></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><a
+href="https://gyazo.com/e8deb42763ad8bfdbc539591f1753fe1">https://gyazo.com/e8deb42763ad8bfdbc539591f1753fe1</a></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'>Select the second option down: “Expose Diner Array” and
+you will get the entire script open and exposed (and the name suggests) for us
+to utilize in our script. </p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><span style='background:yellow'>Before this works, you
+will probably need to add the Diner Array in Project/Settings/Visual
+Scripting/Type Options – press + at the end and type in your “diner Array”:</span></p>
+
+<p class=MsoNormal><img border=0 width=601 height=291 id="Picture 1791167357"
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image030.gif"></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><a
+href="https://gyazo.com/fb9ca1680c3f8927f7f9ffb25da3ad50">https://gyazo.com/fb9ca1680c3f8927f7f9ffb25da3ad50</a></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'>You’ll need to link the public arrays in this script
+into your <b>visual script graph</b> <i>on the <b>iPad Canvas Game Object</b></i>,
+at the start as shown below: <span style='background:yellow'>(Add Inputs Node
+is “Add (in Math/Generic)”)...</span></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><span style='color:black;background:#D9EAD3'><img
+border=0 width=602 height=231 id=image10.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image031.jpg"></span></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/3aa739fc8b3be703e1a6c0e66229c485"><span
+style='color:#1155CC'>https://gyazo.com/3aa739fc8b3be703e1a6c0e66229c485</span></a></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><b><u><span style='font-size:12.0pt;line-height:107%;
+color:black;background:#D9EAD3'>Individual diner IDs can be displayed on an
+iPad text display when Diner ID button is clicked in Diner Prefab UI  </span></u></b><u><span
+style='font-size:12.0pt;line-height:107%;color:black;background:#D9EAD3'>-
+Shown </span></u><span style='font-size:12.0pt;line-height:107%;color:black;
+background:#D9EAD3'>on iPad Model/Screen Buttons/Canvas/Feedback GUI Visual
+Script</span></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><b><i><u><span style='font-size:12.0pt;line-height:
+107%;background:yellow'>Note: This is after you set up the Diner Prefab canvas
+in step 09 01 below</span></u></i></b><b><u><span style='font-size:12.0pt;
+line-height:107%'>.</span></u></b></p>
+
+<p class=MsoNormal><b><span style='font-size:13.0pt;line-height:107%;
+color:black;background:#D9EAD3'>Diner Prefab Canvas Visual Script:</span></b></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><b><u><span style='font-size:12.0pt;line-height:107%;
+color:black;background:#D9EAD3'>The diners are given IDs based on the array
+index, and these are displayed in their Canvas UI Visual Script </span></u></b></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><u><span style='font-size:12.0pt;line-height:107%;
+color:black;background:#D9EAD3'><img border=0 width=602 height=139
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image032.jpg"></span></u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/ec481bbae68ad04800afda488f7fb956"><span
+style='color:#1155CC;background:#D9EAD3'>https://gyazo.com/ec481bbae68ad04800afda488f7fb956</span></a></p>
+
+<p class=MsoNormal><span style='background:#D9EAD3'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><b><u><span style='font-size:12.0pt;line-height:107%;
+color:black;background:#D9EAD3'>Individual diner IDs can be displayed on an
+iPad text display when Diner ID button is clicked in Diner Prefab UI.</span></u></b><u><span
+style='font-size:12.0pt;line-height:107%;color:black;background:#D9EAD3'><br>
+on Diner prefab Canvas Visual Script</span></u></p>
+
+<p class=MsoNormal><span style='color:black;background:#D9EAD3'><img border=0
+width=602 height=381 id=image8.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image033.jpg"></span></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/e88c172da48315c39dc809590a872841"><span
+style='color:#1155CC;background:#D9EAD3'>https://gyazo.com/e88c172da48315c39dc809590a872841</span></a></p>
+
+<p class=MsoNormal style='margin-top:12.0pt;margin-right:0cm;margin-bottom:
+12.0pt;margin-left:0cm'><span style='font-size:12.0pt;line-height:107%;
+color:black;background:#D9EAD3'>on iPad Model/Screen Buttons/Canvas/Feedback
+GUI Visual Script</span></p>
+
+<p class=MsoNormal><span style='color:black;background:#D9EAD3'><img border=0
+width=601 height=249 id=image7.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image034.jpg"></span></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/d4b52d1d05a30cab128e29839c5f5825"><span
+style='color:#1155CC;background:#D9EAD3'>https://gyazo.com/d4b52d1d05a30cab128e29839c5f5825</span></a></p>
+
+<p class=MsoNormal><span style='background:#D9EAD3'>&nbsp;</span></p>
+
+<p class=MsoNormal><b><u>Tutorial 09 01– VS – Diner Prefab VS and UI</u></b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>Select the Annie Diner Prefab
+     and open in scene</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Create a UI WorldSpace Canvas
+     under the Annie root</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Create Dialogue, Order, Deliver
+     and Payment UI buttons</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Create UI Text for DinerID,
+     Diner ID, Timer, Timer Value, and Dialogue</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>Arrange around head, and put
+     canvas with head in middle</li>
+ <li class=MsoNormal>Other text and buttons can come later</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><u><img border=0 width=602
+height=281 id=image22.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image035.jpg"></u></p>
+
+<ol style='margin-top:0cm' start=7 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>Make a visual script graph
+     (embedded) on the Canvas</li>
+ <li class=MsoNormal>The first thing this needs is a camera to look into the
+     Canvas and see the buttons via gazecasting. To do that create the
+     following in the Canvas Script:</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/f1398bff89e8e6442e7abb952449513a"><span
+style='color:#1155CC'>Script Graph (gyazo.com)</span></a></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><u><img border=0 width=384
+height=259 id=image18.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image036.jpg"></u></p>
+
+<ol style='margin-top:0cm' start=9 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>Select Canvas from the dropdown,
+     and Camera Get Main from Unit search</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>To implement the Diner ID, use
+     the following script:</li>
+ <li class=MsoNormal style='margin-bottom:0cm'><u><span style='font-size:12.0pt;
+     line-height:107%'>The diners are given IDs based on the array index, and
+     these are displayed in their UI – This is as set up above in the iPad
+     Canvas and C# Array</span></u></li>
+</ol>
+
+<p class=MsoNormal align=center style='margin-top:12.0pt;margin-right:0cm;
+margin-bottom:12.0pt;margin-left:0cm;text-align:center'><img border=0
+width=602 height=139 id=image20.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image037.jpg"></p>
+
+<p class=MsoNormal align=center style='text-align:center'><a
+href="https://gyazo.com/ec481bbae68ad04800afda488f7fb956"><span
+style='color:#1155CC'>https://gyazo.com/ec481bbae68ad04800afda488f7fb956</span></a></p>
+
+<ol style='margin-top:0cm' start=12 type=1>
+ <li class=MsoNormal>You can make an Elapsed timer as before (But use <b>Elapsed%</b>
+     and use a high upper bound for the OrderWaitTimer variable value like
+     1000):</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><u><img border=0 width=602
+height=288 id=image1.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image038.gif"></u></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/f1bc16d7d4e19f2f941e973ef5bb7988"><span
+style='color:#1155CC'>https://gyazo.com/f1bc16d7d4e19f2f941e973ef5bb7988</span></a></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><u><span style='text-decoration:
+ none'>&nbsp;</span></u></p>
+
+<ol style='margin-top:0cm' start=13 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>OrderWaitTimer is created as an
+     object variable with a value you prefer - try 1000</li>
+ <li class=MsoNormal>Your Dialogue and Animation Trigger is as done in CW1: </li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/756f793998be408935fe0138391a4887"><span
+style='color:#1155CC'>Script Graph (gyazo.com)</span></a></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><u><img border=0 width=602
+height=177 id=image25.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image039.jpg"></u></p>
+
+<ol style='margin-top:0cm' start=15 type=1>
+ <li class=MsoNormal>For the Order button, create a Scene OrderBoolean called
+     OrderBool and use this to turn it on</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/3a51587bcefd126b6df9d7ac526b6da5"><span
+style='color:#1155CC'>Script Graph (gyazo.com)</span></a></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><u><img border=0 width=602
+height=384 id=image24.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image040.jpg"></u></p>
+
+<ol style='margin-top:0cm' start=16 type=1>
+ <li class=MsoNormal>Next we must implement the OrderBool in the main scene to
+     trigger a burger cook and spawn.</li>
+</ol>
+
+<p class=MsoNormal><b><u>Tutorial 09 02– VS – Diner Order and Burger Cook and
+Spawn</u></b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal>Create a UI panel (organises Text and Buttons) on the iPad
+     that will hold Kitchen UI Text Information - I’ve named mine Kitchen GUI.</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=315
+height=291 id=image26.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image041.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/37792e99368f2fcce55d18d3525e7a30"><span
+style='color:#1155CC'>https://gyazo.com/37792e99368f2fcce55d18d3525e7a30</span></a></p>
+
+<ol style='margin-top:0cm' start=2 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>Create and place a UI text and
+     call it “Text Burger Cook Timer”</li>
+ <li class=MsoNormal>Create Scene variables for CookBurger (Boolean) and
+     CookTimer Bool (Boolean)</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=311
+height=342 id=image30.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image042.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/b9b0e5d8588b595911f5727b2a2992a6"><span
+style='color:#1155CC'>https://gyazo.com/b9b0e5d8588b595911f5727b2a2992a6</span></a></p>
+
+<ol style='margin-top:0cm' start=4 type=1>
+ <li class=MsoNormal>You already have the Scene Variable for Order Boolean
+     (Above)</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/f6456f72819b1713163fb7f1fa1837a9"><span
+style='color:#1155CC'>Script Graph (gyazo.com)</span></a></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=601
+height=285 id=image27.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image043.jpg"></p>
+
+<ol style='margin-top:0cm' start=5 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>Create a Visual Script
+     (embedded) for the Kitchen GUI Panel, and use the Update Unit to link to
+     an If Unit - Plug the Scene:OrderBool into this - this checks if the Diner
+     order button is pressed.</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>If true, this passes to a Set
+     Scene Variable for the CookBurger (boolean set to true), then the
+     CookTimerBool(Boolean set to true), Then the Scene Order Boolean is
+     switched back to false, ready for the next order. Group and name this with
+     the Control-LMB-drag to make a box</li>
+ <li class=MsoNormal>Next is the Cook Timer (on the same Visual Script Graph):</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=602
+height=297 id=image33.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image044.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/545fef560828dd0a2445f937c21efa33"><span
+style='color:#1155CC'>https://gyazo.com/545fef560828dd0a2445f937c21efa33</span></a></p>
+
+<ol style='margin-top:0cm' start=8 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>Set up the timer similar to
+     before, but have it link Remaining% to the Multiply function. Variables
+     used are the CookTimerBool (switched to true above to trigger the timer),
+     Cook Timer(Integer set to 5), and TextBurgerCookTimer for the live
+     readout. There is also a debug log that ticks down with messages.</li>
+ <li class=MsoNormal>After Set Text, you are sent to the Spawn Burger section
+     as below:</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=602
+height=238 id=image34.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image045.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/49d6d1996e0193b7e96ec3144edc3e5f"><span
+style='color:#1155CC'>https://gyazo.com/49d6d1996e0193b7e96ec3144edc3e5f</span></a></p>
+
+<ol style='margin-top:0cm' start=10 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>For this you need a scene
+     BurgerUpBool(Boolean), a burger prefab (a cube will do for now), and an
+     empty game object placed where you want the burger to be spawned in the
+     scene.</li>
+ <li class=MsoNormal style='margin-bottom:0cm'>an If unit comes after the Set
+     Text. All this runs off of the Update unit, running the timer, and spawns
+     whenever the timer is triggered and runs down (simulating a burger cook
+     time).</li>
+ <li class=MsoNormal>The If statement checks that the current CookTimer value
+     is less than or equal to zero. To do this, it must get the value as it
+     comes out of the Multiply Unit:</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=601
+height=431 id=image31.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image046.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/2f7a9f3901c4267d746a3b362e720989"><span
+style='color:#1155CC'>https://gyazo.com/2f7a9f3901c4267d746a3b362e720989</span></a></p>
+
+<ol style='margin-top:0cm' start=13 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'>If the timer gets to 0, the If
+     Unit moves on to the Set Scene Variable to make the BurgerUp Bool(Boolean)
+     True. This may be used later for notices.</li>
+ <li class=MsoNormal>This Passes through to an Instantiate unit, with the
+     burger prefab selected, and the Burger Position Get Rotation and Get
+     Position Plugged in for Spawn location:</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=602
+height=408 id=image32.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image047.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/1bfa7c6fc1eddcc961552249c83a926c"><span
+style='color:#1155CC'>https://gyazo.com/1bfa7c6fc1eddcc961552249c83a926c</span></a></p>
+
+<ol style='margin-top:0cm' start=15 type=1>
+ <li class=MsoNormal>Now the burger is spawned, we just tidy up the Boolean
+     variables to get ready  for the next burger:</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=551
+height=345 id=image36.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image048.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/206deba05081116199184220a5548a39"><span
+style='color:#1155CC'>https://gyazo.com/206deba05081116199184220a5548a39</span></a></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'>&nbsp;</p>
+
+<p class=MsoNormal><b><u>Extra:</u></b></p>
+
+<p class=MsoNormal><i>Thinking forward to multiple Diner work, we can start to
+add other characters to the diner list:</i></p>
+
+<p class=MsoNormal><b><u><img border=0 width=602 height=523 id=image35.png
+src="Tutorial%2008%2009%20Visual%20Scripting%2001_files/image049.gif"></u></b></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/678b49983bfddfbbdc916cf978cde0d3"><b><span
+lang=FR style='color:#1155CC'>https://gyazo.com/678b49983bfddfbbdc916cf978cde0d3</span></b></a></p>
+
+<p class=MsoNormal><b><u><span lang=FR><span style='text-decoration:none'>&nbsp;</span></span></u></b></p>
+
+<p class=MsoNormal><u><span lang=FR>Update GUI, Add audio fx</span></u></p>
+
+<p class=MsoNormal><u>Asset Work</u></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><u>Chair Adjustment: Max Units
+and Pivots</u><br>
+<a href="https://youtu.be/H_x9AuSXq1w"><span style='color:#0563C1'>https://youtu.be/H_x9AuSXq1w</span></a></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><u>Asset Management: Burgers and
+Beer<br>
+</u><a href="https://www.youtube.com/watch?v=SXKYAtfenhs"><span
+style='color:#0563C1'>https://www.youtube.com/watch?v=SXKYAtfenhs</span></a></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>
