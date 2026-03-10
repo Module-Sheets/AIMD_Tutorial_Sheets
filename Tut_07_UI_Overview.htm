@@ -130,9 +130,7 @@
       This page preserves and converts all content from Tut 07 UI Overview.htm, with images interspersed in the original sequence.
     </div>
 
-    <details class="accordion" open>
-      <summary class="accordion-summary"><h2>Tutorial 07 Full Content</h2></summary>
-      <div class="accordion-content legacy-content">
+    <div id="tutorial-07-content" class="legacy-content">
         <p class=MsoNormal><b><span style='color:black'>Week 07 UI Tutorial – Unity
 Animation and UI Buttons Overview</span></b></p>
 
@@ -801,9 +799,65 @@ href="https://gyazo.com/31efbb8a5f1266954113046e605ac578"><span lang=EN-GB>https
 <p class=MsoNormal><span lang=EN-US style='color:black'>&nbsp;</span></p>
 
 <p class=MsoNormal><span lang=EN-US>&nbsp;</span></p>
-      </div>
-    </details>
+    </div>
   </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById('tutorial-07-content');
+      if (!root) return;
+
+      function markerTitleFromText(text) {
+        var clean = (text || '').replace(/\s+/g, ' ').trim();
+        var m = clean.match(/7\.\d+\s+[^]+$/i);
+        if (!m) return null;
+        return m[0].trim();
+      }
+
+      function sectionMarkerFor(node) {
+        if (!node || node.nodeType !== Node.ELEMENT_NODE) return null;
+        if (node.tagName !== 'P') return null;
+        var text = node.textContent || '';
+        if (!/7\.\d+/i.test(text)) return null;
+        return markerTitleFromText(text);
+      }
+
+      var sections = [];
+      var current = { title: 'Overview', nodes: [] };
+      sections.push(current);
+
+      var children = Array.from(root.childNodes);
+      children.forEach(function (node) {
+        var markerTitle = sectionMarkerFor(node);
+        if (markerTitle) {
+          current = { title: markerTitle, nodes: [] };
+          sections.push(current);
+        }
+        current.nodes.push(node);
+      });
+
+      root.innerHTML = '';
+      sections.forEach(function (section, idx) {
+        var details = document.createElement('details');
+        details.className = 'accordion';
+        if (idx === 0) details.open = true;
+
+        var summary = document.createElement('summary');
+        summary.className = 'accordion-summary';
+        var h2 = document.createElement('h2');
+        h2.textContent = section.title;
+        summary.appendChild(h2);
+
+        var content = document.createElement('div');
+        content.className = 'accordion-content legacy-content';
+        section.nodes.forEach(function (n) { content.appendChild(n); });
+
+        details.appendChild(summary);
+        details.appendChild(content);
+        root.appendChild(details);
+      });
+    })();
+  </script>
 </body>
 </html>
 
