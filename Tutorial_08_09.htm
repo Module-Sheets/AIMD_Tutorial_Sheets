@@ -121,6 +121,20 @@
     .legacy-content [style*='margin-left:126.0pt'] { margin-left: 4.2rem !important; }
     .legacy-content [style*='margin-left:144.0pt'] { margin-left: 4.8rem !important; }
     .legacy-content [style*='margin-left:180.0pt'] { margin-left: 6rem !important; }
+
+        .panopto-viewer {
+            margin: 12px 0;
+            border: 1px solid #c7dbe2;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #f8fcfd;
+        }
+        .panopto-viewer iframe {
+            width: 100%;
+            min-height: 420px;
+            border: 0;
+            display: block;
+        }
   </style>
 </head>
 <body>
@@ -262,8 +276,17 @@ background:white'>https://www.youtube.com/watch?v=SXKYAtfenhs</span></a></p>
   <li style='margin-bottom:0cm;border:none'><b><i><span
       style='background:lime'>Videos for flattened cube method below: </span></i></b><a
       href="https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=ff508ba5-9366-4895-9dfe-b29f00c4f227 "><i><span
-      style='background:lime'>https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=ff508ba5-9366-4895-9dfe-b29f00c4f227</span></i></a><i>
-      </i></li>
+            style='background:lime'>https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=ff508ba5-9366-4895-9dfe-b29f00c4f227</span></i></a><i>
+            </i>
+            <div class='panopto-viewer'>
+                <iframe
+                    src="https://westminster.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=ff508ba5-9366-4895-9dfe-b29f00c4f227"
+                    title="Panopto video: flattened cube method"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen>
+                </iframe>
+            </div>
+    </li>
  </ol>
 <!-- </ol>
 
@@ -1603,44 +1626,55 @@ style='color:#0563C1'>https://www.youtube.com/watch?v=SXKYAtfenhs</span></a></p>
             if (!root) return;
 
             var markers = [
-                { re: /Tutorial\s*8\s*01/i, title: 'Tutorial 8 01 - FPC, Input, iPad and UI, and Chair', key: 't801' },
-                { re: /Tutorial\s*8\s*02/i, title: 'Tutorial 8 02 - Mixamo Prefab and Animations', key: 't802' },
-                { re: /Tutorial\s*8\s*03/i, title: 'Tutorial 8 03 - VS - Game Manager', key: 't803' },
-                { re: /Tutorial\s*8\s*04/i, title: 'Tutorial 8 04 - VS - iPad Diner UI', key: 't804' },
-                { re: /Tutorial\s*09\s*01/i, title: 'Tutorial 09 01 - VS - Diner Prefab VS and UI', key: 't901' },
-                { re: /Tutorial\s*09\s*02/i, title: 'Tutorial 09 02 - VS - Diner Order and Burger Cook and Spawn', key: 't902' },
-                { re: /^\s*Extra\s*:/i, title: 'Extra', key: 'extra' }
+                { findRe: /Tutorial\s*8\s*01/i, title: 'Tutorial 8 01 - FPC, Input, iPad and UI, and Chair', key: 't801' },
+                { findRe: /Tutorial\s*8\s*02/i, title: 'Tutorial 8 02 - Mixamo Prefab and Animations', key: 't802' },
+                { findRe: /Tutorial\s*8\s*03/i, title: 'Tutorial 8 03 - VS - Game Manager', key: 't803' },
+                { findRe: /Tutorial\s*8\s*04/i, title: 'Tutorial 8 04 - VS - iPad Diner UI', key: 't804' },
+                { findRe: /DINER\s*IDs?\s*IS\s*EXTRA\s*WORK/i, title: 'Diner ID Extra', key: 'dinerid-extra' },
+                { findRe: /Tutorial\s*09\s*01/i, title: 'Tutorial 09 01 - VS - Diner Prefab VS and UI', key: 't901' },
+                { findRe: /Tutorial\s*09\s*02/i, title: 'Tutorial 09 02 - VS - Diner Order and Burger Cook and Spawn', key: 't902' },
+                { findRe: /<p[^>]*>\s*<b[^>]*>\s*<u[^>]*>\s*Extra\s*:/i, title: 'Tutorial 09 Extra', key: 'extra' }
             ];
 
-            function markerFor(node) {
-                if (!node || node.nodeType !== Node.ELEMENT_NODE) return null;
-                if (node.tagName !== 'P') return null;
-                var text = (node.textContent || '').replace(/\s+/g, ' ').trim();
-                for (var i = 0; i < markers.length; i++) {
-                    if (markers[i].re.test(text)) return markers[i];
-                }
-                return null;
-            }
+            var html = root.innerHTML;
+            var foundMarkers = [];
 
-            var sections = [];
-            var current = { title: 'Overview', key: 'overview', nodes: [] };
-            sections.push(current);
-
-            var children = Array.from(root.childNodes);
-            children.forEach(function (node) {
-                var marker = markerFor(node);
-                if (marker) {
-                    current = { title: marker.title, key: marker.key, nodes: [] };
-                    sections.push(current);
+            markers.forEach(function (marker) {
+                var match = marker.findRe.exec(html);
+                if (match) {
+                    foundMarkers.push({ index: match.index, marker: marker });
                 }
-                current.nodes.push(node);
             });
 
+            foundMarkers.sort(function (a, b) { return a.index - b.index; });
+
+            var sections = [];
+            if (foundMarkers.length === 0) {
+                sections.push({ title: 'Overview', key: 'overview', html: html });
+            } else {
+                if (foundMarkers[0].index > 0) {
+                    sections.push({
+                        title: 'Overview',
+                        key: 'overview',
+                        html: html.slice(0, foundMarkers[0].index)
+                    });
+                }
+
+                for (var i = 0; i < foundMarkers.length; i++) {
+                    var start = foundMarkers[i].index;
+                    var end = i + 1 < foundMarkers.length ? foundMarkers[i + 1].index : html.length;
+                    sections.push({
+                        title: foundMarkers[i].marker.title,
+                        key: foundMarkers[i].marker.key,
+                        html: html.slice(start, end)
+                    });
+                }
+            }
+
             root.innerHTML = '';
-            sections.forEach(function (section, idx) {
+            sections.forEach(function (section) {
                 var details = document.createElement('details');
                 details.className = 'accordion';
-                if (idx === 0) details.open = true;
 
                 var summary = document.createElement('summary');
                 summary.className = 'accordion-summary';
@@ -1650,7 +1684,7 @@ style='color:#0563C1'>https://www.youtube.com/watch?v=SXKYAtfenhs</span></a></p>
 
                 var content = document.createElement('div');
                 content.className = 'accordion-content legacy-content';
-                section.nodes.forEach(function (n) { content.appendChild(n); });
+                content.innerHTML = section.html;
 
                 details.appendChild(summary);
                 details.appendChild(content);
