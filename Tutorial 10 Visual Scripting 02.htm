@@ -1,0 +1,630 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:Georgia;
+	panose-1:2 4 5 2 5 4 5 2 3 3;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:0cm;
+	line-height:107%;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{color:#0563C1;
+	text-decoration:underline;}
+.MsoChpDefault
+	{font-family:"Calibri",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:107%;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-GB link="#0563C1" vlink="#954F72" style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal><b><span style='font-size:15.0pt;line-height:107%'>Tutorial
+10 - Finishing Visual Scripting with Prefabs</span></b></p>
+
+<p class=MsoNormal><span style='font-size:14.0pt;line-height:107%;background:
+yellow'>Basic video Run-through from lectures starts on page 12 – note, these
+are for basic examples only and may not have all bug fixes from this year.</span></p>
+
+<p class=MsoNormal><b>Short Video example<br>
+</b><a href="https://gyazo.com/543eef64487e9e0ceeeb330d50c82a83"><b><span
+style='color:#1155CC'>https://gyazo.com/543eef64487e9e0ceeeb330d50c82a83</span></b></a></p>
+
+<p class=MsoNormal><b>Assets (all in Week 8 in BB)</b></p>
+
+<p class=MsoNormal>Cafe_Fbx.zip - Chair, Café (Just chair is in Chair.fbx)<br>
+iPad<br>
+Burger and beer<br>
+Annie<br>
+Sitting Loop Animations - Sitting Loop Anims.zip</p>
+
+<p class=MsoNormal><b>Overview</b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm;border:none'><b>Begin with your
+     week 08-09 Unity Project (this needs all implementation so far)</b></li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal style='color:black;margin-bottom:0cm;border:none'>Work
+      from CW1 Unity Project or Tutorial 08 Base Project Provided and build all
+      week 8 and 9 <span style='color:windowtext'>features</span></li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'>This week will be
+      about completing the interaction loop for one diner prefab</li>
+  <li class=MsoNormal style='margin-bottom:0cm;border:none'>After this,
+      multiple diners, animations, and even the Diner List can be used for
+      extra marks</li>
+ </ol>
+</ol>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><u>iPad interface
+update</u></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=602 height=269 id=image1.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image001.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/8434af7e479af2143c12a4446558ee16"><b><span
+style='color:#1155CC'>https://gyazo.com/8434af7e479af2143c12a4446558ee16</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>iPad Text displays
+are given scene variable displays by duplicating and scaling the original text,
+and giving it the additional name “Value”. These are organised, and given a
+true type font for styling.</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>Check Scene
+Variables below so that you have all:</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=333 height=753 id=image31.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image002.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/0b65d681a3c66b625eed284bdcf0e827"><b><span
+style='color:#1155CC'>https://gyazo.com/0b65d681a3c66b625eed284bdcf0e827</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=322 height=761 id=image27.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image003.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/67945d0fd21cb9a99774ac00f93e237a"><b><span
+style='color:#1155CC'>https://gyazo.com/67945d0fd21cb9a99774ac00f93e237a</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><u>iPad Script
+Updates</u></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=602 height=300 id=image10.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image004.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/d5c131d86ff0302ebecbeba26118ba5c"><b><span
+style='color:#1155CC'>https://gyazo.com/d5c131d86ff0302ebecbeba26118ba5c</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>Our cook Timer
+section gets an “uncooked” update to decrement the uncooked burger supply</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=602 height=263 id=image18.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image005.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/bf2196aa2002ac9d2273c0c879a74afe"><b><span
+style='color:#1155CC'>https://gyazo.com/bf2196aa2002ac9d2273c0c879a74afe</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>Our Spawn Burger,
+or Burger section likewise gets a Cooked Burger tracker update </b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=602 height=179 id=image32.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image006.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/159342b76723c73386e50b0b938f6b2d"><b><span
+style='color:#1155CC'>https://gyazo.com/159342b76723c73386e50b0b938f6b2d</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>Update Text for the
+above and also Burger “OnBoard” are Updated in a new Update Text section</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><u>Diner Prefab
+interface update</u></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=602 height=246 id=image36.jpg
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image007.jpg"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/cc0ffc2e29afc3d1949de7faa673a369"><b><span
+style='color:#1155CC'>https://gyazo.com/cc0ffc2e29afc3d1949de7faa673a369</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><b>As with the iPad, we do a
+housekeeping and font update on the UI Panel for the diner. Text elements are
+duplicated, moved, and scaled to create value displays for the variable text
+labels.</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><b>Buttons are arranged as :</b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal style='margin-bottom:0cm'><b><i>Dialogue</i></b></li>
+ <li class=MsoNormal style='margin-bottom:0cm'><b><i>Order</i></b></li>
+ <li class=MsoNormal style='margin-bottom:0cm'><b><i>Deliver Order</i></b></li>
+ <li class=MsoNormal style='margin-bottom:0cm'><b><i>Take Payment</i></b></li>
+</ol>
+
+<p class=MsoNormal style='margin-bottom:0cm'><b>Dialogue counter and Dialogue
+text box are arranged to the side, and large enough for all dialogue</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><b><img border=0 width=602
+height=279 id=image11.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image008.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><a
+href="https://gyazo.com/fc0be2140e892b882419bd4e275ba2ff"><b><span
+style='color:#1155CC'>https://gyazo.com/fc0be2140e892b882419bd4e275ba2ff</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm'><b>Diner prefab timers and
+interaction sequence</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=602 height=149 id=image7.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image009.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/7eb758cba06c3d34418882942043b41b"><b><span
+style='color:#1155CC'>https://gyazo.com/7eb758cba06c3d34418882942043b41b</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>Button Order and
+Order Wait Timer</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=602 height=207 id=image12.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image010.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/5bf958e0cce5e400d148cf8336555140"><b><span lang=FR
+style='color:#1155CC'>https://gyazo.com/5bf958e0cce5e400d148cf8336555140</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><span lang=FR>Delivery
+Wait Timer</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><span lang=FR>&nbsp;</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=602 height=179 id=image16.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image011.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/634659f071ea76444b2e9703b1f46876"><b><span
+style='color:#1155CC'>https://gyazo.com/634659f071ea76444b2e9703b1f46876</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>Deliver and Eat
+Timer - leading to….</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=601 height=260 id=image23.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image012.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/95890cf0deac606948e1496410e03ce7"><b><span lang=FR
+style='color:#1155CC'>https://gyazo.com/95890cf0deac606948e1496410e03ce7</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><span lang=FR>Pay
+Timer</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><span lang=FR>&nbsp;</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=601 height=247 id=image5.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image013.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/d88afd072683e93eb95e5ebf6dbd50ff"><b><span lang=FR
+style='color:#1155CC'>https://gyazo.com/d88afd072683e93eb95e5ebf6dbd50ff</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><span lang=FR>Pay
+Timer</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><span lang=FR>&nbsp;</span></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=602 height=228 id=image24.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image014.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/1d1a9d324a767867e971f5467a8ccc12"><b><span
+style='color:#1155CC'>https://gyazo.com/1d1a9d324a767867e971f5467a8ccc12</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>Payment, Happiness,
+and Destroy Prefab</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>Note: Drag the
+Annie Prefab in from the project folder to the box on the destroy Unit.</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>All Diner Prefab
+Object Variables:</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=330 height=741 id=image13.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image015.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/d669c56fad1da0faba48c84f0d9956b6"><b><span
+style='color:#1155CC'>https://gyazo.com/d669c56fad1da0faba48c84f0d9956b6</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=328 height=776 id=image22.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image016.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/f319c3086b1063e2bc2eca10449888ab"><b><span
+style='color:#1155CC'>https://gyazo.com/f319c3086b1063e2bc2eca10449888ab</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=322 height=620 id=image26.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image017.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/4b92cb761d3e1e8e94d0571f33da09f1"><b><span
+style='color:#1155CC'>https://gyazo.com/4b92cb761d3e1e8e94d0571f33da09f1</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><u>Burger Update</u></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>Burger gets a
+pickup button for now (testng onclick and button hide))</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=602 height=264 id=image34.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image018.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/dabcfb0bd71fb963b6df1e65d5b0c673"><b><span
+style='color:#1155CC'>https://gyazo.com/dabcfb0bd71fb963b6df1e65d5b0c673</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=602 height=326 id=image25.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image019.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/ab604b07f31d5ef0fd46cfc0895d24b6"><b><span
+style='color:#1155CC'>https://gyazo.com/ab604b07f31d5ef0fd46cfc0895d24b6</span></b></a></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>Burger has no
+variables of its own, it just accesses scene variables; OnBoard, BurgerUpBool</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><u>Final feedback
+in iPad </u></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b>&nbsp;</b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><b><img border=0
+width=601 height=329 id=image9.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image020.gif"></b></p>
+
+<p class=MsoNormal style='margin-bottom:0cm;border:none'><a
+href="https://gyazo.com/36f8a60cd8ea1f805eee17db9295829d"><b><span
+style='color:#1155CC'>https://gyazo.com/36f8a60cd8ea1f805eee17db9295829d</span></b></a></p>
+
+<p class=MsoNormal><b>Happiness is updated to reflect Diner updates when done</b></p>
+
+<p class=MsoNormal><b>&nbsp;</b></p>
+
+<p class=MsoNormal><b><span style='font-size:24.0pt;line-height:107%'>BASIC
+VIDEO RUNTHROUGH ON NEXT PAGES:</span></b></p>
+
+<p class=MsoNormal><b>I did a basic run through demo during Lecture videos
+weeks 9-11 that covered the base requirements with the minimal use of scripts
+and variables. That process is documented in the videos and also the screen
+shots below (audio is not great):</b></p>
+
+<p class=MsoNormal><b>9:</b><br>
+<a
+href="https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=4ba609bd-9c3d-4f79-9383-af55010853e2"><b>https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=4ba609bd-9c3d-4f79-9383-af55010853e2</b></a><b>
+</b><br>
+<b>10:</b><br>
+<a
+href="https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=50dd97d3-9560-4e6f-bd2d-af5c01081dea"><b>https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=50dd97d3-9560-4e6f-bd2d-af5c01081dea</b><span
+style='color:windowtext;text-decoration:none'><br>
+</span></a><a
+href="https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=308b38c3-2d41-4d5b-a0cf-af5e010a6fc8"><b>https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=308b38c3-2d41-4d5b-a0cf-af5e010a6fc8</b></a><b>
+</b><br>
+<b>11:</b><br>
+<a
+href="https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=dae6bd0b-f369-44e8-99f9-af6301089081"><b>https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=dae6bd0b-f369-44e8-99f9-af6301089081</b></a><b>
+</b><br>
+<br>
+<br>
+</p>
+
+<p class=MsoNormal><b><span style='font-size:14.0pt;line-height:107%'>Annie
+Prefab:</span></b></p>
+
+<p class=MsoNormal><u>Camera and Order Scripts:</u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/5cfcf06689a3f4ad98f3fbdc568095b3"><b><span
+style='color:#1155CC'>https://gyazo.com/5cfcf06689a3f4ad98f3fbdc568095b3</span></b></a></p>
+
+<p class=MsoNormal><b><img border=0 width=601 height=324 id=image6.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image021.jpg"></b></p>
+
+<p class=MsoNormal><u>Delivery and Wait and Eat Timers:</u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/d47469389ff4d2519243445fdd1d7b5b"><b><span
+style='color:#1155CC'>https://gyazo.com/d47469389ff4d2519243445fdd1d7b5b</span></b></a></p>
+
+<p class=MsoNormal><b><img border=0 width=601 height=326 id=image14.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image022.jpg"></b></p>
+
+<p class=MsoNormal><u><span style='text-decoration:none'>&nbsp;</span></u></p>
+
+<p class=MsoNormal><u><span style='text-decoration:none'>&nbsp;</span></u></p>
+
+<p class=MsoNormal><u><span style='text-decoration:none'>&nbsp;</span></u></p>
+
+<p class=MsoNormal><u>Eat and Pay Timer Bool:</u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/6f424b17e64f827a93abd2dd9b037d7a"><b><span
+style='color:#1155CC'>https://gyazo.com/6f424b17e64f827a93abd2dd9b037d7a</span></b></a><b>
+</b></p>
+
+<p class=MsoNormal><b><img border=0 width=602 height=326 id=image20.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image023.jpg"></b></p>
+
+<p class=MsoNormal><u>Pay Timer Bool and Pay Timer:</u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/9cff2749bef925a164cd9600b221d4af"><b><span
+style='color:#1155CC'>https://gyazo.com/9cff2749bef925a164cd9600b221d4af</span></b></a><b>
+</b></p>
+
+<p class=MsoNormal><u><img border=0 width=603 height=326 id=image3.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image024.jpg"></u></p>
+
+<p class=MsoNormal><u><span style='text-decoration:none'>&nbsp;</span></u></p>
+
+<p class=MsoNormal><u><span style='text-decoration:none'>&nbsp;</span></u></p>
+
+<p class=MsoNormal><u><span style='text-decoration:none'>&nbsp;</span></u></p>
+
+<p class=MsoNormal><u><span style='text-decoration:none'>&nbsp;</span></u></p>
+
+<p class=MsoNormal><u>Happiness and Destroy:</u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/becdcd5642f9723b6950dfefb067339e"><b><span
+style='color:#1155CC'>https://gyazo.com/becdcd5642f9723b6950dfefb067339e</span></b></a><b>
+</b></p>
+
+<p class=MsoNormal><b><img border=0 width=614 height=330 id=image29.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image025.jpg"></b></p>
+
+<p class=MsoNormal><u>Prefab Object Variables:</u></p>
+
+<p class=MsoNormal><u><img border=0 width=312 height=441 id=image21.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image026.gif"></u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/a02cdbf0948c35e840df8b58c01ded7a"><span
+lang=ES style='color:#1155CC'>https://gyazo.com/a02cdbf0948c35e840df8b58c01ded7a</span></a></p>
+
+<p class=MsoNormal><b><span lang=ES style='font-size:15.0pt;line-height:107%'>Start
+Canvas:</span></b></p>
+
+<p class=MsoNormal><u><img border=0 width=549 height=616 id=image30.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image027.gif"></u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/3e3e58725ec94636dd1990cab5893ac1"><span
+lang=ES style='color:#1155CC'>https://gyazo.com/3e3e58725ec94636dd1990cab5893ac1</span></a></p>
+
+<p class=MsoNormal><b><span lang=ES style='font-size:14.0pt;line-height:107%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=ES style='font-size:14.0pt;line-height:107%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=ES style='font-size:14.0pt;line-height:107%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=ES style='font-size:14.0pt;line-height:107%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=ES style='font-size:14.0pt;line-height:107%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=ES style='font-size:14.0pt;line-height:107%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span lang=ES style='font-size:14.0pt;line-height:107%'>Main
+iPad Canvas:</span></b></p>
+
+<p class=MsoNormal><u>Timer:</u></p>
+
+<p class=MsoNormal><u><img border=0 width=601 height=330 id=image35.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image028.gif"></u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/0f71bf05c2cfb3a13a490372b5bb9f49"><span
+style='color:#1155CC'>https://gyazo.com/0f71bf05c2cfb3a13a490372b5bb9f49</span></a></p>
+
+<p class=MsoNormal><u>Spawn Button/Order:</u></p>
+
+<p class=MsoNormal><u><img border=0 width=602 height=171 id=image33.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image029.gif"></u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/0a2a4eb57df786bf1ae84d1d1018e96c"><span
+style='color:#1155CC'>https://gyazo.com/0a2a4eb57df786bf1ae84d1d1018e96c</span></a></p>
+
+<p class=MsoNormal><u>Order:</u></p>
+
+<p class=MsoNormal><u><img border=0 width=601 height=224 id=image19.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image030.gif"></u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/8d028121cae3bd6ab958a0384350f2e8"><span
+lang=FR style='color:#1155CC'>https://gyazo.com/8d028121cae3bd6ab958a0384350f2e8</span></a></p>
+
+<p class=MsoNormal><u><span lang=FR>Cook Timer:</span></u></p>
+
+<p class=MsoNormal><u><img border=0 width=601 height=168 id=image28.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image031.gif"></u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/1237dc865e061a4eeecfd6ee9f4a379e"><span
+lang=FR style='color:#1155CC'>https://gyazo.com/1237dc865e061a4eeecfd6ee9f4a379e</span></a></p>
+
+<p class=MsoNormal><u><span lang=FR>Cook Timer 2:</span></u></p>
+
+<p class=MsoNormal><u><img border=0 width=602 height=187 id=image4.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image032.gif"></u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/7f8eabd54e17231f683d7454dd891c1f"><span
+style='color:#1155CC'>https://gyazo.com/7f8eabd54e17231f683d7454dd891c1f</span></a></p>
+
+<p class=MsoNormal><u>Spawn Burger:</u></p>
+
+<p class=MsoNormal><u><img border=0 width=602 height=207 id=image15.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image033.gif"></u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/9c4e1d18e4cecd91b9e91a0f0e7aa77b"><span
+style='color:#1155CC'>https://gyazo.com/9c4e1d18e4cecd91b9e91a0f0e7aa77b</span></a></p>
+
+<p class=MsoNormal><u>Text Update:</u></p>
+
+<p class=MsoNormal><u><img border=0 width=602 height=189 id=image8.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image034.gif"></u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/2dfc1fbf54a333a93bd6235044a03bca"><span
+style='color:#1155CC'>https://gyazo.com/2dfc1fbf54a333a93bd6235044a03bca</span></a></p>
+
+<p class=MsoNormal><u>Basic Scene Variables:</u></p>
+
+<p class=MsoNormal><u><img border=0 width=331 height=797 id=image2.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image035.gif"></u></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/a13cfc7a0bcb839476af741c7eda8ea2"><span
+style='color:#1155CC'>https://gyazo.com/a13cfc7a0bcb839476af741c7eda8ea2</span></a></p>
+
+<p class=MsoNormal><u><span style='text-decoration:none'>&nbsp;</span></u></p>
+
+<p class=MsoNormal><u><span style='text-decoration:none'>&nbsp;</span></u></p>
+
+<p class=MsoNormal><b><span style='font-size:15.0pt;line-height:107%'>Cube
+Burger:</span></b></p>
+
+<p class=MsoNormal><b><span style='font-size:15.0pt;line-height:107%'><img
+border=0 width=601 height=521 id=image17.png
+src="Tutorial%2010%20Visual%20Scripting%2002_files/image036.gif"></span></b></p>
+
+<p class=MsoNormal><a href="https://gyazo.com/9e2224fe374bb0b5489bca9cf653de69"><span
+style='font-size:15.0pt;line-height:107%;color:#1155CC'>https://gyazo.com/9e2224fe374bb0b5489bca9cf653de69</span></a></p>
+
+<p class=MsoNormal><u><span style='text-decoration:none'>&nbsp;</span></u></p>
+
+<p class=MsoNormal><u>Next Week:</u></p>
+
+<p class=MsoNormal><u>Animset</u></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>

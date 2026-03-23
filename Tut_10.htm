@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorial 10 : Finishing Visual Scripting with Prefabs</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #1f1f1f;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #0F4761;
+      border-bottom: 3px solid #0F4761;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    .note {
+      background-color: #E8F4F8;
+      border-left: 4px solid #467886;
+      padding: 12px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .accordion {
+      border: 1px solid #0F4761;
+      border-radius: 4px;
+      margin: 15px 0;
+      background-color: #f9f9f9;
+      overflow: hidden;
+    }
+    .accordion-summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 15px;
+      user-select: none;
+      background-color: #f0f0f0;
+      border-radius: 4px 4px 0 0;
+      list-style: none;
+    }
+    .accordion-summary:hover {
+      background-color: #e5e5e5;
+    }
+    .accordion-summary::-webkit-details-marker { display: none; }
+    .accordion-summary::before {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 6px solid #0F4761;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .accordion[open] > .accordion-summary::before { transform: rotate(90deg); }
+    .accordion-summary h2 {
+      margin: 0;
+      color: #0F4761;
+      font-size: 18px;
+    }
+    .accordion-content {
+      padding: 15px;
+      border-top: 1px solid #ddd;
+      background-color: #fff;
+    }
+
+    .legacy-content p, .legacy-content li, .legacy-content div {
+      color: #1f1f1f;
+      max-width: 100%;
+    }
+    .legacy-content a {
+      color: #467886;
+      word-break: break-word;
+    }
+    .legacy-content img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      float: none !important;
+      clear: both;
+      margin: 12px auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .legacy-content p {
+      margin: 0 0 10px 0;
+      text-indent: 0;
+      line-height: 1.45;
+      clear: both;
+    }
+    .legacy-content ol, .legacy-content ul {
+      margin: 8px 0 10px 28px;
+    }
+    .media-link {
+      margin-bottom: 12px;
+      font-size: 0.95em;
+    }
+    .panopto-viewer {
+      margin: 12px 0;
+      border: 1px solid #c7dbe2;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #f8fcfd;
+    }
+    .panopto-viewer iframe {
+      width: 100%;
+      min-height: 420px;
+      border: 0;
+      display: block;
+    }
+    h3 {
+      color: #0F4761;
+      margin: 10px 0;
+    }
+    .highlight {
+      background: #fff3b0;
+      padding: 2px 4px;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Tutorial 10 : Finishing Visual Scripting with Prefabs</h1>
+    <div class="note">
+      This page converts and styles all core content from Tutorial 10 Visual Scripting 02.htm into an expandable format, while preserving screenshots and links.
+    </div>
+
+    <details class="accordion" open>
+      <summary class="accordion-summary"><h2>1) Overview and Setup</h2></summary>
+      <div class="accordion-content legacy-content">
+        <p><b>Tutorial 10 - Finishing Visual Scripting with Prefabs</b></p>
+        <p><span class="highlight"><b>Basic video run-through from lectures starts on page 12. These are basic examples and may not include all bug fixes from this year.</b></span></p>
+        <p><b>Short Video Example</b></p>
+        <p class="media-link"><a href="https://gyazo.com/543eef64487e9e0ceeeb330d50c82a83">https://gyazo.com/543eef64487e9e0ceeeb330d50c82a83</a></p>
+
+        <p><b>Assets (all in Week 8 in BB)</b></p>
+        <p>Cafe_Fbx.zip - Chair, Cafe (Just chair is in Chair.fbx)<br>iPad<br>Burger and beer<br>Annie<br>Sitting Loop Animations - Sitting Loop Anims.zip</p>
+
+        <p><b>Overview</b></p>
+        <ol>
+          <li><b>Begin with your week 08-09 Unity Project (this needs all implementation so far)</b></li>
+          <li>Work from CW1 Unity Project or Tutorial 08 Base Project provided and build all week 8 and 9 features.</li>
+          <li>This week is about completing the interaction loop for one diner prefab.</li>
+          <li>After this, multiple diners, animations, and even the Diner List can be used for extra marks.</li>
+        </ol>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>2) iPad Interface Update and Script Updates</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>iPad interface update</h3>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image001.gif" alt="iPad interface update screenshot">
+        <p class="media-link"><a href="https://gyazo.com/8434af7e479af2143c12a4446558ee16">https://gyazo.com/8434af7e479af2143c12a4446558ee16</a></p>
+
+        <p><b>iPad Text displays are given scene variable displays by duplicating and scaling the original text and adding the name "Value". These are organised and given a true type font for styling.</b></p>
+        <p><b>Check Scene Variables below so that you have all:</b></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image002.gif" alt="Scene variables screenshot 1">
+        <p class="media-link"><a href="https://gyazo.com/0b65d681a3c66b625eed284bdcf0e827">https://gyazo.com/0b65d681a3c66b625eed284bdcf0e827</a></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image003.gif" alt="Scene variables screenshot 2">
+        <p class="media-link"><a href="https://gyazo.com/67945d0fd21cb9a99774ac00f93e237a">https://gyazo.com/67945d0fd21cb9a99774ac00f93e237a</a></p>
+
+        <h3>iPad Script Updates</h3>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image004.gif" alt="iPad script update screenshot 1">
+        <p class="media-link"><a href="https://gyazo.com/d5c131d86ff0302ebecbeba26118ba5c">https://gyazo.com/d5c131d86ff0302ebecbeba26118ba5c</a></p>
+
+        <p><b>Cook Timer section gets an "uncooked" update to decrement uncooked burger supply.</b></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image005.gif" alt="iPad script update screenshot 2">
+        <p class="media-link"><a href="https://gyazo.com/bf2196aa2002ac9d2273c0c879a74afe">https://gyazo.com/bf2196aa2002ac9d2273c0c879a74afe</a></p>
+
+        <p><b>Spawn Burger / Burger section gets a Cooked Burger tracker update.</b></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image006.gif" alt="iPad script update screenshot 3">
+        <p class="media-link"><a href="https://gyazo.com/159342b76723c73386e50b0b938f6b2d">https://gyazo.com/159342b76723c73386e50b0b938f6b2d</a></p>
+
+        <p><b>Update Text section updates these values and Burger "OnBoard".</b></p>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>3) Diner Prefab Interface and Interaction Sequence</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>Diner Prefab interface update</h3>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image007.jpg" alt="Diner prefab interface update">
+        <p class="media-link"><a href="https://gyazo.com/cc0ffc2e29afc3d1949de7faa673a369">https://gyazo.com/cc0ffc2e29afc3d1949de7faa673a369</a></p>
+
+        <p><b>As with the iPad, do housekeeping and font updates on the diner UI panel. Text elements are duplicated, moved, and scaled to create value displays.</b></p>
+        <p><b>Buttons are arranged as:</b></p>
+        <ol>
+          <li><i>Dialogue</i></li>
+          <li><i>Order</i></li>
+          <li><i>Deliver Order</i></li>
+          <li><i>Take Payment</i></li>
+        </ol>
+
+        <p><b>Dialogue counter and Dialogue text box are arranged to the side and sized to hold all dialogue.</b></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image008.gif" alt="Diner dialogue UI">
+        <p class="media-link"><a href="https://gyazo.com/fc0be2140e892b882419bd4e275ba2ff">https://gyazo.com/fc0be2140e892b882419bd4e275ba2ff</a></p>
+
+        <p><b>Diner prefab timers and interaction sequence</b></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image009.gif" alt="Button order and order wait timer">
+        <p class="media-link"><a href="https://gyazo.com/7eb758cba06c3d34418882942043b41b">https://gyazo.com/7eb758cba06c3d34418882942043b41b</a></p>
+        <p><b>Button Order and Order Wait Timer</b></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image010.gif" alt="Delivery wait timer">
+        <p class="media-link"><a href="https://gyazo.com/5bf958e0cce5e400d148cf8336555140">https://gyazo.com/5bf958e0cce5e400d148cf8336555140</a></p>
+        <p><b>Delivery Wait Timer</b></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image011.gif" alt="Deliver and eat timer">
+        <p class="media-link"><a href="https://gyazo.com/634659f071ea76444b2e9703b1f46876">https://gyazo.com/634659f071ea76444b2e9703b1f46876</a></p>
+        <p><b>Deliver and Eat Timer</b></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image012.gif" alt="Pay timer stage 1">
+        <p class="media-link"><a href="https://gyazo.com/95890cf0deac606948e1496410e03ce7">https://gyazo.com/95890cf0deac606948e1496410e03ce7</a></p>
+        <p><b>Pay Timer</b></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image013.gif" alt="Pay timer stage 2">
+        <p class="media-link"><a href="https://gyazo.com/d88afd072683e93eb95e5ebf6dbd50ff">https://gyazo.com/d88afd072683e93eb95e5ebf6dbd50ff</a></p>
+        <p><b>Pay Timer</b></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image014.gif" alt="Payment happiness destroy">
+        <p class="media-link"><a href="https://gyazo.com/1d1a9d324a767867e971f5467a8ccc12">https://gyazo.com/1d1a9d324a767867e971f5467a8ccc12</a></p>
+        <p><b>Payment, Happiness, and Destroy Prefab</b></p>
+        <p><b>Note: Drag the Annie Prefab from the project folder into the Destroy Unit target box.</b></p>
+
+        <p><b>All Diner Prefab Object Variables:</b></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image015.gif" alt="Prefab variables 1">
+        <p class="media-link"><a href="https://gyazo.com/d669c56fad1da0faba48c84f0d9956b6">https://gyazo.com/d669c56fad1da0faba48c84f0d9956b6</a></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image016.gif" alt="Prefab variables 2">
+        <p class="media-link"><a href="https://gyazo.com/f319c3086b1063e2bc2eca10449888ab">https://gyazo.com/f319c3086b1063e2bc2eca10449888ab</a></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image017.gif" alt="Prefab variables 3">
+        <p class="media-link"><a href="https://gyazo.com/4b92cb761d3e1e8e94d0571f33da09f1">https://gyazo.com/4b92cb761d3e1e8e94d0571f33da09f1</a></p>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>4) Burger Update and Final iPad Feedback</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>Burger Update</h3>
+        <p><b>Burger gets a pickup button for now (testing onClick and button hide).</b></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image018.gif" alt="Burger pickup button 1">
+        <p class="media-link"><a href="https://gyazo.com/dabcfb0bd71fb963b6df1e65d5b0c673">https://gyazo.com/dabcfb0bd71fb963b6df1e65d5b0c673</a></p>
+
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image019.gif" alt="Burger pickup button 2">
+        <p class="media-link"><a href="https://gyazo.com/ab604b07f31d5ef0fd46cfc0895d24b6">https://gyazo.com/ab604b07f31d5ef0fd46cfc0895d24b6</a></p>
+
+        <p><b>Burger has no variables of its own. It accesses scene variables: OnBoard and BurgerUpBool.</b></p>
+
+        <h3>Final feedback in iPad</h3>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image020.gif" alt="Final iPad feedback">
+        <p class="media-link"><a href="https://gyazo.com/36f8a60cd8ea1f805eee17db9295829d">https://gyazo.com/36f8a60cd8ea1f805eee17db9295829d</a></p>
+
+        <p><b>Happiness is updated to reflect diner updates when done.</b></p>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>5) Basic Video Runthrough (Weeks 9-11)</h2></summary>
+      <div class="accordion-content legacy-content">
+        <p><b>BASIC VIDEO RUNTHROUGH ON NEXT PAGES</b></p>
+        <p><b>Lecture videos from weeks 9-11 cover base requirements with minimal scripts and variables. The process is documented in the videos and screenshots below.</b></p>
+
+        <p><b>Week 9</b></p>
+        <div class="panopto-viewer">
+          <iframe src="https://westminster.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=4ba609bd-9c3d-4f79-9383-af55010853e2" title="Week 9 Panopto video" allowfullscreen></iframe>
+        </div>
+        <p class="media-link"><a href="https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=4ba609bd-9c3d-4f79-9383-af55010853e2">https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=4ba609bd-9c3d-4f79-9383-af55010853e2</a></p>
+
+        <p><b>Week 10</b></p>
+        <div class="panopto-viewer">
+          <iframe src="https://westminster.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=50dd97d3-9560-4e6f-bd2d-af5c01081dea" title="Week 10 Panopto video 1" allowfullscreen></iframe>
+        </div>
+        <p class="media-link"><a href="https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=50dd97d3-9560-4e6f-bd2d-af5c01081dea">https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=50dd97d3-9560-4e6f-bd2d-af5c01081dea</a></p>
+
+        <div class="panopto-viewer">
+          <iframe src="https://westminster.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=308b38c3-2d41-4d5b-a0cf-af5e010a6fc8" title="Week 10 Panopto video 2" allowfullscreen></iframe>
+        </div>
+        <p class="media-link"><a href="https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=308b38c3-2d41-4d5b-a0cf-af5e010a6fc8">https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=308b38c3-2d41-4d5b-a0cf-af5e010a6fc8</a></p>
+
+        <p><b>Week 11</b></p>
+        <div class="panopto-viewer">
+          <iframe src="https://westminster.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=dae6bd0b-f369-44e8-99f9-af6301089081" title="Week 11 Panopto video" allowfullscreen></iframe>
+        </div>
+        <p class="media-link"><a href="https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=dae6bd0b-f369-44e8-99f9-af6301089081">https://westminster.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=dae6bd0b-f369-44e8-99f9-af6301089081</a></p>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>6) Annie Prefab (Detailed Nodes)</h2></summary>
+      <div class="accordion-content legacy-content">
+        <p><b>Annie Prefab</b></p>
+
+        <p><u>Camera and Order Scripts:</u></p>
+        <p class="media-link"><a href="https://gyazo.com/5cfcf06689a3f4ad98f3fbdc568095b3">https://gyazo.com/5cfcf06689a3f4ad98f3fbdc568095b3</a></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image021.jpg" alt="Camera and order scripts">
+
+        <p><u>Delivery and Wait and Eat Timers:</u></p>
+        <p class="media-link"><a href="https://gyazo.com/d47469389ff4d2519243445fdd1d7b5b">https://gyazo.com/d47469389ff4d2519243445fdd1d7b5b</a></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image022.jpg" alt="Delivery wait eat timers">
+
+        <p><u>Eat and Pay Timer Bool:</u></p>
+        <p class="media-link"><a href="https://gyazo.com/6f424b17e64f827a93abd2dd9b037d7a">https://gyazo.com/6f424b17e64f827a93abd2dd9b037d7a</a></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image023.jpg" alt="Eat and pay timer bool">
+
+        <p><u>Pay Timer Bool and Pay Timer:</u></p>
+        <p class="media-link"><a href="https://gyazo.com/9cff2749bef925a164cd9600b221d4af">https://gyazo.com/9cff2749bef925a164cd9600b221d4af</a></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image024.jpg" alt="Pay timer bool and pay timer">
+
+        <p><u>Happiness and Destroy:</u></p>
+        <p class="media-link"><a href="https://gyazo.com/becdcd5642f9723b6950dfefb067339e">https://gyazo.com/becdcd5642f9723b6950dfefb067339e</a></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image025.jpg" alt="Happiness and destroy">
+
+        <p><u>Prefab Object Variables:</u></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image026.gif" alt="Prefab object variables">
+        <p class="media-link"><a href="https://gyazo.com/a02cdbf0948c35e840df8b58c01ded7a">https://gyazo.com/a02cdbf0948c35e840df8b58c01ded7a</a></p>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>7) Start Canvas and Main iPad Canvas</h2></summary>
+      <div class="accordion-content legacy-content">
+        <p><b>Start Canvas:</b></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image027.gif" alt="Start canvas">
+        <p class="media-link"><a href="https://gyazo.com/3e3e58725ec94636dd1990cab5893ac1">https://gyazo.com/3e3e58725ec94636dd1990cab5893ac1</a></p>
+
+        <p><b>Main iPad Canvas:</b></p>
+
+        <p><u>Timer:</u></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image028.gif" alt="Timer node graph">
+        <p class="media-link"><a href="https://gyazo.com/0f71bf05c2cfb3a13a490372b5bb9f49">https://gyazo.com/0f71bf05c2cfb3a13a490372b5bb9f49</a></p>
+
+        <p><u>Spawn Button/Order:</u></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image029.gif" alt="Spawn button order node graph">
+        <p class="media-link"><a href="https://gyazo.com/0a2a4eb57df786bf1ae84d1d1018e96c">https://gyazo.com/0a2a4eb57df786bf1ae84d1d1018e96c</a></p>
+
+        <p><u>Order:</u></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image030.gif" alt="Order node graph">
+        <p class="media-link"><a href="https://gyazo.com/8d028121cae3bd6ab958a0384350f2e8">https://gyazo.com/8d028121cae3bd6ab958a0384350f2e8</a></p>
+
+        <p><u>Cook Timer:</u></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image031.gif" alt="Cook timer node graph">
+        <p class="media-link"><a href="https://gyazo.com/1237dc865e061a4eeecfd6ee9f4a379e">https://gyazo.com/1237dc865e061a4eeecfd6ee9f4a379e</a></p>
+
+        <p><u>Cook Timer 2:</u></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image032.gif" alt="Cook timer 2 node graph">
+        <p class="media-link"><a href="https://gyazo.com/7f8eabd54e17231f683d7454dd891c1f">https://gyazo.com/7f8eabd54e17231f683d7454dd891c1f</a></p>
+
+        <p><u>Spawn Burger:</u></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image033.gif" alt="Spawn burger node graph">
+        <p class="media-link"><a href="https://gyazo.com/9c4e1d18e4cecd91b9e91a0f0e7aa77b">https://gyazo.com/9c4e1d18e4cecd91b9e91a0f0e7aa77b</a></p>
+
+        <p><u>Text Update:</u></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image034.gif" alt="Text update node graph">
+        <p class="media-link"><a href="https://gyazo.com/2dfc1fbf54a333a93bd6235044a03bca">https://gyazo.com/2dfc1fbf54a333a93bd6235044a03bca</a></p>
+
+        <p><u>Basic Scene Variables:</u></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image035.gif" alt="Basic scene variables">
+        <p class="media-link"><a href="https://gyazo.com/a13cfc7a0bcb839476af741c7eda8ea2">https://gyazo.com/a13cfc7a0bcb839476af741c7eda8ea2</a></p>
+      </div>
+    </details>
+
+    <!-- <details class="accordion">
+      <summary class="accordion-summary"><h2>8) Cube Burger and Next Week</h2></summary>
+      <div class="accordion-content legacy-content">
+        <p><b>Cube Burger:</b></p>
+        <img src="Tutorial%2010%20Visual%20Scripting%2002_files/image036.gif" alt="Cube burger graph">
+        <p class="media-link"><a href="https://gyazo.com/9e2224fe374bb0b5489bca9cf653de69">https://gyazo.com/9e2224fe374bb0b5489bca9cf653de69</a></p>
+
+        <p><u>Next Week:</u></p>
+        <p><u>Animset</u></p>
+      </div>
+    </details> -->
+  </div>
+</body>
+</html>
