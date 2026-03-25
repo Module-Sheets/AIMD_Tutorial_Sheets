@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CW2: Software Architecture Overview</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #1f1f1f;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #0F4761;
+      border-bottom: 3px solid #0F4761;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    .note {
+      background-color: #E8F4F8;
+      border-left: 4px solid #467886;
+      padding: 12px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .accordion {
+      border: 1px solid #0F4761;
+      border-radius: 4px;
+      margin: 15px 0;
+      background-color: #f9f9f9;
+      overflow: hidden;
+    }
+    .accordion-summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 15px;
+      user-select: none;
+      background-color: #f0f0f0;
+      border-radius: 4px 4px 0 0;
+      list-style: none;
+    }
+    .accordion-summary:hover {
+      background-color: #e5e5e5;
+    }
+    .accordion-summary::-webkit-details-marker {
+      display: none;
+    }
+    .accordion-summary::before {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 6px solid #0F4761;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .accordion[open] > .accordion-summary::before {
+      transform: rotate(90deg);
+    }
+    .accordion-summary h2 {
+      margin: 0;
+      color: #0F4761;
+      font-size: 18px;
+    }
+    .accordion-content {
+      padding: 15px;
+      border-top: 1px solid #ddd;
+      background-color: #fff;
+    }
+    .legacy-content p,
+    .legacy-content li,
+    .legacy-content div {
+      color: #1f1f1f;
+      max-width: 100%;
+    }
+    .legacy-content p {
+      margin: 0 0 10px 0;
+      text-indent: 0;
+      line-height: 1.45;
+      clear: both;
+    }
+    .legacy-content ol,
+    .legacy-content ul {
+      margin: 8px 0 10px 28px;
+    }
+    .video-frame {
+      width: 100%;
+      min-height: 460px;
+      border: 1px solid #c7dbe2;
+      border-radius: 6px;
+      background-color: #f8fcfd;
+    }
+    .media-link {
+      margin-top: 10px;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+    h3 {
+      color: #0F4761;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CW2: Software Architecture Overview</h1>
+<!--     <div class="note">
+      Extracted and reformatted from SA_01.htm using the same expandable structure and visual style as Tut_10.htm.
+      All sections are collapsed by default.
+    </div> -->
+
+    <details class="accordion" open>
+      <summary class="accordion-summary"><h2>0) Intro Video</h2></summary>
+      <div class="accordion-content legacy-content">
+        <iframe
+          class="video-frame"
+          src="https://universityofwestminster-my.sharepoint.com/:v:/g/personal/fergusj_westminster_ac_uk/IQBdSRZANvkrSLbRdxonivZXAdcsJYT0UjAaWdx0lLT9eGU?e=vNXcPt&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D"
+          title="Software Architecture Overview Intro Video"
+          allowfullscreen>
+        </iframe>
+        <p class="media-link">
+          If the embedded video does not load, open it directly:
+          <a href="https://universityofwestminster-my.sharepoint.com/:v:/g/personal/fergusj_westminster_ac_uk/IQBdSRZANvkrSLbRdxonivZXAdcsJYT0UjAaWdx0lLT9eGU?e=vNXcPt&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D">View on SharePoint/Stream</a>
+        </p>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>1) Overall Functionality (Software Architecture Viewpoint)</h2></summary>
+      <div class="accordion-content legacy-content">
+        <p>This project is a Unity cafe simulation loop built around:</p>
+        <ul>
+          <li><b>A central game-state/controller: CafeManager</b>
+            <ul>
+              <li>Tracks completion flags like restocking, shop open, back door state, music, and more.</li>
+              <li>Triggers progression (for example, after tasks are done, spawn NPCs or open a door).</li>
+            </ul>
+          </li>
+          <li><b>Interaction as input events on scene objects: InteractionHandler</b>
+            <ul>
+              <li>Unity style: clicking objects (OnMouseDown) triggers actions by calling CafeManager.ToggleTaskCompletion(...) or similar.</li>
+            </ul>
+          </li>
+          <li><b>NPC lifecycle pipeline</b>
+            <ul>
+              <li>NPCSpawner (singleton-like via static instance) spawns random NPC prefabs and injects waypoint routes and table assignments via TableData.</li>
+              <li>Ren_Waypoint moves NPCs along waypoint routes to interaction points/tables and can enable dialogue.</li>
+              <li>Ren_Order runs an order dialogue sequence (text, audio, animation states) and connects to the till for ordering.</li>
+              <li>EatAndLeave handles the consume at table to leave to possibly spawn next NPC loop, and awards tips.</li>
+            </ul>
+          </li>
+          <li><b>Ordering and UI orchestration: Till</b>
+            <ul>
+              <li>Owns UI widgets (buttons, text fields) and order-screen state flow (open/close, add items, confirm/cancel).</li>
+              <li>Calculates totals and updates earned money and earned tips.</li>
+            </ul>
+          </li>
+          <li><b>Table as an in-world domain object: Table</b>
+            <ul>
+              <li>Stores expected/placed food-drink IDs, placement transforms, and supports clean/reset.</li>
+              <li>Resets external systems like BewerageMaker.</li>
+            </ul>
+          </li>
+          <li><b>Door subsystem</b>
+            <ul>
+              <li>Door animates or moves a door.</li>
+              <li>DoorTrigger listens for OnTriggerEnter and opens the door when an NPC enters.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>Architectural style (as implied by the diagram)</h3>
+        <ul>
+          <li>Predominantly <b>MonoBehaviour-driven, object-oriented</b>, with runtime references between components.</li>
+          <li>A blend of <b>GameObject composition</b> (Unity components) and manager orchestration (CafeManager, NPCSpawner, Till).</li>
+          <li>Gameplay is mostly <b>event-driven</b> (clicks, triggers, button presses), but implemented through direct method calls between components.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>2) Subsystems and Best-Practice Framing</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>A) Identify subsystems (good architectural habit)</h3>
+        <p>A clean way to reason about this project is to split it into subsystems:</p>
+        <ol>
+          <li><b>Game State / Progression</b>
+            <ul>
+              <li>CafeManager</li>
+              <li>Responsibility: maintain what tasks are done and decide what can happen next.</li>
+            </ul>
+          </li>
+          <li><b>Interaction/Input</b>
+            <ul>
+              <li>InteractionHandler</li>
+              <li>Responsibility: translate player actions (click) into domain actions (for example, restock completed or back door opened).</li>
+            </ul>
+          </li>
+          <li><b>NPC / AI Flow</b>
+            <ul>
+              <li>NPCSpawner, Ren_Waypoint, EatAndLeave</li>
+              <li>Responsibility: create NPCs, route them, and manage lifecycle.</li>
+            </ul>
+          </li>
+          <li><b>Narrative / Dialogue and Feedback</b>
+            <ul>
+              <li>Ren_Order, DialogueLine, OrderData</li>
+              <li>Responsibility: show lines, play audio, set animation states, and advance dialogue.</li>
+            </ul>
+          </li>
+          <li><b>Ordering / Economy / UI</b>
+            <ul>
+              <li>Till, Item</li>
+              <li>Responsibility: UI flow, pricing, and payouts.</li>
+            </ul>
+          </li>
+          <li><b>World Objects</b>
+            <ul>
+              <li>Table, Door, DoorTrigger (plus referenced BackDoorAnim, BewerageMaker)</li>
+              <li>Responsibility: in-world state and animations.</li>
+            </ul>
+          </li>
+        </ol>
+
+        <p>This is a software-architecture lens: <b>what changes together belongs together</b>. If you change UI, you ideally should not break NPC movement.</p>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>3) Key Architectural Relationships and Risks</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>B) Key architectural relationships (and implications)</h3>
+
+        <p><b>1) CafeManager as a God-object risk</b></p>
+        <p>The diagram shows many systems calling into or being triggered by CafeManager (interaction, restock, spawner, back-door animation). This is common in student Unity projects.</p>
+        <p><b>Best practice idea:</b> keep CafeManager as a <i>state holder plus coordinator</i>, but avoid making it the place where everything happens. A single oversized class becomes hard to test, hard to reuse, and hard to understand.</p>
+
+        <p><b>2) Direct references create tight coupling</b></p>
+        <p>Examples from the diagram:</p>
+        <ul>
+          <li>InteractionHandler -> CafeManager</li>
+          <li>Ren_Order -> Till</li>
+          <li>EatAndLeave -> NPCSpawner (spawn another NPC)</li>
+          <li>Till -> EatAndLeave (tell NPC to move to table)</li>
+          <li>Table -> BewerageMaker</li>
+        </ul>
+        <p>This is <b>tight coupling</b>: changing one class often forces changes in another.</p>
+        <p><b>Best practice:</b> introduce interfaces or an event system for communication.</p>
+        <ul>
+          <li>UI can raise OrderConfirmed(foodId, drinkId).</li>
+          <li>The active NPC can subscribe if it is the current customer.</li>
+          <li>Or a mediator/controller can coordinate.</li>
+        </ul>
+
+        <p><b>3) UI and domain logic appear mixed in Till</b></p>
+        <p>Till owns buttons/text fields, but also pricing, item lists, tips, totals, and NPC triggers.</p>
+        <p><b>Best practice separation:</b></p>
+        <ul>
+          <li><b>View (UI):</b> shows/hides screens and captures button clicks.</li>
+          <li><b>Controller/Presenter:</b> processes UI events and updates view.</li>
+          <li><b>Domain (Model):</b> order calculation, pricing rules, validation.</li>
+        </ul>
+
+        <p><b>4) Data structures (OrderData, DialogueLine, Item) are good signs</b></p>
+        <p>These are simple data carriers and a step toward cleaner architecture. They can evolve into ScriptableObjects, serializable DTOs, or testable logic inputs.</p>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>4) Cleaner Target Architecture (Teachable Version)</h2></summary>
+      <div class="accordion-content legacy-content">
+        <p>If explaining an idealized architecture for this project:</p>
+        <ul>
+          <li><b>Core domain layer (pure C# where possible)</b>
+            <ul>
+              <li>Order, MenuItem, PriceCalculator, DialogueSequence.</li>
+              <li>No MonoBehaviour and no direct Unity UI references.</li>
+            </ul>
+          </li>
+          <li><b>Application layer (game rules)</b>
+            <ul>
+              <li>CafeSessionController coordinates tasks, NPC queue, and order flow.</li>
+              <li>Emits events such as OnCustomerArrived, OnOrderTaken, OnOrderServed.</li>
+            </ul>
+          </li>
+          <li><b>Presentation layer</b>
+            <ul>
+              <li>TillView (buttons/text), DialogueView.</li>
+              <li>Subscribes to controller events and forwards button clicks to controller.</li>
+            </ul>
+          </li>
+          <li><b>Infrastructure layer (Unity specifics)</b>
+            <ul>
+              <li>NPCSpawner, movement components, audio, and animation.</li>
+              <li>Adapters that translate controller intent into Unity actions.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <p>You do not have to implement full Clean Architecture, but <b>thinking in layers</b> helps keep code maintainable.</p>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>5) Refactoring Opportunities</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>High-impact refactors</h3>
+        <ol>
+          <li><b>Replace NPCSpawner.instance with dependency injection or scene references</b>
+            <ul>
+              <li>Static instance is quick, but encourages global access.</li>
+              <li>Better: assign references in the Inspector, or use a single GameContext object for shared services.</li>
+            </ul>
+          </li>
+          <li><b>Introduce an event bus (UnityEvent or C# events)</b>
+            <ul>
+              <li>Instead of Till -> EatAndLeave direct call:</li>
+              <li>Till raises OrderConfirmed(foodId, drinkId), then the active NPC or a controller responds.</li>
+              <li>This reduces bidirectional coupling.</li>
+            </ul>
+          </li>
+          <li><b>Split Till into UI and logic</b>
+            <ul>
+              <li>TillView (buttons/text)</li>
+              <li>TillController (order-screen flow, calls services)</li>
+              <li>OrderService or OrderCalculator (price, totals, validation)</li>
+              <li>This is easier to test and reason about.</li>
+            </ul>
+          </li>
+          <li><b>Use ScriptableObjects for menu items and dialogue</b>
+            <ul>
+              <li>Item could become MenuItemSO (name, price, id, prefab references).</li>
+              <li>OrderData could be a ScriptableObject asset for customer script/dialogue.</li>
+            </ul>
+          </li>
+        </ol>
+
+        <h3>Medium-impact improvements</h3>
+        <ol start="5">
+          <li><b>Define explicit NPC state machines</b>
+            <ul>
+              <li>NPC scripts often become hard to manage with many booleans.</li>
+              <li>Use an enum like CustomerState = Arriving, Ordering, WaitingForFood, Eating, Leaving.</li>
+              <li>Or use a small state-pattern approach.</li>
+            </ul>
+          </li>
+          <li><b>Avoid stringly-typed task toggles</b>
+            <ul>
+              <li>ToggleTaskCompletion(taskName: string) is fragile and typo-prone.</li>
+              <li>Use a TaskType enum or explicit methods/events.</li>
+            </ul>
+          </li>
+          <li><b>Clarify ownership of money/tips</b>
+            <ul>
+              <li>Till appears to track earnings and tips.</li>
+              <li>Consider a Wallet/EconomyManager that owns totals, while UI displays them.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </details>
+  </div>
+</body>
+</html>

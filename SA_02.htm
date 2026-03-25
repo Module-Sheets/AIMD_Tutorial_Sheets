@@ -1,0 +1,443 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Aptos;}
+@font-face
+	{font-family:"\@DengXian";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:115%;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-GB style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal><b>Overall functionality (architecture-level summary from
+the diagram + the fetched&nbsp;Assets/Scripts&nbsp;code)</b></p>
+
+<p class=MsoNormal>At a high level, this Unity project implements a&nbsp;<b>single-customer
+gameplay loop</b>&nbsp;for a café:</p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal><b>Spawn a customer (NPC)</b>&nbsp;at a spawn point (NPCSpawner).</li>
+ <li class=MsoNormal>The NPC&nbsp;<b>walks along entry waypoints</b>&nbsp;to a
+     dialogue location (Ren_Waypoint).</li>
+ <li class=MsoNormal>The NPC&nbsp;<b>plays a dialogue sequence</b>&nbsp;(text +
+     optional audio + animation) and then sets an expected&nbsp;<b>foodID/drinkID</b>&nbsp;order
+     (Ren_Order).</li>
+ <li class=MsoNormal>The&nbsp;<b>Till UI</b>&nbsp;lets the player select
+     exactly two items (one food, one drink) and&nbsp;<b>validates</b>&nbsp;whether
+     the chosen pair matches the NPC’s expected IDs (Till).</li>
+ <li class=MsoNormal>If correct, the NPC is instructed to&nbsp;<b>walk to their
+     table and sit</b>, then later&nbsp;<b>eat and leave</b>, during which they
+     may tip the player (EatAndLeave&nbsp;+&nbsp;Till.Tip(...)).</li>
+ <li class=MsoNormal>When leaving, the NPC triggers&nbsp;<b>spawning the next
+     NPC</b>, then destroys itself (EatAndLeave&nbsp;calls&nbsp;NPCSpawner.instance.SpawnRandomNPC()).</li>
+ <li class=MsoNormal>Tables can accept placed food/drink objects and be
+     cleaned/reset (Table), and doors can open via trigger collisions (Door,&nbsp;DoorTrigger).</li>
+</ol>
+
+<p class=MsoNormal>From a software architecture viewpoint, this is a&nbsp;<b>scene-driven,
+component-based architecture</b>&nbsp;typical of Unity projects, where&nbsp;<b>MonoBehaviours
+act as both controllers and domain objects</b>, and where gameplay is
+coordinated through:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>direct component references (GetComponent, public fields),
+     and</li>
+ <li class=MsoNormal>scene queries (FindObjectOfType,&nbsp;FindAnyObjectByType),
+     and</li>
+ <li class=MsoNormal>a global-ish singleton (NPCSpawner.instance).</li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>Detailed software architecture explanation (for
+university students), highlighting best practice</b></p>
+
+<p class=MsoNormal><b>1) Identify the main subsystems (separation of concerns)</b></p>
+
+<p class=MsoNormal>You can understand this project as a small set of
+cooperating subsystems:</p>
+
+<p class=MsoNormal><b>A. NPC lifecycle / “AI” subsystem</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>NPCSpawner&nbsp;instantiates NPCs and injects route/table
+     data.</li>
+ <li class=MsoNormal>Ren_Waypoint&nbsp;moves NPCs along a waypoint array (entry
+     route) until the last waypoint and then enables dialogue.</li>
+ <li class=MsoNormal>EatAndLeave&nbsp;moves NPCs from “dialogue area &#8594;
+     table route” and later from “table &#8594; exit route”, controls eating
+     animation, and triggers tip + despawn.</li>
+</ul>
+
+<p class=MsoNormal><b>B. Dialogue &amp; order definition subsystem</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Ren_Order&nbsp;selects a random&nbsp;OrderData&nbsp;script,
+     plays a dialogue sequence (DialogueLine[]), triggers animations/audio,
+     then:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>tells the till what the correct order is (till.PlaceOrder(foodID,
+      drinkID)), and</li>
+  <li class=MsoNormal>tells the NPC/table what should be served (GetComponent&lt;EatAndLeave&gt;().SetFoodAndDrink(foodID,
+      drinkID)).</li>
+ </ul>
+</ul>
+
+<p class=MsoNormal><b>C. UI / ordering / economy subsystem</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Till&nbsp;is both:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>the UI controller (buttons, order screen open/close, item
+      selection), and</li>
+  <li class=MsoNormal>the “economy” accumulator (earned money, tips), and</li>
+  <li class=MsoNormal>the validator of gameplay rules (checks if selected items
+      match expected IDs).</li>
+ </ul>
+</ul>
+
+<p class=MsoNormal><b>D. World objects subsystem</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Table&nbsp;is an in-world domain object: holds expected
+     IDs, references where food/drinks are placed, and cleans up after eating.</li>
+ <li class=MsoNormal>Door&nbsp;+&nbsp;DoorTrigger&nbsp;implement a simple
+     physical trigger that opens a door and plays an audio clip when an NPC
+     enters.</li>
+</ul>
+
+<p class=MsoNormal><b>Best-practice note:</b>&nbsp;This decomposition is good
+because it gives you “chunks” to reason about. A common step up in architecture
+maturity is making each subsystem communicate through explicit interfaces or
+events, rather than locating each other dynamically.</p>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>2) The runtime flow (who calls whom, in what order)</b></p>
+
+<p class=MsoNormal>Here’s the actual control-flow implied by the fetched
+scripts:</p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal><b>Spawn and initialise NPC</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>NPCSpawner.SpawnRandomNPC()&nbsp;instantiates a random
+      prefab.</li>
+  <li class=MsoNormal>It sets:</li>
+  <ul style='margin-top:0cm' type=square>
+   <li class=MsoNormal>npc.Ren_Waypoint.waypoints = startWaypoints</li>
+   <li class=MsoNormal>npc.EatAndLeave.tableWaypoints/exitWaypoints/table =
+       random TableData</li>
+  </ul>
+  <li class=MsoNormal>This is “dependency injection” but done manually at
+      runtime.</li>
+ </ul>
+ <li class=MsoNormal><b>Move to dialogue</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Ren_Waypoint.Update()&nbsp;calls&nbsp;MoveToWaypoint()&nbsp;until
+      the last waypoint.</li>
+  <li class=MsoNormal>On last waypoint, it stops walking and activates&nbsp;ActivateDialogue&nbsp;once.</li>
+ </ul>
+ <li class=MsoNormal><b>Dialogue and order setup</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Ren_Order.Start()&nbsp;selects random&nbsp;OrderData,
+      loads its&nbsp;DialogueLine[], and wires the talk button to&nbsp;AdvanceDialogue.</li>
+  <li class=MsoNormal>When dialogue ends:</li>
+  <ul style='margin-top:0cm' type=square>
+   <li class=MsoNormal>till.ActivateOrderButton()</li>
+   <li class=MsoNormal>till.PlaceOrder(foodID, drinkID)&nbsp;(sets expected IDs
+       internally in&nbsp;Till)</li>
+   <li class=MsoNormal>EatAndLeave.SetFoodAndDrink(foodID, drinkID)&nbsp;(stores
+       expected IDs on the&nbsp;Table, and starts tip-timer logic)</li>
+   <li class=MsoNormal>hides dialogue UI</li>
+  </ul>
+ </ul>
+ <li class=MsoNormal><b>Player uses till</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Till&nbsp;builds an item catalogue mapping&nbsp;<i>button
+      GameObject names &#8594; Item(name, price, orderID)</i>.</li>
+  <li class=MsoNormal>Player picks up to 2 items;&nbsp;CalculateAndShowTotal()&nbsp;checks
+      correctness against&nbsp;orderedFood/orderedDrink.</li>
+  <li class=MsoNormal>If correct:</li>
+  <ul style='margin-top:0cm' type=square>
+   <li class=MsoNormal>add earned money</li>
+   <li class=MsoNormal>FindObjectOfType&lt;EatAndLeave&gt;()?.MoveToTable()&nbsp;to
+       start table movement</li>
+  </ul>
+  <li class=MsoNormal>If wrong:</li>
+  <ul style='margin-top:0cm' type=square>
+   <li class=MsoNormal>FindObjectOfType&lt;Ren_Order&gt;().OrderIncorrect()&nbsp;plays
+       feedback</li>
+  </ul>
+ </ul>
+ <li class=MsoNormal><b>NPC sits, waits for food/drink objects, eats, tips,
+     exits</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>EatAndLeave.MoveToWaypoint(tableWaypoints)&nbsp;until
+      last; triggers sit.</li>
+  <li class=MsoNormal>It checks&nbsp;table.foodOnTable &amp;&amp;
+      table.drinkOnTable&nbsp;before starting the eating coroutine.</li>
+  <li class=MsoNormal>After&nbsp;eatTime, it:</li>
+  <ul style='margin-top:0cm' type=square>
+   <li class=MsoNormal>marks exiting and moves along exit waypoints</li>
+   <li class=MsoNormal>calls&nbsp;table.CleanTable()</li>
+   <li class=MsoNormal>calls&nbsp;FindAnyObjectByType&lt;Till&gt;().Tip(tipAmount)</li>
+  </ul>
+  <li class=MsoNormal>On reaching final exit waypoint:</li>
+  <ul style='margin-top:0cm' type=square>
+   <li class=MsoNormal>NPCSpawner.instance.SpawnRandomNPC()</li>
+   <li class=MsoNormal>Destroy(gameObject)</li>
+  </ul>
+ </ul>
+ <li class=MsoNormal><b>Door</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>DoorTrigger.OnTriggerEnter(Collider other)&nbsp;checks
+      tag&nbsp;&quot;NPC&quot;, calls&nbsp;door.OpenDoor(), and plays the
+      door’s audio.</li>
+  <li class=MsoNormal>Door.OpenDoor()&nbsp;starts a coroutine to open for ~2s,
+      then close, with trigger cooldown.</li>
+ </ul>
+</ol>
+
+<p class=MsoNormal><b>Best-practice note:</b>&nbsp;This flow works, but a lot
+of it is held together by&nbsp;<i>scene searches</i>&nbsp;(FindObjectOfType)
+and&nbsp;<i>global state</i>&nbsp;(NPCSpawner.instance), which becomes fragile
+as the project grows or when multiple NPCs exist simultaneously.</p>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>3) Architectural strengths and weaknesses (teaching
+points)</b></p>
+
+<p class=MsoNormal><b>Strengths (good student-friendly patterns present)</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal><b>Component-based separation</b>: movement (Ren_Waypoint,&nbsp;EatAndLeave)
+     is separate from UI (Till) and from dialogue (Ren_Order).</li>
+ <li class=MsoNormal><b>Serializable data containers</b>:&nbsp;OrderData&nbsp;and&nbsp;DialogueLine&nbsp;are
+     serializable and can be configured in the Inspector—good for
+     content-driven design.</li>
+ <li class=MsoNormal><b>Waypoint movement abstraction</b>: both&nbsp;Ren_Waypoint&nbsp;and&nbsp;EatAndLeave&nbsp;implement
+     waypoint traversal cleanly enough for small projects.</li>
+</ul>
+
+<p class=MsoNormal><b>Weaknesses / risks (and why they matter)</b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal><b>Tight coupling via scene searches</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Till.CalculateAndShowTotal()&nbsp;uses&nbsp;FindObjectOfType&lt;EatAndLeave&gt;()&nbsp;and&nbsp;FindObjectOfType&lt;Ren_Order&gt;().</li>
+  <li class=MsoNormal>EatAndLeave&nbsp;uses&nbsp;FindAnyObjectByType&lt;Till&gt;().</li>
+  <li class=MsoNormal>This works for prototypes but becomes unreliable when:</li>
+  <ul style='margin-top:0cm' type=square>
+   <li class=MsoNormal>there are multiple NPCs,</li>
+   <li class=MsoNormal>multiple tills/UI objects,</li>
+   <li class=MsoNormal>objects are disabled/enabled across scenes,</li>
+   <li class=MsoNormal>or ordering is more complex.</li>
+  </ul>
+ </ul>
+ <li class=MsoNormal><b>Global singleton&nbsp;NPCSpawner.instance</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Used by&nbsp;EatAndLeave&nbsp;to spawn the next NPC.</li>
+  <li class=MsoNormal>This is convenient, but introduces hidden dependencies
+      and makes testing harder.</li>
+ </ul>
+ <li class=MsoNormal><b>Till&nbsp;mixes UI, domain logic, and orchestration</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Till&nbsp;controls buttons/screens, validates
+      correctness, updates economy totals, and tells NPCs to move.</li>
+  <li class=MsoNormal>Best practice is to keep UI display logic separate from
+      gameplay rules and from NPC control.</li>
+ </ul>
+ <li class=MsoNormal><b>Implicit single-customer assumption</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>The code structure strongly suggests “one active NPC at a
+      time”.</li>
+  <li class=MsoNormal>If later you want a queue or multiple tables active
+      concurrently, you’ll need to refactor how you identify “which NPC is
+      ordering” rather than using “find any NPC”.</li>
+ </ul>
+</ol>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>Suggestions / refactoring improvements (practical and
+best-practice aligned)</b></p>
+
+<p class=MsoNormal><b>A) Reduce coupling: replace scene searches with explicit
+references/events</b></p>
+
+<p class=MsoNormal><b>Problem:</b>&nbsp;FindObjectOfType&nbsp;picks an
+arbitrary instance and hides dependencies.</p>
+
+<p class=MsoNormal><b>Refactor direction:</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>When the NPC finishes dialogue, it can register itself as
+     the “current customer” in a controller (or in the till).</li>
+ <li class=MsoNormal>Or use C# events:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Ren_Order&nbsp;raises&nbsp;OnOrderReady(foodID, drinkID,
+      customerRef)</li>
+  <li class=MsoNormal>Till&nbsp;subscribes and stores&nbsp;currentCustomer</li>
+  <li class=MsoNormal>When the order is correct,&nbsp;Till&nbsp;calls&nbsp;currentCustomer.MoveToTable()</li>
+ </ul>
+</ul>
+
+<p class=MsoNormal>This makes the system deterministic and scalable.</p>
+
+<p class=MsoNormal><b>B) Split&nbsp;Till&nbsp;into smaller responsibilities
+(MVC/MVP style)</b></p>
+
+<p class=MsoNormal>Right now&nbsp;Till&nbsp;is doing too much. A
+student-friendly refactor:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>TillView&nbsp;(MonoBehaviour): owns Buttons/Text, emits UI
+     events.</li>
+ <li class=MsoNormal>TillController&nbsp;(MonoBehaviour or plain C#): holds
+     selected items, validates orders, updates money/tips.</li>
+ <li class=MsoNormal>OrderValidator&nbsp;/&nbsp;MenuCatalogue&nbsp;(plain C# or
+     ScriptableObject): maps IDs to prices/names; computes totals.</li>
+</ul>
+
+<p class=MsoNormal>This improves maintainability and testability.</p>
+
+<p class=MsoNormal><b>C) Replace “button GameObject name &#8594; item” mapping
+with IDs or ScriptableObjects</b></p>
+
+<p class=MsoNormal>Till.InitialiseItemsCatalogue()&nbsp;uses&nbsp;foodOptionButtons[i].gameObject.name&nbsp;as
+the key. That’s fragile.</p>
+
+<p class=MsoNormal>Better options:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>store an&nbsp;ItemButton&nbsp;component on each button
+     with an&nbsp;itemId&nbsp;field, or</li>
+ <li class=MsoNormal>use ScriptableObjects:&nbsp;MenuItemSO { id, displayName,
+     price }.</li>
+</ul>
+
+<p class=MsoNormal><b>D) Make NPC state explicit (finite state machine)</b></p>
+
+<p class=MsoNormal>EatAndLeave&nbsp;currently uses booleans like&nbsp;canMove,&nbsp;exiting,&nbsp;canEat,&nbsp;canStartTipTimer.</p>
+
+<p class=MsoNormal>A clearer architecture is an enum:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>CustomerState = Arriving, Ordering, WalkingToTable,
+     WaitingForFood, Eating, Leaving</li>
+</ul>
+
+<p class=MsoNormal>This reduces “boolean explosion” and clarifies transitions.</p>
+
+<p class=MsoNormal><b>E) Improve robustness of&nbsp;Table.CleanTable()</b></p>
+
+<p class=MsoNormal>CleanTable()&nbsp;destroys&nbsp;foodOnTable&nbsp;and&nbsp;drinkOnTable&nbsp;without
+null checks, and always calls&nbsp;bewerageMaker.ResetBeverageMaker().</p>
+
+<p class=MsoNormal>Best practice:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>null-check before destroying</li>
+ <li class=MsoNormal>only reset beverage maker if it exists</li>
+ <li class=MsoNormal>consider object pooling for spawned food/drink objects in
+     larger projects.</li>
+</ul>
+
+<p class=MsoNormal><b>F) Future scalability: move “spawn next NPC”
+responsibility out of&nbsp;EatAndLeave</b></p>
+
+<p class=MsoNormal>Currently,&nbsp;EatAndLeave&nbsp;decides when to spawn the
+next NPC. Architecturally, spawning is a “game progression/system” concern.</p>
+
+<p class=MsoNormal>Better:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>EatAndLeave&nbsp;raises an event&nbsp;OnCustomerExited</li>
+ <li class=MsoNormal>NPCSpawner&nbsp;(or a&nbsp;CafeSessionController) listens
+     and spawns next NPC.</li>
+</ul>
+
+<p class=MsoNormal>This keeps responsibilities clean.</p>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>Final takeaway (architecture in one sentence)</b></p>
+
+<p class=MsoNormal>Your project is a solid Unity prototype built around&nbsp;<b>MonoBehaviour
+components</b>&nbsp;cooperating through direct calls, scene lookups, and a
+spawner singleton; for best practice and scalability, the next step is to&nbsp;<b>reduce
+coupling</b>&nbsp;(events/explicit references),&nbsp;<b>separate UI from domain
+logic</b>, and make NPC/customer flow a more explicit&nbsp;<b>state-driven
+pipeline</b>.</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>

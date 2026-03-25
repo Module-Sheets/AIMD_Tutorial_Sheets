@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CW2: Software Architecture Detail</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #1f1f1f;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #0F4761;
+      border-bottom: 3px solid #0F4761;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    .note {
+      background-color: #E8F4F8;
+      border-left: 4px solid #467886;
+      padding: 12px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    .accordion {
+      border: 1px solid #0F4761;
+      border-radius: 4px;
+      margin: 15px 0;
+      background-color: #f9f9f9;
+      overflow: hidden;
+    }
+    .accordion-summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 15px;
+      user-select: none;
+      background-color: #f0f0f0;
+      border-radius: 4px 4px 0 0;
+      list-style: none;
+    }
+    .accordion-summary:hover {
+      background-color: #e5e5e5;
+    }
+    .accordion-summary::-webkit-details-marker {
+      display: none;
+    }
+    .accordion-summary::before {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 6px solid #0F4761;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .accordion[open] > .accordion-summary::before {
+      transform: rotate(90deg);
+    }
+    .accordion-summary h2 {
+      margin: 0;
+      color: #0F4761;
+      font-size: 18px;
+    }
+    .accordion-content {
+      padding: 15px;
+      border-top: 1px solid #ddd;
+      background-color: #fff;
+    }
+    .legacy-content p,
+    .legacy-content li,
+    .legacy-content div {
+      color: #1f1f1f;
+      max-width: 100%;
+    }
+    .legacy-content p {
+      margin: 0 0 10px 0;
+      text-indent: 0;
+      line-height: 1.45;
+      clear: both;
+    }
+    .legacy-content ol,
+    .legacy-content ul {
+      margin: 8px 0 10px 28px;
+    }
+    .video-frame {
+      width: 100%;
+      min-height: 460px;
+      border: 1px solid #c7dbe2;
+      border-radius: 6px;
+      background-color: #f8fcfd;
+    }
+    .media-link {
+      margin-top: 10px;
+      font-size: 0.95em;
+      word-break: break-word;
+    }
+    h3 {
+      color: #0F4761;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CW2: Software Architecture Detail</h1>
+    <div class="note">
+      Video section reused from CW2 Software Architecture Overview. Detailed architecture sections are extracted and formatted from SA_02.htm.
+    </div>
+
+    <details class="accordion" open>
+      <summary class="accordion-summary"><h2>0) Intro Video</h2></summary>
+      <div class="accordion-content legacy-content">
+        <iframe
+          class="video-frame"
+          src="https://universityofwestminster-my.sharepoint.com/:v:/g/personal/fergusj_westminster_ac_uk/IQBdSRZANvkrSLbRdxonivZXAdcsJYT0UjAaWdx0lLT9eGU?e=vNXcPt&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D"
+          title="Software Architecture Detail Intro Video"
+          allowfullscreen>
+        </iframe>
+        <p class="media-link">
+          If the embedded video does not load, open it directly:
+          <a href="https://universityofwestminster-my.sharepoint.com/:v:/g/personal/fergusj_westminster_ac_uk/IQBdSRZANvkrSLbRdxonivZXAdcsJYT0UjAaWdx0lLT9eGU?e=vNXcPt&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D">View on SharePoint/Stream</a>
+        </p>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>1) Overall Functionality (Architecture-Level Summary)</h2></summary>
+      <div class="accordion-content legacy-content">
+        <p>At a high level, this Unity project implements a <b>single-customer gameplay loop</b> for a cafe:</p>
+        <ol>
+          <li><b>Spawn a customer (NPC)</b> at a spawn point (NPCSpawner).</li>
+          <li>The NPC <b>walks along entry waypoints</b> to a dialogue location (Ren_Waypoint).</li>
+          <li>The NPC <b>plays a dialogue sequence</b> (text, optional audio, animation), then sets expected <b>foodID and drinkID</b> (Ren_Order).</li>
+          <li>The <b>Till UI</b> lets the player select exactly two items (one food, one drink), then validates the selected pair against expected IDs (Till).</li>
+          <li>If correct, the NPC is instructed to <b>walk to table and sit</b>, then later <b>eat and leave</b>, possibly tipping the player (EatAndLeave + Till.Tip(...)).</li>
+          <li>When leaving, the NPC triggers <b>spawning the next NPC</b>, then destroys itself (EatAndLeave calls NPCSpawner.instance.SpawnRandomNPC()).</li>
+          <li>Tables can accept food/drink placements and be cleaned/reset (Table), and doors can open via trigger collisions (Door, DoorTrigger).</li>
+        </ol>
+
+        <p>From a software architecture viewpoint, this is a <b>scene-driven, component-based architecture</b> typical of Unity projects, where <b>MonoBehaviours act as both controllers and domain objects</b>, and gameplay is coordinated through:</p>
+        <ul>
+          <li>direct component references (GetComponent, public fields),</li>
+          <li>scene queries (FindObjectOfType, FindAnyObjectByType),</li>
+          <li>a global-like singleton (NPCSpawner.instance).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>2) Main Subsystems (Separation of Concerns)</h2></summary>
+      <div class="accordion-content legacy-content">
+        <p>You can understand this project as a small set of cooperating subsystems:</p>
+
+        <h3>A) NPC lifecycle / AI subsystem</h3>
+        <ul>
+          <li>NPCSpawner instantiates NPCs and injects route/table data.</li>
+          <li>Ren_Waypoint moves NPCs along entry waypoints until the last point, then enables dialogue.</li>
+          <li>EatAndLeave handles movement from dialogue to table to exit, eating animation, tip trigger, and despawn.</li>
+        </ul>
+
+        <h3>B) Dialogue and order-definition subsystem</h3>
+        <ul>
+          <li>Ren_Order selects random OrderData, plays DialogueLine[] sequence, triggers animations and audio.</li>
+          <li>Then it tells Till the correct order via PlaceOrder(foodID, drinkID).</li>
+          <li>It also sets expected serve values on the NPC/table via EatAndLeave.SetFoodAndDrink(foodID, drinkID).</li>
+        </ul>
+
+        <h3>C) UI / ordering / economy subsystem</h3>
+        <ul>
+          <li>Till is both UI controller (buttons, order screen open/close, item selection) and gameplay validator.</li>
+          <li>Till also accumulates economy values (earned money and tips).</li>
+        </ul>
+
+        <h3>D) World objects subsystem</h3>
+        <ul>
+          <li>Table stores expected IDs, placement references, and handles cleanup after eating.</li>
+          <li>Door and DoorTrigger implement trigger-based door opening with audio feedback.</li>
+        </ul>
+
+        <p><b>Best-practice note:</b> decomposition into subsystems is a strong foundation. The next architectural step is communicating through explicit interfaces/events instead of dynamic scene lookups.</p>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>3) Runtime Control Flow (Call Order)</h2></summary>
+      <div class="accordion-content legacy-content">
+        <ol>
+          <li><b>Spawn and initialize NPC</b>
+            <ul>
+              <li>NPCSpawner.SpawnRandomNPC() instantiates a random prefab.</li>
+              <li>It injects Ren_Waypoint.waypoints, and EatAndLeave table/exit data from selected TableData.</li>
+              <li>This is manual runtime dependency injection.</li>
+            </ul>
+          </li>
+          <li><b>Move to dialogue</b>
+            <ul>
+              <li>Ren_Waypoint.Update() repeatedly calls MoveToWaypoint() until the final waypoint.</li>
+              <li>At final waypoint, walking stops and ActivateDialogue is triggered once.</li>
+            </ul>
+          </li>
+          <li><b>Dialogue and order setup</b>
+            <ul>
+              <li>Ren_Order.Start() picks random OrderData and wires talk button to AdvanceDialogue.</li>
+              <li>At end of dialogue: ActivateOrderButton(), PlaceOrder(foodID, drinkID), SetFoodAndDrink(foodID, drinkID), hide dialogue UI.</li>
+            </ul>
+          </li>
+          <li><b>Player uses till</b>
+            <ul>
+              <li>Till maps button object names to Item(name, price, orderID).</li>
+              <li>Player picks up to 2 items. CalculateAndShowTotal() checks against orderedFood/orderedDrink.</li>
+              <li>If correct: add earned money and trigger MoveToTable() on EatAndLeave.</li>
+              <li>If wrong: call Ren_Order.OrderIncorrect() for feedback.</li>
+            </ul>
+          </li>
+          <li><b>NPC sits, eats, tips, exits</b>
+            <ul>
+              <li>EatAndLeave moves along table waypoints and triggers sit behavior.</li>
+              <li>After both table.foodOnTable and table.drinkOnTable are present, eating starts.</li>
+              <li>After eatTime: mark exit, move to exit waypoints, clean table, apply tip via Till.Tip(tipAmount).</li>
+              <li>At final exit waypoint: spawn next NPC and destroy current NPC GameObject.</li>
+            </ul>
+          </li>
+          <li><b>Door interactions</b>
+            <ul>
+              <li>DoorTrigger.OnTriggerEnter checks for tag NPC, then opens door and plays audio.</li>
+              <li>Door.OpenDoor() opens for roughly 2 seconds, then closes with cooldown.</li>
+            </ul>
+          </li>
+        </ol>
+
+        <p><b>Best-practice note:</b> this flow is functional, but it depends heavily on scene searches and global state, which becomes fragile as systems grow or multiple NPCs run concurrently.</p>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>4) Strengths and Weaknesses</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>Strengths (student-friendly patterns already present)</h3>
+        <ul>
+          <li><b>Component-based separation:</b> movement (Ren_Waypoint, EatAndLeave), UI (Till), and dialogue (Ren_Order) are split.</li>
+          <li><b>Serializable data containers:</b> OrderData and DialogueLine are inspector-configurable and support content-driven design.</li>
+          <li><b>Waypoint movement abstraction:</b> waypoint traversal is reused and understandable for small projects.</li>
+        </ul>
+
+        <h3>Weaknesses and risks (and why they matter)</h3>
+        <ol>
+          <li><b>Tight coupling via scene searches</b>
+            <ul>
+              <li>Till uses FindObjectOfType<EatAndLeave>() and FindObjectOfType<Ren_Order>().</li>
+              <li>EatAndLeave uses FindAnyObjectByType<Till>().</li>
+              <li>Fragile when multiple NPCs/tills exist, objects are toggled, or ordering flow grows.</li>
+            </ul>
+          </li>
+          <li><b>Global singleton NPCSpawner.instance</b>
+            <ul>
+              <li>Convenient but introduces hidden dependencies and harder testing.</li>
+            </ul>
+          </li>
+          <li><b>Till mixes concerns</b>
+            <ul>
+              <li>UI control, validation logic, economy accumulation, and NPC orchestration are in one class.</li>
+            </ul>
+          </li>
+          <li><b>Implicit single-customer assumption</b>
+            <ul>
+              <li>Current structure strongly assumes one active customer at a time.</li>
+              <li>Scaling to multiple simultaneous customers/tables requires order ownership refactoring.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </details>
+
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>5) Refactoring Improvements and Final Takeaway</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>Practical, best-practice-aligned improvements</h3>
+
+        <p><b>A) Reduce coupling: replace scene searches with explicit references or events</b></p>
+        <ul>
+          <li>Problem: FindObjectOfType picks arbitrary instances and hides dependencies.</li>
+          <li>Refactor direction:
+            <ul>
+              <li>When dialogue ends, register that NPC as current customer in a controller or till.</li>
+              <li>Or use events: Ren_Order raises OnOrderReady(foodID, drinkID, customerRef), Till subscribes and stores currentCustomer, then calls currentCustomer.MoveToTable() if validated.</li>
+            </ul>
+          </li>
+          <li>Outcome: deterministic and scalable flow.</li>
+        </ul>
+
+        <p><b>B) Split Till into smaller responsibilities (MVC/MVP style)</b></p>
+        <ul>
+          <li>TillView: owns buttons/text, emits UI events.</li>
+          <li>TillController: stores selected items, validates orders, updates money/tips.</li>
+          <li>OrderValidator/MenuCatalogue: maps IDs to price/name and computes totals.</li>
+        </ul>
+
+        <p><b>C) Replace button-name mapping with IDs or ScriptableObjects</b></p>
+        <ul>
+          <li>Current gameObject.name mapping is fragile.</li>
+          <li>Use ItemButton component with itemId, or MenuItemSO assets with id/displayName/price.</li>
+        </ul>
+
+        <p><b>D) Make NPC state explicit with a finite state machine</b></p>
+        <ul>
+          <li>Current booleans can cause complexity growth.</li>
+          <li>Use enum state model: Arriving, Ordering, WalkingToTable, WaitingForFood, Eating, Leaving.</li>
+        </ul>
+
+        <p><b>E) Improve Table.CleanTable() robustness</b></p>
+        <ul>
+          <li>Add null checks before destroy calls.</li>
+          <li>Reset beverage maker only if instance exists.</li>
+          <li>Consider object pooling for larger spawned-object counts.</li>
+        </ul>
+
+        <p><b>F) Move spawn-next responsibility out of EatAndLeave</b></p>
+        <ul>
+          <li>EatAndLeave should raise OnCustomerExited.</li>
+          <li>NPCSpawner or CafeSessionController should handle next spawn.</li>
+        </ul>
+
+        <h3>Final takeaway</h3>
+        <p>This project is a strong Unity prototype built on <b>MonoBehaviour components</b> with direct calls, scene lookups, and a spawner singleton. For better scalability, reduce coupling through events or explicit references, separate UI from domain logic, and drive NPC/customer behavior through an explicit state pipeline.</p>
+      </div>
+    </details>
+  </div>
+</body>
+</html>

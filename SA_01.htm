@@ -1,0 +1,372 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Aptos;}
+@font-face
+	{font-family:"\@DengXian";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:115%;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-GB style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal><b>1) Overall functionality (from a software architecture
+viewpoint)</b></p>
+
+<p class=MsoNormal>This project is a Unity café simulation loop built around:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal><b>A central game-state/controller</b>:&nbsp;CafeManager</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Tracks completion flags like restocking, shop open, back
+      door state, music, etc.</li>
+  <li class=MsoNormal>Triggers progression (e.g., after tasks are done, spawn
+      NPCs / open door / etc.).</li>
+ </ul>
+ <li class=MsoNormal><b>Interaction as input events on scene objects</b>:&nbsp;InteractionHandler</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Unity-style: clicking objects (OnMouseDown) triggers
+      actions by calling&nbsp;CafeManager.ToggleTaskCompletion(...)&nbsp;or
+      similar.</li>
+ </ul>
+ <li class=MsoNormal><b>NPC lifecycle pipeline</b>:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>NPCSpawner&nbsp;(singleton-ish via&nbsp;static instance)
+      spawns random NPC prefabs and injects their waypoint routes / table
+      assignments via&nbsp;TableData.</li>
+  <li class=MsoNormal>Ren_Waypoint&nbsp;moves NPCs along waypoint routes to
+      reach interaction points / tables and can enable dialogue.</li>
+  <li class=MsoNormal>Ren_Order&nbsp;runs an order dialogue sequence (text,
+      audio, animation states) and connects to the till for ordering.</li>
+  <li class=MsoNormal>EatAndLeave&nbsp;handles the “consume at table &#8594;
+      leave &#8594; possibly spawn next NPC” loop, and awards tips.</li>
+ </ul>
+ <li class=MsoNormal><b>Ordering + UI orchestration</b>:&nbsp;Till</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Owns UI widgets (buttons, text fields) and the order
+      screen state machine (open/close, add items, confirm/cancel).</li>
+  <li class=MsoNormal>Calculates totals and updates “earned money” and “earned
+      tips”.</li>
+ </ul>
+ <li class=MsoNormal><b>Table as an in-world domain object</b>:&nbsp;Table</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Stores what food/drink IDs are expected/placed, holds
+      transforms for placements, and can clean/reset.</li>
+  <li class=MsoNormal>Resets external systems like&nbsp;BewerageMaker.</li>
+ </ul>
+ <li class=MsoNormal><b>Door subsystem</b>:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Door&nbsp;animates/moves a door.</li>
+  <li class=MsoNormal>DoorTrigger&nbsp;listens for physics trigger (OnTriggerEnter)
+      and opens the door when an NPC enters.</li>
+ </ul>
+</ul>
+
+<p class=MsoNormal><b>Architectural style (as implied by the diagram):</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Predominantly&nbsp;<b>MonoBehaviour-driven,
+     object-oriented</b>, with&nbsp;<b>runtime references</b>&nbsp;between
+     components.</li>
+ <li class=MsoNormal>A blend of&nbsp;<b>GameObject composition</b>&nbsp;(Unity
+     components) and “manager” orchestration (CafeManager,&nbsp;NPCSpawner,&nbsp;Till).</li>
+ <li class=MsoNormal>Gameplay is mostly&nbsp;<b>event-driven</b>&nbsp;(clicks,
+     triggers, button presses) but implemented through direct method calls
+     between components.</li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>2) Detailed architecture explanation (for university
+students) + best practice framing</b></p>
+
+<p class=MsoNormal><b>A. Identify subsystems (good architectural habit)</b></p>
+
+<p class=MsoNormal>A clean way to reason about this project is to split it into
+subsystems:</p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal><b>Game State / Progression</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>CafeManager</li>
+  <li class=MsoNormal>Responsibility: maintain “what tasks are done” and decide
+      what can happen next.</li>
+ </ul>
+ <li class=MsoNormal><b>Interaction/Input</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>InteractionHandler</li>
+  <li class=MsoNormal>Responsibility: translate player actions (click) into
+      domain actions (“restock completed”, “open back door”, etc.).</li>
+ </ul>
+ <li class=MsoNormal><b>NPC / AI Flow</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>NPCSpawner,&nbsp;Ren_Waypoint,&nbsp;EatAndLeave</li>
+  <li class=MsoNormal>Responsibility: create NPCs, route them, manage their
+      lifecycle.</li>
+ </ul>
+ <li class=MsoNormal><b>Narrative / Dialogue + Feedback</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Ren_Order,&nbsp;DialogueLine,&nbsp;OrderData</li>
+  <li class=MsoNormal>Responsibility: show lines, play audio, set animation
+      states, advance dialogue.</li>
+ </ul>
+ <li class=MsoNormal><b>Ordering / Economy / UI</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Till,&nbsp;Item</li>
+  <li class=MsoNormal>Responsibility: UI flow + pricing + payouts.</li>
+ </ul>
+ <li class=MsoNormal><b>World Objects</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Table,&nbsp;Door,&nbsp;DoorTrigger&nbsp;(+
+      referenced&nbsp;BackDoorAnim,&nbsp;BewerageMaker)</li>
+  <li class=MsoNormal>Responsibility: in-world state and animations.</li>
+ </ul>
+</ol>
+
+<p class=MsoNormal>This is a “software architecture lens”:&nbsp;<b>what changes
+together belongs together</b>. If you change UI, you ideally shouldn’t break
+NPC movement, etc.</p>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>B. Key architectural relationships (and what they imply)</b></p>
+
+<p class=MsoNormal><b>1)&nbsp;CafeManager&nbsp;as a “God object” risk</b></p>
+
+<p class=MsoNormal>The diagram shows many systems calling into or being
+triggered by&nbsp;CafeManager&nbsp;(interaction, restock, spawner, back door
+animation). This is common in student Unity projects.</p>
+
+<p class=MsoNormal><b>Best practice idea:</b>&nbsp;keep&nbsp;CafeManager&nbsp;as
+a&nbsp;<i>state holder + coordinator</i>, but avoid letting it become the place
+where “everything happens”. When a single class grows, it becomes:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>hard to test,</li>
+ <li class=MsoNormal>hard to reuse,</li>
+ <li class=MsoNormal>hard to understand without reading the entire codebase.</li>
+</ul>
+
+<p class=MsoNormal><b>2) Direct references create tight coupling</b></p>
+
+<p class=MsoNormal>Examples from the diagram:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>InteractionHandler --&gt; CafeManager</li>
+ <li class=MsoNormal>Ren_Order --&gt; Till</li>
+ <li class=MsoNormal>EatAndLeave --&gt; NPCSpawner&nbsp;(spawns another NPC)</li>
+ <li class=MsoNormal>Till --&gt; EatAndLeave&nbsp;(tells NPC to move to table)</li>
+ <li class=MsoNormal>Table --&gt; BewerageMaker</li>
+</ul>
+
+<p class=MsoNormal>This is&nbsp;<b>tight coupling</b>: changing one class often
+forces changes in the other.</p>
+
+<p class=MsoNormal><b>Best practice:</b>&nbsp;introduce&nbsp;<i>interfaces</i>&nbsp;or
+an&nbsp;<i>event system</i>&nbsp;for communication.</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>UI can raise&nbsp;OrderConfirmed(foodId, drinkId)&nbsp;event</li>
+ <li class=MsoNormal>NPC can subscribe to it if it’s the current customer</li>
+ <li class=MsoNormal>Or a mediator/controller coordinates.</li>
+</ul>
+
+<p class=MsoNormal><b>3) UI and domain logic appear mixed in&nbsp;Till</b></p>
+
+<p class=MsoNormal>Till&nbsp;owns buttons, text fields, but also pricing, items
+list, tips, totals, and triggers NPC actions.</p>
+
+<p class=MsoNormal><b>Best practice separation:</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal><b>View (UI)</b>: just shows/hides screens, reads button
+     clicks.</li>
+ <li class=MsoNormal><b>Controller/Presenter</b>: processes UI events, updates
+     view.</li>
+ <li class=MsoNormal><b>Domain (Model)</b>: order calculation, price list,
+     validation.</li>
+</ul>
+
+<p class=MsoNormal>In Unity you can still do this with MonoBehaviours, but keep
+the responsibilities clean.</p>
+
+<p class=MsoNormal><b>4) Data structures (OrderData,&nbsp;DialogueLine,&nbsp;Item)
+are good signs</b></p>
+
+<p class=MsoNormal>These are simple data carriers. That’s a good step toward a
+cleaner architecture because they can become:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>ScriptableObjects (Unity-friendly data assets),</li>
+ <li class=MsoNormal>serializable DTOs,</li>
+ <li class=MsoNormal>testable logic inputs.</li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>C. A “cleaner” target architecture (teachable version)</b></p>
+
+<p class=MsoNormal>If I were explaining an idealised architecture for this
+project to students:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal><b>Core domain layer (pure C# if possible)</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Order,&nbsp;MenuItem,&nbsp;PriceCalculator,&nbsp;DialogueSequence</li>
+  <li class=MsoNormal>No&nbsp;MonoBehaviour, no Unity UI references.</li>
+ </ul>
+ <li class=MsoNormal><b>Application layer (game rules)</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>CafeSessionController&nbsp;(coordinates tasks, NPC queue,
+      order flow)</li>
+  <li class=MsoNormal>Emits events like&nbsp;OnCustomerArrived,&nbsp;OnOrderTaken,&nbsp;OnOrderServed.</li>
+ </ul>
+ <li class=MsoNormal><b>Presentation layer</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>TillView&nbsp;(buttons/text),&nbsp;DialogueView</li>
+  <li class=MsoNormal>Subscribes to controller events, forwards button clicks
+      to controller.</li>
+ </ul>
+ <li class=MsoNormal><b>Infrastructure layer (Unity specifics)</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>NPCSpawner, movement components, audio, animation</li>
+  <li class=MsoNormal>Adapters that translate controller intent into Unity
+      actions.</li>
+ </ul>
+</ul>
+
+<p class=MsoNormal>You don’t have to fully implement Clean Architecture,
+but&nbsp;<b>thinking in layers</b>&nbsp;helps keep code maintainable.</p>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>3) Suggestions / refactoring opportunities (based on the
+diagram)</b></p>
+
+<p class=MsoNormal><b>High-impact refactors</b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal><b>Replace&nbsp;NPCSpawner.instance&nbsp;with dependency
+     injection or scene references</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>static instance&nbsp;is quick, but encourages global
+      access.</li>
+  <li class=MsoNormal>Better: assign references in the Inspector, or have a
+      single&nbsp;GameContext&nbsp;object that holds services.</li>
+ </ul>
+ <li class=MsoNormal><b>Introduce an event bus (UnityEvent/C# events)</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Instead of&nbsp;Till -&gt; EatAndLeave&nbsp;direct call:</li>
+  <ul style='margin-top:0cm' type=square>
+   <li class=MsoNormal>Till&nbsp;raises&nbsp;OrderConfirmed(foodId, drinkId)</li>
+   <li class=MsoNormal>The active NPC (or a controller) responds.</li>
+  </ul>
+  <li class=MsoNormal>This reduces bidirectional coupling.</li>
+ </ul>
+ <li class=MsoNormal><b>Split&nbsp;Till&nbsp;into UI and logic</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>TillView&nbsp;(buttons/text)</li>
+  <li class=MsoNormal>TillController&nbsp;(order screen flow, invokes services)</li>
+  <li class=MsoNormal>OrderService&nbsp;or&nbsp;OrderCalculator&nbsp;(prices,
+      totals, validation)</li>
+  <li class=MsoNormal>This makes it far easier to test and reason about.</li>
+ </ul>
+ <li class=MsoNormal><b>Use ScriptableObjects for menu items and dialogue</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Item&nbsp;could become&nbsp;MenuItemSO&nbsp;(name, price,
+      id, prefab refs).</li>
+  <li class=MsoNormal>OrderData&nbsp;could be a ScriptableObject asset
+      representing a customer script/dialogue.</li>
+ </ul>
+</ol>
+
+<p class=MsoNormal><b>Medium-impact improvements</b></p>
+
+<ol style='margin-top:0cm' start=5 type=1>
+ <li class=MsoNormal><b>Define explicit NPC state machines</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Many Unity NPC scripts grow messy with booleans (canMove,&nbsp;isLastWaypointReached,
+      etc.).</li>
+  <li class=MsoNormal>Better: an enum like&nbsp;CustomerState = Arriving,
+      Ordering, WaitingForFood, Eating, Leaving.</li>
+  <li class=MsoNormal>Even better: a small state pattern.</li>
+ </ul>
+ <li class=MsoNormal><b>Avoid stringly-typed task toggles</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>ToggleTaskCompletion(taskName: string)&nbsp;is fragile
+      (typos break logic).</li>
+  <li class=MsoNormal>Use an enum&nbsp;TaskType&nbsp;or separate explicit
+      methods/events.</li>
+ </ul>
+ <li class=MsoNormal><b>Clarify ownership of “money/tips”</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Currently&nbsp;Till&nbsp;seems to track earnings/tips.</li>
+  <li class=MsoNormal>Consider a&nbsp;Wallet/EconomyManager&nbsp;that owns
+      totals; UI displays it.</li>
+ </ul>
+</ol>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>
