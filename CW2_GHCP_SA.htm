@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CW2 – GitHub Copilot Software Architecture</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #1f1f1f;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #0F4761;
+      border-bottom: 3px solid #0F4761;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    .note {
+      background-color: #E8F4F8;
+      border-left: 4px solid #467886;
+      padding: 12px;
+      margin: 15px 0 20px;
+      border-radius: 4px;
+    }
+    .accordion {
+      border: 1px solid #0F4761;
+      border-radius: 4px;
+      margin: 15px 0;
+      background-color: #f9f9f9;
+      overflow: hidden;
+    }
+    .accordion-summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 15px;
+      user-select: none;
+      background-color: #f0f0f0;
+      border-radius: 4px 4px 0 0;
+      list-style: none;
+    }
+    .accordion-summary:hover {
+      background-color: #e5e5e5;
+    }
+    .accordion-summary::-webkit-details-marker {
+      display: none;
+    }
+    .accordion-summary::before {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 6px solid #0F4761;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .accordion[open] > .accordion-summary::before {
+      transform: rotate(90deg);
+    }
+    .accordion-summary h2 {
+      margin: 0;
+      color: #0F4761;
+      font-size: 18px;
+    }
+    .accordion-content {
+      padding: 15px;
+      border-top: 1px solid #ddd;
+      background-color: #fff;
+    }
+    .legacy-content p,
+    .legacy-content li,
+    .legacy-content div {
+      color: #1f1f1f;
+      max-width: 100%;
+    }
+    .legacy-content p {
+      margin: 0 0 10px 0;
+      text-indent: 0;
+      line-height: 1.45;
+      clear: both;
+    }
+    .legacy-content ol,
+    .legacy-content ul {
+      margin: 8px 0 10px 28px;
+    }
+    h3 {
+      color: #0F4761;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CW2 Baseline Submission Example</h1>
+
+    <div class="note">
+      Embedded Panopto video for the CW2 baseline submission example.
+    </div>
+
+    <div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%">
+      <iframe src="https://westminster.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=c5f6607c-f3d1-4c75-aab6-b2ad00f84690&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all" style="border: 1px solid #464646; position: absolute; top: 0; left: 0; width: 100%; height: 100%; box-sizing: border-box;" allowfullscreen allow="autoplay" aria-label="Panopto Embedded Video Player" aria-description="CW2 Baseline Submission Example"></iframe>
+    </div>
+
+    <h2 style="color: #0F4761; margin-top: 40px; border-top: 2px solid #0F4761; padding-top: 20px;">Visual Scripting Cafe Application Architecture</h2>
+
+    <!-- 1. Purpose & scope -->
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>1) Purpose &amp; Scope</h2></summary>
+      <div class="accordion-content legacy-content">
+        <p>This system is a Unity 3D prototype where a player (First Person Controller) operates in a café scene and completes an interaction loop with a diner prefab (Annie). Interaction is driven by:</p>
+        <ul>
+          <li>a <b>player-attached iPad</b> with <b>World Space UI</b> to start gameplay and run "kitchen" actions (cook/spawn burger, show timers/counters), and</li>
+          <li>a <b>diner prefab UI panel</b> (World Space) that progresses through a staged sequence: <b>Dialogue → Order → Deliver Order → Take Payment → Destroy/leave</b>, with timers and happiness/score feedback.</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- 2. System context -->
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>2) System Context</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>Actors / external dependencies</h3>
+        <ul>
+          <li><b>Player</b>: navigates scene and triggers UI actions.</li>
+          <li><b>Unity Engine</b>: rendering, physics, UI, prefab instantiation/destruction.</li>
+          <li><b>Starter Assets (FPC)</b>: movement/camera controller package.</li>
+          <li><b>Unity Visual Scripting</b>: primary logic implementation (graphs, variables, script machines).</li>
+          <li><b>TextMeshPro (optional/likely)</b>: used for improved text rendering; requires Visual Scripting node type options regeneration if used.</li>
+          <li><b>Imported content</b>: Café model, chair, iPad model (or cube proxy), burger/beer/fries, Annie character, sitting loop animations (Mixamo/Fuse pipeline).</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- 3. Architectural overview -->
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>3) Architectural Overview (High-Level)</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>Key design decisions</h3>
+        <ol>
+          <li><b>Diegetic World Space UI</b>: UI exists "in-world" (on the iPad and on the diner panel), not as screen overlay.</li>
+          <li><b>Logic in Visual Scripting graphs</b>: timers, button flows, variable updates, prefab destruction are graph-driven.</li>
+          <li><b>Two-tier state model</b>:
+            <ul>
+              <li><b>Scene Variables</b> for global/shared gameplay state (inventory, cook timers, onboard states, overall feedback).</li>
+              <li><b>Prefab Object Variables</b> for per-diner local state (interaction stage, per-diner timers, dialogue counters, local UI refs).</li>
+            </ul>
+          </li>
+          <li><b>Prefab modularity</b>: Annie diner is packaged as a prefab with animator + UI + graphs + variables; enabling future scaling to multiple diners.</li>
+        </ol>
+      </div>
+    </details>
+
+    <!-- 4. Logical architecture -->
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>4) Logical Architecture (Components and Responsibilities)</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>4.1 Scene Composition</h3>
+
+        <p><b>A) Player (First Person Controller)</b></p>
+        <ul>
+          <li>Provides locomotion and camera.</li>
+          <li>Can be toggled on/off (e.g., "Start Disable" behaviour) via a Visual Scripting graph (often hosted by a manager object).</li>
+        </ul>
+
+        <p><b>B) iPad (3D object)</b></p>
+        <ul>
+          <li>Parent/attached to player capsule.</li>
+          <li>Uses an <b>iPad root transform</b> to normalize transform/pivot/scaling (especially if using cube proxy and/or if parent is scaled).</li>
+        </ul>
+
+        <p><b>C) iPad Canvas (World Space UI)</b></p>
+        <ul>
+          <li>Renders timer and "value display" texts.</li>
+          <li>Hosts buttons that trigger global actions (start, cook, spawn burger, update display).</li>
+          <li>Has Script Machine / Embedded graphs implementing:
+            <ul>
+              <li>timer countdown logic,</li>
+              <li>inventory/counter updates (uncooked/cooked),</li>
+              <li>burger spawning / "onboard" state,</li>
+              <li>periodic UI refresh.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <p><b>D) GameManager (empty GameObject + Visual Scripting graph)</b></p>
+        <ul>
+          <li>Provides an always-present "host" graph for scene-wide control.</li>
+          <li>Useful for:
+            <ul>
+              <li>initialization,</li>
+              <li>enabling/disabling FPC,</li>
+              <li>maintaining/setting Scene Variables,</li>
+              <li>orchestrating basic scene functions.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <p><b>E) Environment (café container + chair + colliders)</b></p>
+        <ul>
+          <li>Static meshes and colliders (stairs colliders explicitly noted).</li>
+        </ul>
+
+        <h3>4.2 Prefab Architecture</h3>
+
+        <p><b>A) Annie Diner Prefab</b> — Contains:</p>
+        <ul>
+          <li>Annie character model (humanoid rig).</li>
+          <li>Animator Controller with sitting/eating loop animations.</li>
+          <li>Diner UI panel (World Space canvas) with:
+            <ul>
+              <li>Dialogue area + dialogue counter,</li>
+              <li>Buttons in prescribed order:
+                <ol type="a">
+                  <li>Dialogue</li>
+                  <li>Order</li>
+                  <li>Deliver Order</li>
+                  <li>Take Payment</li>
+                </ol>
+              </li>
+            </ul>
+          </li>
+          <li>Visual Scripting graphs implementing the diner state machine and timers.</li>
+          <li>Prefab Object Variables capturing per-instance state.</li>
+        </ul>
+
+        <p><b>B) Burger (and other food props)</b></p>
+        <ul>
+          <li>Spawned and tracked via Scene Variables.</li>
+          <li>Tutorial 10 notes burger has <b>no local variables</b> and uses Scene Variables such as <code>OnBoard</code> and <code>BurgerUpBool</code>.</li>
+          <li>Includes a temporary pickup button to validate onClick wiring and show/hide behaviour.</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- 5. Data architecture -->
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>5) Data Architecture (State, Variables, and Bindings)</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>5.1 Scene Variables (global)</h3>
+        <p>Used by iPad UI graphs, burger logic, and referenced by diner logic when needed.</p>
+        <p>Typical categories:</p>
+        <ul>
+          <li><b>Cook timer state</b> (countdown, ready state).</li>
+          <li><b>Inventory counters</b>:
+            <ul>
+              <li>uncooked burger supply,</li>
+              <li>cooked burger count/tracker.</li>
+            </ul>
+          </li>
+          <li><b>Carry/availability state</b>:
+            <ul>
+              <li>"OnBoard" (whether burger is held/available for delivery),</li>
+              <li>"BurgerUpBool" (visibility/pickup toggle).</li>
+            </ul>
+          </li>
+          <li><b>Global feedback</b>:
+            <ul>
+              <li>happiness/score summary to show on iPad.</li>
+            </ul>
+          </li>
+        </ul>
+        <p><b>UI binding pattern:</b> "Value displays" are created by duplicating label texts, renaming them (e.g., "Value"), and having graphs set their text based on scene variables.</p>
+
+        <h3>5.2 Prefab Object Variables (local)</h3>
+        <p>Stored on each diner prefab instance, typically including:</p>
+        <ul>
+          <li>interaction stage flags (dialogue done, order placed, delivered, payment due),</li>
+          <li>timers: order wait, delivery wait, eat timer, pay timer,</li>
+          <li>dialogue index/counter,</li>
+          <li>references to UI Text/TextMeshPro elements and buttons,</li>
+          <li>references for destroy/remove behaviour.</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- 6. Behavioural architecture -->
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>6) Behavioural Architecture (Key Flows)</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>6.1 Start / enable player control</h3>
+        <ol>
+          <li>Player presses Start on iPad UI.</li>
+          <li>GameManager graph toggles FPC enabled state.</li>
+          <li>Scene Variables initialize/reset (as needed).</li>
+        </ol>
+
+        <h3>6.2 Cook and spawn burger (global loop)</h3>
+        <ol>
+          <li>Player triggers cook timer on iPad UI.</li>
+          <li>Timer counts down; iPad text updates each tick.</li>
+          <li>At completion:
+            <ul>
+              <li>uncooked supply decrements (Tutorial 10 "uncooked update"),</li>
+              <li>cooked burger tracker increments/updates.</li>
+            </ul>
+          </li>
+          <li>Player triggers "Spawn Burger":
+            <ul>
+              <li>checks cooked availability,</li>
+              <li>updates onboard / carry booleans,</li>
+              <li>spawns or enables burger object.</li>
+            </ul>
+          </li>
+        </ol>
+
+        <h3>6.3 Diner interaction loop (per prefab)</h3>
+        <ol>
+          <li>Dialogue: advances dialogue text/counter.</li>
+          <li>Order: begins order-wait timer.</li>
+          <li>Deliver: delivery-wait + eat timer sequences; may check global onboard/cooked state.</li>
+          <li>Payment: pay timer stage; updates happiness; triggers destroy (removes prefab instance).</li>
+          <li>iPad receives updated happiness state via Scene Variables and reflects it in UI.</li>
+        </ol>
+      </div>
+    </details>
+
+    <!-- 7. UI architecture -->
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>7) UI Architecture</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>7.1 World Space UI rationale</h3>
+        <ul>
+          <li>Supports diegetic UI: player "looks at" iPad and diner panel in the 3D world.</li>
+          <li>Requires careful transform normalization:
+            <ul>
+              <li>iPad root empty object,</li>
+              <li>avoid inheriting problematic scaling from parent objects.</li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>7.2 Text system choice</h3>
+        <ul>
+          <li>Standard Unity Text or TextMeshPro UGUI.</li>
+          <li>If TextMeshPro is used, Visual Scripting node types must be enabled and nodes regenerated.</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- 8. Deployment / packaging -->
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>8) Deployment / Packaging View (Unity Project Organisation)</h2></summary>
+      <div class="accordion-content legacy-content">
+        <p>Recommended structure implied by tutorial workflow:</p>
+        <ul>
+          <li><code>Assets/Models/</code> (Cafe, Chair, iPad, Annie)</li>
+          <li><code>Assets/Textures/</code> (café sign/posters/iPad screen images)</li>
+          <li><code>Assets/Animations/</code> (sitting loops)</li>
+          <li><code>Assets/Prefabs/</code> (Annie prefab, burger prefab, UI prefabs if any)</li>
+          <li><code>Assets/VisualScripting/</code> (graphs, macro assets if extracted)</li>
+          <li><code>Assets/Scenes/</code> (main café scene)</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- 9. Quality attributes -->
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>9) Quality Attributes &amp; Considerations</h2></summary>
+      <div class="accordion-content legacy-content">
+        <h3>Maintainability</h3>
+        <ul>
+          <li><b>Pros</b>: Prefab encapsulation + graphs encourage modular thinking.</li>
+          <li><b>Cons</b>: Visual Scripting graphs can become hard to version/diff at scale; naming conventions for variables and graphs become critical.</li>
+        </ul>
+
+        <h3>Scalability (functional)</h3>
+        <ul>
+          <li>Architecture supports multiple diners by instantiating multiple prefab instances.</li>
+          <li>Key risk: overuse of Scene Variables for per-diner state can cause cross-talk; per-diner data should remain in Prefab Object Variables.</li>
+        </ul>
+
+        <h3>Usability</h3>
+        <ul>
+          <li>Clear button ordering and staged timers guide the player.</li>
+          <li>Value displays on iPad provide continuous feedback (inventory/timers/happiness).</li>
+        </ul>
+
+        <h3>Performance</h3>
+        <ul>
+          <li>For small numbers of prefabs and simple graphs, performance is fine.</li>
+          <li>For many diners, consider throttling UI updates (avoid updating many text nodes every frame).</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- 10. Risks & mitigations -->
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>10) Risks &amp; Mitigations</h2></summary>
+      <div class="accordion-content legacy-content">
+        <ol>
+          <li><b>Transform scaling/pivot issues (iPad attachment)</b>
+            <ul>
+              <li>Mitigation: root empty object normalization; avoid scaled parents; add intermediate parent if needed.</li>
+            </ul>
+          </li>
+          <li><b>TextMeshPro node availability in Visual Scripting</b>
+            <ul>
+              <li>Mitigation: enable TMP types in Visual Scripting project settings; regenerate nodes; standardize on one text system early.</li>
+            </ul>
+          </li>
+          <li><b>State coupling via Scene Variables</b>
+            <ul>
+              <li>Mitigation: keep global-only values in Scene Variables; keep per-diner state in prefab variables; use consistent naming.</li>
+            </ul>
+          </li>
+          <li><b>Prefab destruction references</b>
+            <ul>
+              <li>Tutorial note: Destroy unit targets the Annie prefab; ensure correct target reference per instance.</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+    </details>
+
+    <!-- 11. Extension points -->
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>11) Extension Points (Future Work)</h2></summary>
+      <div class="accordion-content legacy-content">
+        <ul>
+          <li>Multiple diners with shared queue/list (Tutorial 10 mentions diner list for extra marks).</li>
+          <li>More robust item interaction (replace pickup button with raycast/interact system).</li>
+          <li>More formal state machine pattern per diner (still possible in Visual Scripting, but with clearer state enum).</li>
+          <li>Save/load of global counters (optional).</li>
+          <li>Better separation: move global "kitchen" logic into a dedicated KitchenManager graph.</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- 12. Appendix -->
+    <details class="accordion">
+      <summary class="accordion-summary"><h2>12) Appendix: Key Components Checklist</h2></summary>
+      <div class="accordion-content legacy-content">
+        <ul>
+          <li>FPC imported and working</li>
+          <li>iPad model/cube attached to player + normalized root</li>
+          <li>iPad World Space canvas aligned to screen</li>
+          <li>Scene Variables created (inventory/timers/onboard/happiness)</li>
+          <li>GameManager empty object hosts global VS graph</li>
+          <li>Annie imported, humanoid rig configured, sitting loops set up</li>
+          <li>Annie prefab created with UI panel + graphs + prefab variables</li>
+          <li>Diner interaction sequence implemented with timers + destroy</li>
+          <li>Burger spawn + onboard state + pickup/delivery plumbing</li>
+        </ul>
+      </div>
+    </details>
+
+  </div>
+</body>
+</html>

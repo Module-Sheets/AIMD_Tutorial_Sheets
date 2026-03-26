@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIMD Architecture Diagrams</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #1f1f1f;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #0F4761;
+      border-bottom: 3px solid #0F4761;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    .note {
+      background-color: #E8F4F8;
+      border-left: 4px solid #467886;
+      padding: 12px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+
+    /* Accordion */
+    .accordion {
+      border: 1px solid #0F4761;
+      border-radius: 4px;
+      margin: 15px 0;
+      background-color: #f9f9f9;
+    }
+    .accordion-summary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 15px;
+      user-select: none;
+      background-color: #f0f0f0;
+      border-radius: 4px 4px 0 0;
+      list-style: none;
+    }
+    .accordion-summary:hover { background-color: #e5e5e5; }
+    .accordion-summary::-webkit-details-marker { display: none; }
+    .accordion-summary::before {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 6px solid #0F4761;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .accordion[open] > .accordion-summary::before { transform: rotate(90deg); }
+    .accordion-summary h2 {
+      margin: 0;
+      color: #0F4761;
+      font-size: 18px;
+    }
+    .accordion-content {
+      padding: 15px;
+      border-top: 1px solid #ddd;
+      background-color: #fff;
+    }
+
+    /* Diagram controls toolbar */
+    .diagram-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      padding: 8px 10px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .diagram-controls button {
+      background-color: #0F4761;
+      color: white;
+      border: none;
+      padding: 5px 13px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: 'Segoe UI', sans-serif;
+      transition: background-color 0.15s;
+    }
+    .diagram-controls button:hover { background-color: #467886; }
+    .diagram-controls .sep {
+      width: 1px;
+      height: 22px;
+      background: #bbb;
+      margin: 0 2px;
+    }
+    .zoom-label {
+      font-size: 13px;
+      color: #555;
+      min-width: 70px;
+    }
+    .drag-hint {
+      font-size: 12px;
+      color: #888;
+      margin-left: auto;
+    }
+
+    /* Diagram viewport */
+    .diagram-viewport {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fafafa;
+      overflow: hidden;
+      cursor: grab;
+    }
+    .diagram-viewport:active { cursor: grabbing; }
+    .diagram-viewport svg {
+      display: block;
+      width: 100%;
+      height: 660px;
+    }
+
+    /* Mermaid render target */
+    .mermaid-src { display: none; }
+
+    /* Loading state */
+    .diagram-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      color: #888;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AIMD Architecture Diagrams</h1>
+    <p class="note">Interactive architecture diagrams for the Visual Scripting Café application (Tutorials 08/09 + 10). Pan by clicking and dragging. Zoom with the mouse wheel or the buttons below.</p>
+
+    <details class="accordion" open>
+      <summary class="accordion-summary"><h2>Unity Visual Scripting Architecture (Tutorial 08/09 + 10)</h2></summary>
+      <div class="accordion-content">
+        <p>Full architecture overview showing the Unity Scene, Player, Global Logic, Diner Prefab (Annie), and Food/Interactable components and their variable data flows.</p>
+
+        <div class="diagram-controls">
+          <button onclick="diagramZoomIn('d1')">＋</button>
+          <button onclick="diagramZoomOut('d1')">－</button>
+          <div class="sep"></div>
+          <button onclick="diagramReset('d1')">Reset</button>
+          <button onclick="diagramFit('d1')">Fit</button>
+          <div class="sep"></div>
+          <span class="zoom-label" id="zoom-label-d1">Zoom: 100%</span>
+          <span class="drag-hint">Drag to pan &nbsp;|&nbsp; Scroll to zoom</span>
+        </div>
+
+        <div class="diagram-viewport" id="viewport-d1">
+          <div class="diagram-loading" id="loading-d1">Rendering diagram…</div>
+        </div>
+
+        <!-- Source kept hidden; rendered into viewport above -->
+        <pre class="mermaid-src" id="src-d1">flowchart TB
+  subgraph Scene["Unity Scene (Café)"]
+    ENV["Environment\n(Cafe container, chair, colliders/stairs)"]
+
+    subgraph Player["Player"]
+      FPC["First Person Controller (FPC)\nMovement + Camera"]
+      IPADROOT["iPad Root Transform\n(normalised parent)"]
+      IPADMODEL["iPad Model\n(or flattened cube proxy)"]
+
+      subgraph IPADUI["iPad Canvas (World Space UI)"]
+        IPADBTNS["Buttons\n(Start / Cook / Spawn Burger / etc.)"]
+        IPADTEXT["Text/Value displays\n(Timer, inventory, happiness)"]
+        IPADGRAPH["Visual Scripting Graph(s)\n(Script Machine / Embedded)"]
+      end
+
+      FPC --> IPADROOT --> IPADMODEL
+      IPADROOT --> IPADUI
+      IPADBTNS --> IPADGRAPH
+      IPADGRAPH --> IPADTEXT
+    end
+
+    subgraph GlobalLogic["Global Logic"]
+      GM["GameManager (Empty GameObject)\nHosts VS Graph to access Scene Variables"]
+      SV[("Scene Variables\n(Global state)\n- timers (cook)\n- inventory (uncooked/cooked)\n- OnBoard / BurgerUpBool\n- happiness/score\n- start flags")]
+    end
+
+    GM <--> SV
+    IPADGRAPH <--> SV
+  end
+
+  subgraph Prefabs["Prefabs / Runtime Instances"]
+    subgraph Diner["Diner Prefab Instance: Annie"]
+      ANNIE["Annie Character\n(Mixamo/Fuse import)"]
+      ANIM["Animator Controller\n(Sitting loop / eat etc.)"]
+
+      subgraph DinerUI["Diner Canvas (World Space UI Panel)"]
+        DBTNS["Buttons\nDialogue / Order / Deliver / Take Payment"]
+        DTXT["Dialogue text + counters\nTimer/value fields"]
+      end
+
+      DOV[("Prefab Object Variables\n(Per-diner state)\n- stage bools\n- order/delivery/eat/pay timers\n- UI refs")]
+
+      DGRAPH["Diner Visual Scripting Graph(s)\n(state machine + timers)"]
+
+      ANNIE --> ANIM
+      ANNIE --> DinerUI
+      DBTNS --> DGRAPH
+      DGRAPH <--> DOV
+      DGRAPH --> DTXT
+    end
+
+    subgraph Food["Food / Interactables"]
+      BURGER["Burger Prefab / Object"]
+      BPICK["Pickup Button / UI (testing)"]
+      BGRAPH["VS Graph (simple)\n(no local vars)\nreads/writes Scene Vars"]
+      BURGER --> BPICK --> BGRAPH
+    end
+  end
+
+  SV <--> DGRAPH
+  SV <--> BGRAPH
+  DGRAPH -->|"Payment/Happiness update"| SV
+  DGRAPH -->|"Destroy prefab when done"| DESTROY["Destroy Unit\n(removes Annie instance)"]
+</pre>
+      </div>
+    </details>
+
+  </div><!-- /container -->
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'default',
+      flowchart: { useMaxWidth: false, htmlLabels: true },
+      securityLevel: 'loose'
+    });
+
+    const pzInstances = {};
+
+    async function renderAll() {
+      const sources = document.querySelectorAll('.mermaid-src');
+      for (const src of sources) {
+        const id = src.id.replace('src-', '');
+        const viewport = document.getElementById('viewport-' + id);
+        const loading  = document.getElementById('loading-' + id);
+        try {
+          const { svg } = await mermaid.render('mermaid-svg-' + id, src.textContent.trim());
+          loading.remove();
+          viewport.innerHTML = svg;
+          const svgEl = viewport.querySelector('svg');
+          svgEl.style.height = '660px';
+          svgEl.style.width  = '100%';
+          svgEl.removeAttribute('height');
+          svgEl.removeAttribute('width');
+          requestAnimationFrame(() => {
+            pzInstances[id] = svgPanZoom(svgEl, {
+              zoomEnabled: true,
+              panEnabled: true,
+              controlIconsEnabled: false,
+              mouseWheelZoomEnabled: true,
+              fit: true,
+              center: true,
+              minZoom: 0.05,
+              maxZoom: 20,
+              onZoom: level => setZoomLabel(id, level)
+            });
+            setZoomLabel(id, pzInstances[id].getZoom());
+          });
+        } catch (err) {
+          loading.textContent = 'Diagram render failed — check browser console.';
+          loading.style.color = '#c00';
+          console.error('[diagrams.htm] Mermaid error for ' + id, err);
+        }
+      }
+    }
+
+    function setZoomLabel(id, level) {
+      const el = document.getElementById('zoom-label-' + id);
+      if (el) el.textContent = 'Zoom: ' + Math.round(level * 100) + '%';
+    }
+
+    function diagramZoomIn(id)  { if (pzInstances[id]) { pzInstances[id].zoomIn();  setZoomLabel(id, pzInstances[id].getZoom()); } }
+    function diagramZoomOut(id) { if (pzInstances[id]) { pzInstances[id].zoomOut(); setZoomLabel(id, pzInstances[id].getZoom()); } }
+    function diagramReset(id)   { if (pzInstances[id]) { pzInstances[id].resetZoom(); pzInstances[id].center(); setZoomLabel(id, pzInstances[id].getZoom()); } }
+    function diagramFit(id)     { if (pzInstances[id]) { pzInstances[id].fit(); pzInstances[id].center(); setZoomLabel(id, pzInstances[id].getZoom()); } }
+
+    document.addEventListener('DOMContentLoaded', renderAll);
+  </script>
+</body>
+</html>

@@ -1,0 +1,507 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:DengXian;
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+@font-face
+	{font-family:Aptos;}
+@font-face
+	{font-family:"\@DengXian";
+	panose-1:2 1 6 0 3 1 1 1 1 1;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:8.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;}
+.MsoChpDefault
+	{font-family:"Aptos",sans-serif;}
+.MsoPapDefault
+	{margin-bottom:8.0pt;
+	line-height:115%;}
+@page WordSection1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-GB style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal><b>1. Purpose &amp; scope</b></p>
+
+<p class=MsoNormal>This system is a Unity 3D prototype where a player (First
+Person Controller) operates in a café scene and completes an interaction loop
+with a diner prefab (Annie). Interaction is driven by:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>a&nbsp;<b>player-attached iPad</b>&nbsp;with&nbsp;<b>World
+     Space UI</b>&nbsp;to start gameplay and run “kitchen” actions (cook/spawn
+     burger, show timers/counters), and</li>
+ <li class=MsoNormal>a&nbsp;<b>diner prefab UI panel</b>&nbsp;(World Space)
+     that progresses through a staged sequence:&nbsp;<b>Dialogue &#8594; Order
+     &#8594; Deliver Order &#8594; Take Payment &#8594; Destroy/leave</b>, with
+     timers and happiness/score feedback.</li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>2. System context</b></p>
+
+<p class=MsoNormal><b>Actors / external dependencies</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal><b>Player</b>: navigates scene and triggers UI actions.</li>
+ <li class=MsoNormal><b>Unity Engine</b>: rendering, physics, UI, prefab
+     instantiation/destruction.</li>
+ <li class=MsoNormal><b>Starter Assets (FPC)</b>: movement/camera controller
+     package.</li>
+ <li class=MsoNormal><b>Unity Visual Scripting</b>: primary logic
+     implementation (graphs, variables, script machines).</li>
+ <li class=MsoNormal><b>TextMeshPro (optional/likely)</b>: used for improved
+     text rendering; requires Visual Scripting node type options regeneration
+     if used.</li>
+ <li class=MsoNormal><b>Imported content</b>: Café model, chair, iPad model (or
+     cube proxy), burger/beer/fries, Annie character, sitting loop animations
+     (Mixamo/Fuse pipeline).</li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>3. Architectural overview (high-level)</b></p>
+
+<p class=MsoNormal><b>Key design decisions</b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal><b>Diegetic World Space UI</b>: UI exists “in-world” (on
+     the iPad and on the diner panel), not as screen overlay.</li>
+ <li class=MsoNormal><b>Logic in Visual Scripting graphs</b>: timers, button
+     flows, variable updates, prefab destruction are graph-driven.</li>
+ <li class=MsoNormal><b>Two-tier state model</b>:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal><b>Scene Variables</b>&nbsp;for global/shared gameplay
+      state (inventory, cook timers, onboard states, overall feedback).</li>
+  <li class=MsoNormal><b>Prefab Object Variables</b>&nbsp;for per-diner local
+      state (interaction stage, per-diner timers, dialogue counters, local UI
+      refs).</li>
+ </ul>
+ <li class=MsoNormal><b>Prefab modularity</b>: Annie diner is packaged as a
+     prefab with animator + UI + graphs + variables; enabling future scaling to
+     multiple diners.</li>
+</ol>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>4. Logical architecture (components and responsibilities)</b></p>
+
+<p class=MsoNormal><b>4.1 Scene Composition</b></p>
+
+<p class=MsoNormal><b>A) Player (First Person Controller)</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Provides locomotion and camera.</li>
+ <li class=MsoNormal>Can be toggled on/off (e.g., “Start Disable” behavior) via
+     a Visual Scripting graph (often hosted by a manager object).</li>
+</ul>
+
+<p class=MsoNormal><b>B) iPad (3D object)</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Parent/attached to player capsule.</li>
+ <li class=MsoNormal>Uses an&nbsp;<b>iPad root transform</b>&nbsp;to normalize
+     transform/pivot/scaling (especially if using cube proxy and/or if parent
+     is scaled).</li>
+</ul>
+
+<p class=MsoNormal><b>C) iPad Canvas (World Space UI)</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Renders timer and “value display” texts.</li>
+ <li class=MsoNormal>Hosts buttons that trigger global actions (start, cook,
+     spawn burger, update display).</li>
+ <li class=MsoNormal>Has Script Machine / Embedded graphs implementing:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>timer countdown logic,</li>
+  <li class=MsoNormal>inventory/counter updates (uncooked/cooked),</li>
+  <li class=MsoNormal>burger spawning / “onboard” state,</li>
+  <li class=MsoNormal>periodic UI refresh.</li>
+ </ul>
+</ul>
+
+<p class=MsoNormal><b>D) GameManager (empty GameObject + Visual Scripting
+graph)</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Provides an always-present “host” graph for scene-wide
+     control.</li>
+ <li class=MsoNormal>Useful for:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>initialization,</li>
+  <li class=MsoNormal>enabling/disabling FPC,</li>
+  <li class=MsoNormal>maintaining/setting Scene Variables,</li>
+  <li class=MsoNormal>orchestrating basic scene functions.</li>
+ </ul>
+</ul>
+
+<p class=MsoNormal><b><span lang=FR>E) Environment (café container + chair +
+colliders)</span></b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Static meshes and colliders (stairs colliders explicitly
+     noted).</li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>4.2 Prefab Architecture</b></p>
+
+<p class=MsoNormal><b>A) Annie Diner Prefab</b>&nbsp;Contains:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Annie character model (humanoid rig).</li>
+ <li class=MsoNormal>Animator Controller with sitting/eating loop animations.</li>
+ <li class=MsoNormal>Diner UI panel (World Space canvas) with:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Dialogue area + dialogue counter,</li>
+  <li class=MsoNormal>Buttons in prescribed order:</li>
+  <ol style='margin-top:0cm' start=1 type=a>
+   <li class=MsoNormal>Dialogue</li>
+   <li class=MsoNormal>Order</li>
+   <li class=MsoNormal>Deliver Order</li>
+   <li class=MsoNormal>Take Payment</li>
+  </ol>
+ </ul>
+ <li class=MsoNormal>Visual Scripting graphs implementing the diner state
+     machine and timers.</li>
+ <li class=MsoNormal>Prefab Object Variables capturing per-instance state.</li>
+</ul>
+
+<p class=MsoNormal><b>B) Burger (and other food props)</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Spawned and tracked via Scene Variables.</li>
+ <li class=MsoNormal>Tutorial 10 notes burger has&nbsp;<b>no local variables</b>&nbsp;and
+     uses Scene Variables such as&nbsp;OnBoard&nbsp;and&nbsp;BurgerUpBool.</li>
+ <li class=MsoNormal>Includes a temporary pickup button to validate&nbsp;onClick&nbsp;wiring
+     and show/hide behavior.</li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>5. Data architecture (state, variables, and bindings)</b></p>
+
+<p class=MsoNormal><b>5.1 Scene Variables (global)</b></p>
+
+<p class=MsoNormal>Used by iPad UI graphs, burger logic, and referenced by
+diner logic when needed.</p>
+
+<p class=MsoNormal>Typical categories:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal><b>Cook timer state</b>&nbsp;(countdown, ready state).</li>
+ <li class=MsoNormal><b>Inventory counters</b>:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>uncooked burger supply,</li>
+  <li class=MsoNormal>cooked burger count/tracker.</li>
+ </ul>
+ <li class=MsoNormal><b>Carry/availability state</b>:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>“OnBoard” (whether burger is held/available for
+      delivery),</li>
+  <li class=MsoNormal>“BurgerUpBool” (visibility/pickup toggle).</li>
+ </ul>
+ <li class=MsoNormal><b>Global feedback</b>:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>happiness/score summary to show on iPad.</li>
+ </ul>
+</ul>
+
+<p class=MsoNormal><b>UI binding pattern:</b>&nbsp;“Value displays” are created
+by duplicating label texts, renaming them (e.g., “Value”), and having graphs
+set their text based on scene variables.</p>
+
+<p class=MsoNormal><b>5.2 Prefab Object Variables (local)</b></p>
+
+<p class=MsoNormal>Stored on each diner prefab instance, typically including:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>interaction stage flags (dialogue done, order placed,
+     delivered, payment due),</li>
+ <li class=MsoNormal>timers: order wait, delivery wait, eat timer, pay timer,</li>
+ <li class=MsoNormal>dialogue index/counter,</li>
+ <li class=MsoNormal>references to UI Text/TextMeshPro elements and buttons,</li>
+ <li class=MsoNormal>references for destroy/remove behavior.</li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>6. Behavioral architecture (key flows)</b></p>
+
+<p class=MsoNormal><b>6.1 Start / enable player control</b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal>Player presses Start on iPad UI.</li>
+ <li class=MsoNormal>GameManager graph toggles FPC enabled state.</li>
+ <li class=MsoNormal>Scene Variables initialize/reset (as needed).</li>
+</ol>
+
+<p class=MsoNormal><b>6.2 Cook and spawn burger (global loop)</b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal>Player triggers cook timer on iPad UI.</li>
+ <li class=MsoNormal>Timer counts down; iPad text updates each tick.</li>
+ <li class=MsoNormal>At completion:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>uncooked supply decrements (Tutorial 10 “uncooked
+      update”),</li>
+  <li class=MsoNormal>cooked burger tracker increments/updates.</li>
+ </ul>
+ <li class=MsoNormal>Player triggers “Spawn Burger”:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>checks cooked availability,</li>
+  <li class=MsoNormal>updates onboard / carry booleans,</li>
+  <li class=MsoNormal>spawns or enables burger object.</li>
+ </ul>
+</ol>
+
+<p class=MsoNormal><b>6.3 Diner interaction loop (per prefab)</b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal><span lang=FR>Dialogue: advances dialogue text/counter.</span></li>
+ <li class=MsoNormal>Order: begins order-wait timer.</li>
+ <li class=MsoNormal>Deliver: delivery-wait + eat timer sequences; may check
+     global onboard/cooked state.</li>
+ <li class=MsoNormal>Payment: pay timer stage; updates happiness; triggers
+     destroy (removes prefab instance).</li>
+ <li class=MsoNormal>iPad receives updated happiness state via Scene Variables
+     and reflects it in UI.</li>
+</ol>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>7. UI architecture</b></p>
+
+<p class=MsoNormal><b>7.1 World Space UI rationale</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Supports diegetic UI: player “looks at” iPad and diner
+     panel in the 3D world.</li>
+ <li class=MsoNormal>Requires careful transform normalization:</li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>iPad root empty object,</li>
+  <li class=MsoNormal>avoid inheriting problematic scaling from parent objects.</li>
+ </ul>
+</ul>
+
+<p class=MsoNormal><b>7.2 Text system choice</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Standard Unity Text or TextMeshPro UGUI.</li>
+ <li class=MsoNormal>If TextMeshPro is used, Visual Scripting node types must
+     be enabled and nodes regenerated.</li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>8. Deployment / packaging view (Unity project
+organization)</b></p>
+
+<p class=MsoNormal>Recommended structure implied by tutorial workflow:</p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Assets/Models/&nbsp;(Cafe, Chair, iPad, Annie)</li>
+ <li class=MsoNormal>Assets/Textures/&nbsp;(café sign/posters/iPad screen
+     images)</li>
+ <li class=MsoNormal>Assets/Animations/&nbsp;(sitting loops)</li>
+ <li class=MsoNormal>Assets/Prefabs/&nbsp;(Annie prefab, burger prefab, UI
+     prefabs if any)</li>
+ <li class=MsoNormal>Assets/VisualScripting/&nbsp;(graphs, macro assets if
+     extracted)</li>
+ <li class=MsoNormal><span lang=FR>Assets/Scenes/&nbsp;(main café scene)</span></li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>9. Quality attributes &amp; considerations</b></p>
+
+<p class=MsoNormal><b>Maintainability</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal><b>Pros</b>: Prefab encapsulation + graphs encourage
+     modular thinking.</li>
+ <li class=MsoNormal><b>Cons</b>: Visual Scripting graphs can become hard to
+     version/diff at scale; naming conventions for variables and graphs become
+     critical.</li>
+</ul>
+
+<p class=MsoNormal><b>Scalability (functional)</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Architecture supports multiple diners by instantiating
+     multiple prefab instances.</li>
+ <li class=MsoNormal>Key risk: overuse of Scene Variables for per-diner state
+     can cause cross-talk; per-diner data should remain in Prefab Object
+     Variables.</li>
+</ul>
+
+<p class=MsoNormal><b>Usability</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Clear button ordering and staged timers guide the player.</li>
+ <li class=MsoNormal>Value displays on iPad provide continuous feedback
+     (inventory/timers/happiness).</li>
+</ul>
+
+<p class=MsoNormal><b>Performance</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>For small numbers of prefabs and simple graphs,
+     performance is fine.</li>
+ <li class=MsoNormal>For many diners, consider throttling UI updates (avoid
+     updating many text nodes every frame).</li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>10. Risks &amp; mitigations</b></p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal><b>Transform scaling/pivot issues (iPad attachment)</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Mitigation: root empty object normalization; avoid scaled
+      parents; add intermediate parent if needed.</li>
+ </ul>
+ <li class=MsoNormal><b>TextMeshPro node availability in Visual Scripting</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Mitigation: enable TMP types in Visual Scripting project
+      settings; regenerate nodes; standardize on one text system early.</li>
+ </ul>
+ <li class=MsoNormal><b>State coupling via Scene Variables</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Mitigation: keep global-only values in Scene Variables;
+      keep per-diner state in prefab variables; use consistent naming.</li>
+ </ul>
+ <li class=MsoNormal><b>Prefab destruction references</b></li>
+ <ul style='margin-top:0cm' type=circle>
+  <li class=MsoNormal>Tutorial note: Destroy unit targets the Annie prefab;
+      ensure correct target reference per instance.</li>
+ </ul>
+</ol>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>11. Extension points (future work)</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>Multiple diners with shared queue/list (Tutorial 10
+     mentions diner list for extra marks).</li>
+ <li class=MsoNormal>More robust item interaction (replace pickup button with
+     raycast/interact system).</li>
+ <li class=MsoNormal>More formal state machine pattern per diner (still
+     possible in Visual Scripting, but with clearer state enum).</li>
+ <li class=MsoNormal>Save/load of global counters (optional).</li>
+ <li class=MsoNormal>Better separation: move global “kitchen” logic into a
+     dedicated KitchenManager graph.</li>
+</ul>
+
+<div class=MsoNormal align=center style='text-align:center'>
+
+<hr size=4 width="100%" align=center>
+
+</div>
+
+<p class=MsoNormal><b>12. Appendix: Key components checklist</b></p>
+
+<ul style='margin-top:0cm' type=disc>
+ <li class=MsoNormal>&nbsp;FPC imported and working</li>
+ <li class=MsoNormal>&nbsp;iPad model/cube attached to player + normalized root</li>
+ <li class=MsoNormal>&nbsp;iPad World Space canvas aligned to screen</li>
+ <li class=MsoNormal>&nbsp;Scene Variables created
+     (inventory/timers/onboard/happiness)</li>
+ <li class=MsoNormal>&nbsp;GameManager empty object hosts global VS graph</li>
+ <li class=MsoNormal>&nbsp;Annie imported, humanoid rig configured, sitting
+     loops set up</li>
+ <li class=MsoNormal>&nbsp;Annie prefab created with UI panel + graphs + prefab
+     variables</li>
+ <li class=MsoNormal>&nbsp;Diner interaction sequence implemented with timers +
+     destroy</li>
+ <li class=MsoNormal>&nbsp;Burger spawn + onboard state + pickup/delivery
+     plumbing</li>
+</ul>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>
