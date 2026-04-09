@@ -135,6 +135,72 @@
             border: 0;
             display: block;
         }
+        .gyazo-modal-open {
+            overflow: hidden;
+        }
+        .gyazo-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .gyazo-modal[hidden] {
+            display: none;
+        }
+        .gyazo-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 71, 97, 0.72);
+        }
+        .gyazo-modal-dialog {
+            position: relative;
+            width: min(960px, 100%);
+            max-height: calc(100vh - 48px);
+            overflow: auto;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.25);
+            padding: 18px;
+        }
+        .gyazo-modal-close {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 90px;
+            margin-left: auto;
+            margin-bottom: 12px;
+            padding: 8px 14px;
+            border: 1px solid #0F4761;
+            border-radius: 999px;
+            background: #ffffff;
+            color: #0F4761;
+            cursor: pointer;
+        }
+        .gyazo-modal-close:hover {
+            background: #f0f6f8;
+        }
+        .gyazo-modal-preview {
+            display: block;
+            width: 100%;
+            height: auto;
+            border: 1px solid #d6e1e5;
+            border-radius: 6px;
+            background: #f8fcfd;
+        }
+        .gyazo-modal-status {
+            margin: 0;
+            color: #465a63;
+        }
+        .gyazo-modal-actions {
+            margin-top: 12px;
+        }
+        .gyazo-modal-actions a {
+            color: #0F4761;
+            font-weight: 600;
+        }
   </style>
 </head>
 <body>
@@ -1203,10 +1269,7 @@ href="https://gyazo.com/534b30098f891285465053c4763b5ecc">https://gyazo.com/534b
 
 <p><b><span style='font-size:13.0pt;line-height:107%;
 color:black;background:#D9EAD3'>Update: Spawn Diners via Seat Table button
-(Includes diner IDs and display of IDs):</span></b></p>
-
-<p><b><i><span style='font-size:13.0pt;line-height:107%;
-background:yellow'>NOTE: DINER IDs IS EXTRA WORK</span></i></b></p>
+(Includes diner IDs and display of IDs, NOTE: DINER IDs IS EXTRA WORK)</span></b></p>
 
 <p><b><span style='font-size:13.0pt;line-height:107%;
 color:black;background:#D9EAD3'>iPad Canvas Scripts:</span></b></p>
@@ -1643,10 +1706,106 @@ style='color:#0563C1'>https://www.youtube.com/watch?v=SXKYAtfenhs</span></a></p>
         </div>
   </div>
 
+    <div id="gyazo-modal" class="gyazo-modal" hidden>
+        <div class="gyazo-modal-backdrop" data-close-gyazo></div>
+        <div class="gyazo-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="gyazo-modal-link">
+            <button type="button" class="gyazo-modal-close" data-close-gyazo>Close</button>
+            <img id="gyazo-modal-image" class="gyazo-modal-preview" alt="Gyazo preview" hidden>
+            <p id="gyazo-modal-status" class="gyazo-modal-status" hidden></p>
+            <p class="gyazo-modal-actions"><a id="gyazo-modal-link" href="#" target="_blank" rel="noopener">Open original Gyazo link</a></p>
+        </div>
+    </div>
+
     <script>
         (function () {
             var root = document.getElementById('tutorial-08-09-content');
             if (!root) return;
+
+            var gyazoModal = document.getElementById('gyazo-modal');
+            var gyazoImage = document.getElementById('gyazo-modal-image');
+            var gyazoStatus = document.getElementById('gyazo-modal-status');
+            var gyazoLink = document.getElementById('gyazo-modal-link');
+
+            function getGyazoId(url) {
+                var match = /^https?:\/\/(?:www\.)?gyazo\.com\/([a-zA-Z0-9]+)/i.exec(url || '');
+                return match ? match[1] : null;
+            }
+
+            function getGyazoPreviewCandidates(id) {
+                return [
+                    'https://i.gyazo.com/' + id + '.png',
+                    'https://i.gyazo.com/' + id + '.jpg',
+                    'https://i.gyazo.com/' + id + '.gif'
+                ];
+            }
+
+            function closeGyazoModal() {
+                gyazoModal.hidden = true;
+                document.body.classList.remove('gyazo-modal-open');
+                gyazoImage.hidden = true;
+                gyazoImage.removeAttribute('src');
+                gyazoStatus.hidden = true;
+                gyazoStatus.textContent = '';
+            }
+
+            function loadGyazoPreview(candidates, index) {
+                if (index >= candidates.length) {
+                    gyazoImage.hidden = true;
+                    gyazoStatus.textContent = 'Preview unavailable for this Gyazo item. Use the original link below.';
+                    gyazoStatus.hidden = false;
+                    return;
+                }
+
+                gyazoImage.onload = function () {
+                    gyazoStatus.hidden = true;
+                    gyazoImage.hidden = false;
+                };
+
+                gyazoImage.onerror = function () {
+                    loadGyazoPreview(candidates, index + 1);
+                };
+
+                gyazoImage.src = candidates[index];
+            }
+
+            function openGyazoModal(url, label) {
+                var gyazoId = getGyazoId(url);
+                if (!gyazoId) return false;
+
+                gyazoLink.href = url;
+                gyazoLink.textContent = label || 'Open original Gyazo link';
+                gyazoStatus.textContent = 'Loading preview...';
+                gyazoStatus.hidden = false;
+                gyazoImage.hidden = true;
+                gyazoModal.hidden = false;
+                document.body.classList.add('gyazo-modal-open');
+                loadGyazoPreview(getGyazoPreviewCandidates(gyazoId), 0);
+                return true;
+            }
+
+            function bindGyazoLinks(scope) {
+                document.addEventListener('click', function (event) {
+                    var closeTrigger = event.target.closest('[data-close-gyazo]');
+                    if (closeTrigger && !gyazoModal.hidden) {
+                        event.preventDefault();
+                        closeGyazoModal();
+                        return;
+                    }
+
+                    var link = event.target.closest('a[href*="gyazo.com/"]');
+                    if (!link || !scope.contains(link)) return;
+
+                    if (openGyazoModal(link.href, (link.textContent || '').trim() || 'Open original Gyazo link')) {
+                        event.preventDefault();
+                    }
+                });
+
+                document.addEventListener('keydown', function (event) {
+                    if (event.key === 'Escape' && !gyazoModal.hidden) {
+                        closeGyazoModal();
+                    }
+                });
+            }
 
             var markers = [
                 { findRe: /Tutorial\s*8\s*01/i, title: 'Tutorial 8 01 - FPC, Input, iPad and UI, and Chair', key: 't801' },
@@ -1713,6 +1872,8 @@ style='color:#0563C1'>https://www.youtube.com/watch?v=SXKYAtfenhs</span></a></p>
                 details.appendChild(content);
                 root.appendChild(details);
             });
+
+            bindGyazoLinks(root);
         })();
     </script>
 </body>

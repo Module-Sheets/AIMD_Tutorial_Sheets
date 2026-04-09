@@ -1,0 +1,351 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Aptos;}
+@font-face
+	{font-family:"Open Sans";}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;}
+p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:0cm;
+	margin-left:36.0pt;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:"Arial",sans-serif;}
+.MsoChpDefault
+	{font-family:"Arial",sans-serif;}
+.MsoPapDefault
+	{line-height:115%;}
+@page WordSection1
+	{size:595.45pt 841.7pt;
+	margin:72.0pt 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+ ol
+	{margin-bottom:0cm;}
+ul
+	{margin-bottom:0cm;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-GB link=blue vlink=purple style='word-wrap:break-word'>
+
+<div class=WordSection1>
+
+<p class=MsoNormal>Animset and Visual Scripted Movement.</p>
+
+<p class=MsoNormal><span style='background:yellow'>This tutorial uses the </span><b><span
+style='font-size:10.5pt;line-height:115%;font-family:"Open Sans",sans-serif;
+color:#262626;background:yellow'>Week 12 2025 MB Animset Fix.zip in the Week 12
+Folder on BB</span></b></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal><b>Overview:</b></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:54.0pt;text-indent:-18.0pt'>1.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><span dir=LTR></span>Diner
+Fbx Model is just TPose with Mesh</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:54.0pt;text-indent:-18.0pt'>2.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><span dir=LTR></span>Diner
+Prefab has Animator with mix of sitting and standing animations, as well as sit
+to stand and stand to sit</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:54.0pt;text-indent:-18.0pt'>3.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><span dir=LTR></span>The
+root for sitting animations is as captured in real life </p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:54.0pt'>(if it is below
+the seat, then it is not between the feet):</p>
+
+<p class=MsoNormal style='margin-left:54.0pt'><img width=411 height=371
+id="Picture 1264196526"
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image001.jpg"></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:54.0pt;text-indent:-18.0pt'>4.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><span dir=LTR></span>Therefore
+a fix you can apply is to use the<b> Root</b> object that sits below the seat
+to store the offset from a foot Root, and make the<b> Control Rig Reference
+(Character_Ctrl:Reference)</b> have an offset to between the feet.</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:54.0pt;text-indent:-18.0pt'>5.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><span dir=LTR></span>Finally
+when you use both sets of animation in an Animator, you can select the root
+that is between the feet for animation settings and any adjustments. </p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:54.0pt;text-indent:-18.0pt'>6.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><span dir=LTR></span>In
+our case it is always <b>Root Transform </b>in the<b> Animations window,</b> or<b>
+Control Rig Reference (Character_Ctrl:Reference)</b>, the top root level, as
+the seat root offset in stored on the child <b>Root </b>object</p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:90.0pt;text-indent:-18.0pt'>a.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><span dir=LTR></span>“normal”
+motion capture animations  -standing</p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img width=261 height=167
+id="Picture 2119502326"
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image002.jpg"><img
+width=252 height=167 id="Picture 33466932"
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image003.jpg"></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:90.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:90.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:90.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:90.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:90.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:90.0pt;text-indent:-18.0pt'>b.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><span dir=LTR></span>Normal
+motion capture animations with Offset from motion capture choices.</p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img width=264 height=120
+id="Picture 2118301499"
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image004.gif"><img
+width=263 height=120 id="Picture 1902358304"
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image005.jpg"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'>&nbsp;</p>
+
+<p class=MsoListParagraph style='margin-left:90.0pt;text-indent:-18.0pt'>c.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Adjusted Animations for seated offset</p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img width=259 height=134
+id="Picture 1414153012"
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image006.jpg"><img
+width=276 height=134 id="Picture 1122040131"
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image007.jpg"></p>
+
+<p class=MsoNormal style='margin-left:54.0pt'>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:36.0pt'>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:36.0pt'>&nbsp;</p>
+
+<ol style='margin-top:0cm' start=1 type=1>
+ <li class=MsoNormal>Previously in the module we were using the Sitting Loop
+     Anims AnimSet - This had a root below the characters bottom, and was easy
+     to use for sitting. You could spawn it to the root of the chair...</li>
+ <li class=MsoNormal>If you want to create movement (sitting, standing,
+     walking) it is best to put the root back between the characters feet, so
+     that can be standard.</li>
+ <li class=MsoNormal>FYI, the Annie TPose and Prefab in Tuts 8-10 uses the
+     Clark Animset</li>
+ <li class=MsoNormal>We will adjust the Clark animset to adjust the root
+     between the feet for the animations that are sitting, to get them in line
+     with all animations.</li>
+ <li class=MsoNormal>I provide the raw Clark Animset, and also a fixed file,
+     with Sit to Stand, Walk, and sitting animations with root between the feet</li>
+ <li class=MsoNormal>The root that is moved is one level down from the
+     Character_Ctrl:Reference</li>
+ <li class=MsoNormal>Move it back to -30 in Z, and process as normal in Story
+     mode via Control Rig and character - then export as a processed anim clip
+     from Story</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img width=602 height=600
+id=image10.png
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image008.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/9dd57b3df4240caeca8ff35729de9c56"><span
+style='color:#1155CC'>https://gyazo.com/9dd57b3df4240caeca8ff35729de9c56</span></a></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=602
+height=603 id=image2.png
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image009.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/23d5c7ee26851d93a26adc66d556bb54"><span
+style='color:#1155CC'>https://gyazo.com/23d5c7ee26851d93a26adc66d556bb54</span></a></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=602
+height=618 id=image1.png
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image010.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/750295854fb315295e1b42e408f3a620"><span
+style='color:#1155CC'>https://gyazo.com/750295854fb315295e1b42e408f3a620</span></a></p>
+
+<ol style='margin-top:0cm' start=8 type=1>
+ <li class=MsoNormal>Process all required clips in this way. I have provided a
+     basic set</li>
+ <li class=MsoNormal>There is also a walk animation downloaded from mixamo.
+     This can also be used when processed.</li>
+ <li class=MsoNormal><b>Top Tip: Reversing animations</b></li>
+</ol>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:72.0pt;text-indent:-18.0pt'>a.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><span dir=LTR></span>To
+make a <b>Stand to Sit</b> from the <b>Sit to Stand</b> or any other animation:</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'>b.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><span dir=LTR></span>Select
+the clip in <b>Story</b> mode</p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:72.0pt;text-indent:-18.0pt'>c.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+dir=LTR></span>Go to top menu: <b>Window/Add Property View</b></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:72.0pt;text-indent:-18.0pt'>d.<span
+style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp; </span><span dir=LTR></span>In
+Property View expand <b>Time Warp</b> and click <b>Reverse</b></p>
+
+<ol style='margin-top:0cm' start=11 type=1>
+ <li class=MsoNormal>In Unity, import all your processed clips of the new anim
+     set and we will create a new Animator Controller with State Machine and
+     Triggers like the one before (AC1), and plug the new animator controller
+     into the Anne Prefab. This updates all her animation!</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=601
+height=331 id=image9.png
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image011.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/5eb22f774e9c6c0afd7c33a1fb9e86ff"><span
+style='color:#1155CC'>https://gyazo.com/5eb22f774e9c6c0afd7c33a1fb9e86ff</span></a></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=601
+height=364 id=image4.png
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image012.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/89d564ef1a725fd482a3f3a540882508"><span
+style='color:#1155CC'>https://gyazo.com/89d564ef1a725fd482a3f3a540882508</span></a></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/b85aac22fadcde8517b8d6d03a8df8c9"><span
+style='color:#1155CC'>https://gyazo.com/b85aac22fadcde8517b8d6d03a8df8c9</span></a>
+</p>
+
+<ol style='margin-top:0cm' start=12 type=1>
+ <li class=MsoNormal>Dont forget to process each animation clip for</li>
+ <ol style='margin-top:0cm' start=1 type=a>
+  <li class=MsoNormal>Rig: Humanoid, and created from This</li>
+  <li class=MsoNormal>Animation: Compression off, loop for the Sit basic, and
+      Motion Root selected as <b>Root Transform</b></li>
+ </ol>
+</ol>
+
+<p class=MsoNormal align=center style='text-align:center'><b><img border=0
+width=397 height=97 id=image5.png
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image013.jpg"></b></p>
+
+<p class=MsoNormal><b>&nbsp;</b></p>
+
+<ol style='margin-top:0cm' start=13 type=1>
+ <li class=MsoNormal>In the Annie Prefab, script the movement as follows (on
+     testing buttons):</li>
+ <li class=MsoNormal>Pay Timer Adjust</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=601
+height=184 id=image7.png
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image014.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/d4495237831860fac5bc5ffd0d74c553"><span
+style='color:#1155CC'>https://gyazo.com/d4495237831860fac5bc5ffd0d74c553</span></a></p>
+
+<ol style='margin-top:0cm' start=15 type=1>
+ <li class=MsoNormal>Stand:<img border=0 width=561 height=330 id=image8.png
+     src="Animset%20and%20Visual%20Scripted%20Movement_files/image015.gif"></li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/de26c882e4f55b50564c36700a81245b"><span
+style='color:#1155CC'>https://gyazo.com/de26c882e4f55b50564c36700a81245b</span></a></p>
+
+<ol style='margin-top:0cm' start=16 type=1>
+ <li class=MsoNormal>Walk Look at: <img border=0 width=601 height=232
+     id=image3.png
+     src="Animset%20and%20Visual%20Scripted%20Movement_files/image016.gif"></li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/fd6221f493fe86f4d1b34de351815891"><span
+style='color:#1155CC'>https://gyazo.com/fd6221f493fe86f4d1b34de351815891</span></a></p>
+
+<ol style='margin-top:0cm' start=17 type=1>
+ <li class=MsoNormal>Walk Towards:</li>
+</ol>
+
+<p class=MsoNormal style='margin-left:36.0pt'><img border=0 width=602
+height=200 id=image6.png
+src="Animset%20and%20Visual%20Scripted%20Movement_files/image017.gif"></p>
+
+<p class=MsoNormal style='margin-left:36.0pt'><a
+href="https://gyazo.com/a39f192adc8dae1d0f290c9f19d81d6b"><span
+style='color:#1155CC'>https://gyazo.com/a39f192adc8dae1d0f290c9f19d81d6b</span></a></p>
+
+<ol style='margin-top:0cm' start=18 type=1>
+ <li class=MsoNormal>This should prove the pivots and movement sound, next step
+     is to make movement more subtle by doing a quaternion lerp on the Look At,
+     and to add elements such as a burger parented to the hand.</li>
+</ol>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='margin-left:36.0pt'>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>
